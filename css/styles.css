@@ -17,6 +17,7 @@
 :root{
   --black:#000; --ivory:#FFFAEB; --white:#fff;
   --grey:#878787; --rule:#DCDCDC;
+  --control-grey:#77756F;
   --taupe:#938C82; --taupe-ink:#FFFAEB;
   --tile:#E9DEC8;
   --tar:#101114; --moss:#3E3523; --sand:#C9C4B4;
@@ -846,6 +847,10 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .quick-size.one-size span{margin:0;color:var(--black);font-size:9px}
 .quick-add{min-height:39px;background:var(--black);color:var(--ivory);font-size:9px;letter-spacing:.18em;text-transform:uppercase;transition:background .3s,color .3s}
 .quick-add:hover{background:transparent;color:var(--black);outline:1px solid var(--black)}
+#lookTiles .quick-add,#compTiles .quick-add{background:var(--control-grey)}
+#lookTiles .quick-add:hover,#compTiles .quick-add:hover{background:#96938C;color:var(--ivory);outline:0}
+#lookTiles .vtog button[aria-pressed="true"],#compTiles .vtog button[aria-pressed="true"]{background:var(--control-grey);color:var(--ivory)}
+#lookTiles + .viewall{align-self:center;margin-top:clamp(48px,5vw,70px)}
 
 .lookmeta{display:flex;justify-content:space-between;gap:14px;align-items:baseline;padding-top:12px}
 .lookmeta strong{font-family:"Greenstone",serif;font-size:12.5px;font-weight:400;letter-spacing:.12em;text-transform:uppercase}
