@@ -558,9 +558,6 @@ function composeCell(box,group,startCol){
       tog.appendChild(b)});
     cell.appendChild(tog)}
   var sw=document.createElement('span');sw.className='sw csw';if(!locked)cell.appendChild(sw);
-  var ord=document.createElement('button');ord.className='ordlink';ord.textContent='View piece';
-  if(isComposer)ord.style.display='none';else ord.setAttribute('data-piece-link',state.c+':'+state.k);
-  cell.appendChild(ord);
   var wlb=document.createElement('button');wlb.className='wlbtn';wlb.type='button';wlb.innerHTML=WLHEART;
   wlb.setAttribute('aria-label','Save to wishlist');
   wlb.addEventListener('click',function(e){e.stopPropagation();wlToggle(state.c,state.k);
@@ -576,7 +573,6 @@ function composeCell(box,group,startCol){
     if(P.stack.length&&group!=='belt'){img.style.display='';img.src=bankSrc(prodSlug(P.stack))}else{img.style.display='none';img.removeAttribute('src')}img.setAttribute('aria-label',P.n);
     if(study)study.setAttribute('data-colour',state.c);
     cap.innerHTML=P.n+(PRICEK[state.k]?'<em class="capprice">'+fmtP(PRICEK[state.k])+'</em>':'');
-    if(!isComposer)ord.setAttribute('data-piece-link',state.c+':'+state.k);
     if(typeof wlb!=='undefined'){wlb.setAttribute('data-wl',state.c+':'+state.k);wlb.classList.toggle('on',wlHas(state.c,state.k))}
     if(tog)[].forEach.call(tog.children,function(b,i){b.setAttribute('aria-pressed',String(variants[i]===state.k))});
     sw.innerHTML='';
@@ -586,12 +582,23 @@ function composeCell(box,group,startCol){
       d.setAttribute('aria-pressed',String(c===state.c));
       d.addEventListener('click',function(e){e.stopPropagation();if(state.c!==c){state.c=c;render()}});
       sw.appendChild(d)});
+    var selectionKey=(group==='tailcoat'||group==='jacket')?'coat':group;
+    box.__selections=box.__selections||{};
+    box.__selections[selectionKey]={k:state.k,colour:PIECES[state.c].name,name:P.n};
+    if(box.id==='lookTiles')updateLookPurchase();
     if(isComposer){COMPSEL[group]={k:state.k,colour:PIECES[state.c].name,name:P.n};updateComposerSummary()}
   }
   render();box.appendChild(cell);
 }
-function buildComposeBox(box){var col=box.getAttribute('data-compose');box.innerHTML='';
-  box.getAttribute('data-slots').split(',').forEach(function(g){composeCell(box,g,col)})}
+function buildComposeBox(box){var col=box.getAttribute('data-compose');box.innerHTML='';box.__selections={};
+  box.getAttribute('data-slots').split(',').forEach(function(g){composeCell(box,g,col)});
+  if(box.id==='lookTiles')updateLookPurchase()}
+function updateLookPurchase(){var box=document.getElementById('lookTiles');if(!box||!box.__selections)return;
+  var total=0;['coat','breech','corset'].forEach(function(key){var s=box.__selections[key];if(!s)return;
+    total+=PRICEK[s.k]||0;var label=document.querySelector('[data-look-size="'+key+'"] > span');if(label)label.textContent=s.name});
+  var totalEl=document.getElementById('lookSuitTotal');if(totalEl)totalEl.textContent=fmtP(total)}
+function lookSuitSize(key){var row=document.querySelector('[data-look-size="'+key+'"]');if(!row)return'38';
+  var on=row.querySelector('button[aria-pressed="true"]');return on?on.textContent:'38'}
 function compositionSize(group){if(group==='belt')return 'One size';var row=document.querySelector('[data-compose-size="'+group+'"]');if(!row)return '38';
   var on=row.querySelector('button[aria-pressed="true"]');return on?on.textContent:'38'}
 document.querySelectorAll('.composition-sizes .size-options').forEach(function(group){
@@ -605,6 +612,13 @@ if(addComposition)addComposition.addEventListener('click',function(){
   if(!items.length)return;
   var bag=bagData();items.forEach(function(item){bag.push(item)});bagSave(bag);
   try{localStorage.setItem('kc_composition',JSON.stringify({summary:document.getElementById('compSelectionText').textContent,items:items}))}catch(e){}
+  bagToast(null,'Complete suit added to your bag');openBag()});
+var addLookSuit=document.getElementById('addLookSuit');
+if(addLookSuit)addLookSuit.addEventListener('click',function(){var box=document.getElementById('lookTiles');if(!box||!box.__selections)return;
+  var group='suit-'+Date.now(),items=[];
+  ['coat','breech','corset'].forEach(function(key){var s=box.__selections[key];if(s)items.push({p:s.name,c:s.colour,z:lookSuitSize(key),group:group})});
+  if(items.length!==3)return;
+  var bag=bagData();items.forEach(function(item){bag.push(item)});bagSave(bag);
   bagToast(null,'Complete suit added to your bag');openBag()});
 /* tiles build deferred to init (needs PIECES) */
 /* front tiles — flip through all colours and models */
