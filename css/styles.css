@@ -759,6 +759,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .composer-intro{max-width:660px;margin:calc(-1*clamp(12px,2vw,26px)) 0 clamp(34px,5vw,58px);font-size:clamp(14px,1.35vw,17px);line-height:1.75;color:var(--grey)}
 .composer-intro strong{font-weight:400;color:var(--black)}
 #compTiles .cell{position:relative}
+#compTiles>.cell:not(.is-accessory) .tile{aspect-ratio:4/5}
 #compTiles .cell.is-accessory{grid-column:1/-1;display:grid;grid-template-columns:minmax(260px,1.25fr) minmax(260px,.75fr);grid-template-areas:"visual details";gap:clamp(26px,4vw,64px);align-items:center;border-top:1px solid var(--rule);padding-top:clamp(34px,5vw,58px);margin-top:clamp(8px,2vw,20px)}
 #compTiles .cell.is-accessory .pc{grid-area:visual;cursor:default}
 #compTiles .cell.is-accessory .tile{aspect-ratio:16/8;background:#ece9e2;position:relative}
@@ -767,6 +768,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 #compTiles .cell.is-accessory .csw{position:absolute;left:calc(56.25% + clamp(26px,4vw,64px));top:92px;margin:0;justify-content:flex-start}
 #compTiles .cell.is-accessory .csw button{width:22px;height:22px;margin-right:5px}
 #compTiles .cell.is-accessory .ordlink{position:absolute;left:calc(56.25% + clamp(26px,4vw,64px));top:142px;margin:0}
+#compTiles .cell.is-accessory .quick-buy{position:absolute;left:calc(56.25% + clamp(26px,4vw,64px));top:142px;width:min(300px,30vw);margin:0}
 #compTiles .cell.is-accessory .wlbtn{top:12px;right:calc(43.75% + clamp(26px,4vw,64px))}
 .accessory-study{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;color:#181817;transition:background .45s var(--ease),color .45s var(--ease)}
 .accessory-study::before{content:"Colour study";position:absolute;left:18px;top:16px;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:currentColor;opacity:.62}
@@ -796,11 +798,12 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 @media (max-width:760px){
   #compTiles .cell.is-accessory{grid-template-columns:1fr;grid-template-areas:"visual" "details";padding-bottom:18px}
   #compTiles .cell.is-accessory .tile{aspect-ratio:4/3}
-  #compTiles .cell.is-accessory .cap2,#compTiles .cell.is-accessory .csw,#compTiles .cell.is-accessory .ordlink,.accessory-note{position:static;width:auto;text-align:center;margin-left:auto;margin-right:auto}
+  #compTiles .cell.is-accessory .cap2,#compTiles .cell.is-accessory .csw,#compTiles .cell.is-accessory .ordlink,#compTiles .cell.is-accessory .quick-buy,.accessory-note{position:static;width:auto;text-align:center;margin-left:auto;margin-right:auto}
   #compTiles .cell.is-accessory .cap2{margin-top:18px}
   #compTiles .cell.is-accessory .cap2::after{margin:12px auto 0}
   #compTiles .cell.is-accessory .csw{margin-top:14px;justify-content:center}
   #compTiles .cell.is-accessory .ordlink{margin-top:10px}
+  #compTiles .cell.is-accessory .quick-buy{grid-column:1;width:min(320px,calc(100% - 36px));margin-top:14px}
   #compTiles .cell.is-accessory .wlbtn{top:12px;right:12px}
   .accessory-note{margin-top:12px;padding:0 18px}
   .composition-summary{grid-template-columns:1fr;grid-template-areas:"copy" "price" "actions";align-items:start}
@@ -839,6 +842,8 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .quick-size{display:flex;align-items:center;border:1px solid var(--rule);min-height:39px;padding:0 9px}
 .quick-size span{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey);margin-right:5px}
 .quick-size select{width:100%;border:0;background:transparent;color:var(--black);font:inherit;font-size:11px;outline:0;cursor:pointer}
+.quick-size.one-size{justify-content:center}
+.quick-size.one-size span{margin:0;color:var(--black);font-size:9px}
 .quick-add{min-height:39px;background:var(--black);color:var(--ivory);font-size:9px;letter-spacing:.18em;text-transform:uppercase;transition:background .3s,color .3s}
 .quick-add:hover{background:transparent;color:var(--black);outline:1px solid var(--black)}
 

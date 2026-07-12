@@ -551,16 +551,20 @@ function composeCell(box,group,startCol){
     cell.appendChild(tog)}
   var sw=document.createElement('span');sw.className='sw csw';if(!locked)cell.appendChild(sw);
   var sizeSelect=null,quickAdd=null;
-  if(box.id==='lookTiles'&&group!=='belt'){
+  if(box.id==='lookTiles'||box.id==='compTiles'){
     var quick=document.createElement('div');quick.className='quick-buy';
     var sizeWrap=document.createElement('label');sizeWrap.className='quick-size';
-    var sizeLabel=document.createElement('span');sizeLabel.textContent='Size';sizeWrap.appendChild(sizeLabel);
-    sizeSelect=document.createElement('select');[34,36,38,40,42].forEach(function(s){var o=document.createElement('option');o.value=String(s);o.textContent=s;if(s===38)o.selected=true;sizeSelect.appendChild(o)});sizeWrap.appendChild(sizeSelect);
+    if(group==='belt'){sizeWrap.classList.add('one-size');var oneSize=document.createElement('span');oneSize.textContent='One size';sizeWrap.appendChild(oneSize)}
+    else{var sizeLabel=document.createElement('span');sizeLabel.textContent='Size';sizeWrap.appendChild(sizeLabel);
+      sizeSelect=document.createElement('select');[34,36,38,40,42].forEach(function(s){var o=document.createElement('option');o.value=String(s);o.textContent=s;if(s===38)o.selected=true;sizeSelect.appendChild(o)});sizeWrap.appendChild(sizeSelect)}
     quickAdd=document.createElement('button');quickAdd.type='button';quickAdd.className='quick-add';quickAdd.textContent='Add to bag';
-    quickAdd.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();var P=PIECES[state.c][state.k];
+    quickAdd.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();var P=PIECES[state.c][state.k],bag=bagData();
+      if(group==='belt'){var coatIndex=-1;for(var bi=bag.length-1;bi>=0;bi--){if(bag[bi].p==='Tailcoat'||bag[bi].p==='Jacket'){coatIndex=bi;break}}
+        if(coatIndex<0){bagToast(null,'Add your Tailcoat or Jacket first, then include this set');return}
+        bag[coatIndex].includedSet=PIECES[state.c].name;bagSave(bag);bagToast(null,PIECES[state.c].name+' Belt & Epaulettes included with your suit');return}
       var item={p:P.n,c:PIECES[state.c].name,z:sizeSelect.value};
-      if(state.k==='tailcoat'||state.k==='jacket')item.includedSet=PIECES[state.c].name;
-      var bag=bagData();bag.push(item);bagSave(bag);bagToast(item)});
+      if(state.k==='tailcoat'||state.k==='jacket')item.includedSet=box.id==='compTiles'?(window.__composerIncludedSet||PIECES[state.c].name):PIECES[state.c].name;
+      bag.push(item);bagSave(bag);bagToast(item)});
     quick.appendChild(sizeWrap);quick.appendChild(quickAdd);cell.appendChild(quick)}
   var wlb=document.createElement('button');wlb.className='wlbtn';wlb.type='button';wlb.innerHTML=WLHEART;
   wlb.setAttribute('aria-label','Save to wishlist');
