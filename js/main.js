@@ -391,7 +391,7 @@ var PIECES={
    belt:{n:'Belt & epaulettes',stack:[],rail:[]}},
  moss:{name:'Moss',
    tailcoat:{n:'Tailcoat',stack:['hero_moss','frack_gron_fram','frack_gron_bak','kostym_frack_gron','lining_moss'],rail:[]},
-   jacket:{n:'Jacket',stack:['lj_moss4','lj_moss1','lj_moss3','jacka_gron_fram','jacka_gron_bak','kostym_jacka_gron','lining_moss'],rail:[]},
+   jacket:{n:'Jacket',stack:['lj_moss4','lj_moss1','lj_moss3','jacka_gron_fram','kostym_jacka_gron','lining_moss'],rail:[]},
    corset:{n:'Corset',stack:['vast_gron_fram','vast_gron_bak'],rail:[]},
    cargo:{n:'Cargo breeches',stack:['byxa_gron_cargo_fram','byxa_gron_cargo_bak','byxa_gron_cargo_sida'],rail:[]},
    slim:{n:'Slim breeches',stack:['byxa_gron_slim_fram','byxa_gron_slim_bak','byxa_gron_slim_sida'],rail:[]},
