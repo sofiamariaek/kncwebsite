@@ -147,16 +147,16 @@ var PRICE={'Tailcoat':4800,'Jacket':4200,'Cargo breeches':2000,'Slim breeches':1
 var PRICEK={tailcoat:4800,jacket:4200,cargo:2000,slim:1850,corset:2000,belt:750};
 function fmtP(v){return '\u20AC'+String(v).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
 var LOOKS=[
- {kind:'tailcoat',c:'sand',name:'Sandstone Tailcoat Suit',shots:['hero_sand','lm_sand2','lm_sand3','kostym_frack_beige','lining_sand','belt_beige_f','shoulder_beige']},
- {kind:'tailcoat',c:'tar',name:'Tar Tailcoat Suit',shots:['hero_tar','lm_tar2','lm_tar3','kostym_frack_svart','lining_tar']},
- {kind:'tailcoat',c:'moss',name:'Moss Tailcoat Suit',shots:['hero_moss','lm_moss2','lm_moss3','kostym_frack_gron','lining_moss']},
- {kind:'jacket',c:'tar',name:'Tar Jacket Suit',shots:['lj_tar1','lj_tar2','lj_tar3','kostym_black','lining_tar']},
- {kind:'jacket',c:'moss',name:'Moss Jacket Suit',shots:['lj_moss4','lj_moss1','lj_moss3','kostym_jacka_gron','lining_moss']},
- {kind:'jacket',c:'sand',name:'Sandstone Jacket Suit',shots:['lj_sand1','lj_sand2','lj_sand3','kostym_jacka_beige','lining_sand']}
+ {kind:'tailcoat',c:'sand',name:'The Equestrian Suit',variant:'Sandstone · Tailcoat silhouette',shots:['hero_sand','lm_sand2','lm_sand3','kostym_frack_beige','lining_sand','belt_beige_f','shoulder_beige']},
+ {kind:'tailcoat',c:'tar',name:'The Equestrian Suit',variant:'Tar · Tailcoat silhouette',shots:['hero_tar','lm_tar2','lm_tar3','kostym_frack_svart','lining_tar']},
+ {kind:'tailcoat',c:'moss',name:'The Equestrian Suit',variant:'Moss · Tailcoat silhouette',shots:['hero_moss','lm_moss2','lm_moss3','kostym_frack_gron','lining_moss']},
+ {kind:'jacket',c:'tar',name:'The Equestrian Suit',variant:'Tar · Jacket silhouette',shots:['lj_tar1','lj_tar2','lj_tar3','kostym_black','lining_tar']},
+ {kind:'jacket',c:'moss',name:'The Equestrian Suit',variant:'Moss · Jacket silhouette',shots:['lj_moss4','lj_moss1','lj_moss3','kostym_jacka_gron','lining_moss']},
+ {kind:'jacket',c:'sand',name:'The Equestrian Suit',variant:'Sandstone · Jacket silhouette',shots:['lj_sand1','lj_sand2','lj_sand3','kostym_jacka_beige','lining_sand']}
 ];
 function lookCard(i){var L=LOOKS[i];
   var a=document.createElement('a');a.href='#';
-  a.innerHTML='<figure><img src="'+bankSrc(L.shots[0])+'" alt="'+L.name+'"></figure><span class="lookmeta"><strong>'+L.name+'</strong><em>Available</em></span>';
+  a.innerHTML='<figure><img src="'+bankSrc(L.shots[0])+'" alt="'+L.name+', '+L.variant+'"></figure><span class="lookmeta"><strong>'+L.name+'</strong><em>Available</em></span><span class="lookvariant">'+L.variant+'</span>';
   a.addEventListener('click',function(e){e.preventDefault();openLook(i)});
   return a}
 function renderLooks(f){var g=document.getElementById('lookGrid');if(!g)return;g.innerHTML='';
@@ -170,6 +170,7 @@ document.querySelectorAll('#lookFilter button').forEach(function(b){
 var curLook=0;
 function lookImgs(i){var L=LOOKS[i];curLook=i;
   document.getElementById('lookTitle').textContent=L.name;
+  document.getElementById('lookVariant').textContent=L.variant;
   var names={tar:'Tar',moss:'Moss',sand:'Sandstone'};
   var lab=document.getElementById('lookSwLab');if(lab)lab.textContent=names[L.c];
   document.querySelectorAll('#lookSw button').forEach(function(d){
