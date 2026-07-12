@@ -453,7 +453,9 @@ function bagRender(){var a=bagData(),box=document.getElementById('bagItems');box
     var ck=null;
     for(var cc in PIECES){if(PIECES[cc].name===x.c){for(var k in PIECES[cc]){if(PIECES[cc][k]&&PIECES[cc][k].n===x.p){ck=PIECES[cc][k]}}}}
     var im=document.createElement('img');im.src=(ck&&ck.stack&&ck.stack.length)?bankSrc(prodSlug(ck.stack)):(x.p==='Belt & epaulettes'?bankSrc('belt_beige_f'):'');row.appendChild(im);
-    var nm=document.createElement('div');nm.className='nm';nm.textContent=x.c+' \u00b7 '+(x.extra?'Extra Belt & Epaulettes':x.p)+' \u00b7 '+x.z;row.appendChild(nm);
+    var nm=document.createElement('div');nm.className='nm';nm.textContent=x.c+' \u00b7 '+(x.extra?'Extra Belt & Epaulettes':x.p)+' \u00b7 '+x.z;
+    if(x.includedSet){var included=document.createElement('em');included.className='included-set';included.textContent='Included Belt & Epaulettes \u00b7 '+x.includedSet;nm.appendChild(included)}
+    row.appendChild(nm);
     var pr=document.createElement('span');pr.className='rprice';pr.textContent=fmtP(PRICE[x.p]||0);row.appendChild(pr);
     var rm=document.createElement('button');rm.className='rm';rm.innerHTML='&#215;';
     rm.addEventListener('click',function(){var b=bagData();b.splice(i,1);bagSave(b);bagRender()});row.appendChild(rm);
@@ -469,8 +471,8 @@ function bagUpsell(a){var up=document.getElementById('bagUp');up.innerHTML='';
   if(a.some(function(x){return x.p==='Belt & epaulettes'}))return;
   var frag=document.createDocumentFragment();
   var h=document.createElement('p');h.className='upt';h.textContent='Add an extra set';frag.appendChild(h);
-  var nte=document.createElement('p');nte.className='upn';nte.textContent='Your Tailcoat or Jacket includes its matching belt and epaulettes. Add an extra set in another colour, if desired.';frag.appendChild(nte);
-  frag.appendChild(upsellRow(suit.c,suit.z));
+  var nte=document.createElement('p');nte.className='upn';nte.textContent='Your Tailcoat or Jacket includes the belt and epaulettes colour you selected. Add an extra set in another colour, if desired.';frag.appendChild(nte);
+  frag.appendChild(upsellRow(suit.includedSet||suit.c,suit.z));
   up.appendChild(frag)}
 function openBag(e){if(e)e.preventDefault();bagov.classList.remove('confirmed');bagRender();bagov.classList.add('open');document.body.style.overflow='hidden'}
 function closeBag(){bagov.classList.remove('open');document.body.style.overflow=''}
@@ -554,15 +556,17 @@ function composeCell(box,group,startCol){
     wlb.setAttribute('data-wl',state.c+':'+state.k);wlHearts()});
   cell.appendChild(wlb);
   if(group==='belt'){
+    if(box.id==='compTiles')wlb.style.display='none';
     var accessoryNote=document.createElement('p');accessoryNote.className='accessory-note';
-    accessoryNote.textContent='Shown as a colour study. The concierge can confirm the exact vegan-suede tone against your chosen coat before ordering.';
+    accessoryNote.textContent='One set is included with your Tailcoat or Jacket. Choose the vegan-suede colour you would like with your suit.';
     cell.appendChild(accessoryNote)}
   function render(){
     var P=PIECES[state.c][state.k];
     if(group==='belt')pc.removeAttribute('data-piece');else pc.setAttribute('data-piece',state.c+':'+state.k);
     if(P.stack.length&&group!=='belt'){img.style.display='';img.src=bankSrc(prodSlug(P.stack))}else{img.style.display='none';img.removeAttribute('src')}img.setAttribute('aria-label',P.n);
     if(study)study.setAttribute('data-colour',state.c);
-    cap.innerHTML=P.n+(PRICEK[state.k]?'<em class="capprice">'+fmtP(PRICEK[state.k])+'</em>':'');
+    if(group==='belt'&&box.id==='compTiles')window.__composerIncludedSet=PIECES[state.c].name;
+    cap.innerHTML=P.n+(group==='belt'&&box.id==='compTiles'?'<em class="capprice">Included</em>':(PRICEK[state.k]?'<em class="capprice">'+fmtP(PRICEK[state.k])+'</em>':''));
     if(typeof wlb!=='undefined'){wlb.setAttribute('data-wl',state.c+':'+state.k);wlb.classList.toggle('on',wlHas(state.c,state.k))}
     if(tog)[].forEach.call(tog.children,function(b,i){b.setAttribute('aria-pressed',String(variants[i]===state.k))});
     sw.innerHTML='';
@@ -637,13 +641,13 @@ var CARE={
  cargo:{care:['Made in Italy','Wash delicately inside out at 30\u00b0C','Close zippers before washing','Hang dry','Do not bleach','Do not tumble dry','Do not wring','Do not iron','Avoid fabric softeners'],comp:[['Colibri Cr\u00eape by Reggiani','80% Polyamide, 20% Elastane'],['Secondary fabric','80% Polyester (approx. 20% plant-based), 20% Polyurethane (approx. 31% plant-based)'],['Lining','73% Polyamide, 27% Elastane']]},
  slim:{care:['Made in Italy','Wash delicately inside out at 30\u00b0C','Close zippers before washing','Hang dry','Do not bleach','Do not tumble dry','Do not wring','Do not iron','Avoid fabric softeners'],comp:[['Colibri Cr\u00eape by Reggiani','80% Polyamide, 20% Elastane'],['Secondary fabric','80% Polyester (approx. 20% plant-based), 20% Polyurethane (approx. 31% plant-based)'],['Lining','73% Polyamide, 27% Elastane']]}
 };
-var lastColour='tar',lastKey='tailcoat',lastOrigin=null;
-function openPiece(c,k){
+var lastColour='tar',lastKey='tailcoat',lastOrigin=null,lastIncludedSet=null;
+function openPiece(c,k,includedSet){
   var cv=document.querySelector('.view:not([hidden])');
   if(cv&&cv.getAttribute('data-view')!=='piece')lastOrigin=cv.getAttribute('data-view');
   var P=PIECES[c][k];
   if(!P||!P.stack.length)return;
-  lastColour=c;lastKey=k;
+  lastColour=c;lastKey=k;lastIncludedSet=(k==='tailcoat'||k==='jacket')?(includedSet||PIECES[c].name):null;
   var th=document.getElementById('pieceThumbs');th.innerHTML='';
   ['tar','moss','sand'].forEach(function(cc){if(!PIECES[cc][k]||!PIECES[cc][k].stack.length)return;
     var bt=document.createElement('button');bt.type='button';
@@ -652,7 +656,7 @@ function openPiece(c,k){
     var tstack=PIECES[cc][k].stack,tsl=tstack[0];
     for(var ti=0;ti<tstack.length;ti++){if(!/^(hero_|lj_|lm_)/.test(tstack[ti])){tsl=tstack[ti];break}}
     bt.appendChild(bankImg(tsl,''));
-    bt.addEventListener('click',function(){openPiece(cc,k)});
+    bt.addEventListener('click',function(){openPiece(cc,k,lastIncludedSet)});
     th.appendChild(bt)});
   var sz=document.getElementById('pieceSizes');sz.innerHTML='';
   var sizeGuide=document.querySelector('.view[data-view="piece"] .sizeguide');
@@ -711,12 +715,13 @@ document.addEventListener('click',function(e){
   var b=e.target.closest('.pc[data-piece]');if(!b)return;
   var parts=b.getAttribute('data-piece').split(':');
   if(parts[1]==='belt'){openPiece('sand','belt');return}
-  openPiece(parts[0],parts[1]);
+  openPiece(parts[0],parts[1],b.closest('#compTiles')?window.__composerIncludedSet:null);
 });
 document.getElementById('pieceBack').addEventListener('click',function(e){e.preventDefault();goBack()});
 document.getElementById('pieceOrder').addEventListener('click',function(){
   var selected=document.querySelector('#pieceSizes span.on');
   var item={p:PIECES[lastColour][lastKey].n,c:PIECES[lastColour].name,z:selected?selected.textContent:(lastKey==='belt'?'One size':'38')};
+  if(lastIncludedSet)item.includedSet=lastIncludedSet;
   var bag=bagData();
   if(lastKey==='belt'&&!bagHasCoat(bag)){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
   bag.push(item);bagSave(bag);bagToast(item)});
