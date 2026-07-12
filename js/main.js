@@ -453,7 +453,7 @@ function bagRender(){var a=bagData(),box=document.getElementById('bagItems');box
     var ck=null;
     for(var cc in PIECES){if(PIECES[cc].name===x.c){for(var k in PIECES[cc]){if(PIECES[cc][k]&&PIECES[cc][k].n===x.p){ck=PIECES[cc][k]}}}}
     var im=document.createElement('img');im.src=(ck&&ck.stack&&ck.stack.length)?bankSrc(prodSlug(ck.stack)):(x.p==='Belt & epaulettes'?bankSrc('belt_beige_f'):'');row.appendChild(im);
-    var nm=document.createElement('div');nm.className='nm';nm.textContent=x.c+' \u00b7 '+x.p+' \u00b7 '+x.z;row.appendChild(nm);
+    var nm=document.createElement('div');nm.className='nm';nm.textContent=x.c+' \u00b7 '+(x.extra?'Extra Belt & Epaulettes':x.p)+' \u00b7 '+x.z;row.appendChild(nm);
     var pr=document.createElement('span');pr.className='rprice';pr.textContent=fmtP(PRICE[x.p]||0);row.appendChild(pr);
     var rm=document.createElement('button');rm.className='rm';rm.innerHTML='&#215;';
     rm.addEventListener('click',function(){var b=bagData();b.splice(i,1);bagSave(b);bagRender()});row.appendChild(rm);
@@ -468,8 +468,8 @@ function bagUpsell(a){var up=document.getElementById('bagUp');up.innerHTML='';
   if(!suit)return;
   if(a.some(function(x){return x.p==='Belt & epaulettes'}))return;
   var frag=document.createDocumentFragment();
-  var h=document.createElement('p');h.className='upt';h.textContent='Complete the look';frag.appendChild(h);
-  var nte=document.createElement('p');nte.className='upn';nte.textContent='Add the house belt and epaulettes to complete the composition.';frag.appendChild(nte);
+  var h=document.createElement('p');h.className='upt';h.textContent='Add an extra set';frag.appendChild(h);
+  var nte=document.createElement('p');nte.className='upn';nte.textContent='Your Tailcoat or Jacket includes its matching belt and epaulettes. Add an extra set in another colour, if desired.';frag.appendChild(nte);
   frag.appendChild(upsellRow(suit.c,suit.z));
   up.appendChild(frag)}
 function openBag(e){if(e)e.preventDefault();bagov.classList.remove('confirmed');bagRender();bagov.classList.add('open');document.body.style.overflow='hidden'}
@@ -492,14 +492,14 @@ function upsellRow(suitCol,size){var pn='Belt & epaulettes';
   row.appendChild(ad);
   function render(){
     if(chosen==='Sandstone'){im.src=bankSrc(UPIMGS.Belt);im.style.display=''}else{im.removeAttribute('src');im.style.display='none'}
-    nm.innerHTML='Belt & epaulettes<em style="display:block;font-style:normal;font-size:11px;color:var(--grey);margin-top:2px">'+fmtP(750)+'</em>';
+    nm.innerHTML='Extra belt & epaulettes<em style="display:block;font-style:normal;font-size:11px;color:var(--grey);margin-top:2px">'+fmtP(750)+'</em>';
     sw.innerHTML='';
     others.forEach(function(c){var d=document.createElement('button');d.type='button';d.className=UPDOT[c];
       d.setAttribute('aria-pressed',String(c===chosen));d.setAttribute('aria-label',c);
       d.addEventListener('click',function(e){e.stopPropagation();chosen=c;render()});sw.appendChild(d)})}
   ad.addEventListener('click',function(){var a=bagData();
     if(!bagHasCoat(a)){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
-    var it={p:pn,c:chosen,z:size||'One size'};a.push(it);bagSave(a);bagToast(it);
+    var it={p:pn,c:chosen,z:'One size',extra:true};a.push(it);bagSave(a);bagToast(null,chosen+' extra belt & epaulettes added to your bag');
     if(typeof bagRender==='function'&&document.getElementById('bag').classList.contains('open'))bagRender()});
   render();return row}
 var bagToastEl=null,bagToastT=null;
@@ -519,20 +519,10 @@ bagBadge();
 
 /* compose in the squares — colour dots under each piece */
 var SWCLS={tar:'t',moss:'m',sand:'s'},CCOLS=['tar','moss','sand'];
-var COMPSEL={};
-function updateComposerSummary(){
-  var order=['coat','breech','corset','belt'],parts=[],total=0;
-  order.forEach(function(group){var s=COMPSEL[group];if(!s)return;
-    parts.push(s.colour+' '+s.name.toLowerCase());total+=PRICEK[s.k]||0;
-    var sizeRow=document.querySelector('[data-compose-size="'+group+'"] > span');if(sizeRow)sizeRow.textContent=s.name});
-  var copy=document.getElementById('compSelectionText'),price=document.getElementById('compTotal');
-  if(copy&&parts.length)copy.textContent=parts.join(' \u00b7 ');
-  if(price)price.textContent=fmtP(total)}
 function composeCell(box,group,startCol){
   var variants=group==='breech'?['cargo','slim']:(group==='coat'?['tailcoat','jacket']:[group]);
   var state={k:variants[0],c:startCol};
   if(!PIECES[state.c][state.k])state.c=CCOLS.filter(function(c){return PIECES[c][state.k]})[0];
-  var isComposer=box.id==='compTiles';
   var cell=document.createElement('div');cell.className='cell'+(group==='belt'?' is-accessory':'');
   var pc=document.createElement('button');pc.className='pc';
   var tile=document.createElement('span');tile.className='tile';
@@ -582,26 +572,11 @@ function composeCell(box,group,startCol){
       d.setAttribute('aria-pressed',String(c===state.c));
       d.addEventListener('click',function(e){e.stopPropagation();if(state.c!==c){state.c=c;render()}});
       sw.appendChild(d)});
-    if(isComposer){COMPSEL[group]={k:state.k,colour:PIECES[state.c].name,name:P.n};updateComposerSummary()}
   }
   render();box.appendChild(cell);
 }
 function buildComposeBox(box){var col=box.getAttribute('data-compose');box.innerHTML='';
   box.getAttribute('data-slots').split(',').forEach(function(g){composeCell(box,g,col)})}
-function compositionSize(group){if(group==='belt')return 'One size';var row=document.querySelector('[data-compose-size="'+group+'"]');if(!row)return '38';
-  var on=row.querySelector('button[aria-pressed="true"]');return on?on.textContent:'38'}
-document.querySelectorAll('.composition-sizes .size-options').forEach(function(group){
-  group.querySelectorAll('button').forEach(function(button){button.addEventListener('click',function(){
-    group.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',String(x===button))})})})});
-var addComposition=document.getElementById('addComposition');
-if(addComposition)addComposition.addEventListener('click',function(){
-  var order=['coat','breech','corset','belt'],items=[],group='composition-'+Date.now();
-  order.forEach(function(key){var s=COMPSEL[key];if(!s)return;
-    items.push({p:s.name,c:s.colour,z:compositionSize(key),group:group})});
-  if(!items.length)return;
-  var bag=bagData();items.forEach(function(item){bag.push(item)});bagSave(bag);
-  try{localStorage.setItem('kc_composition',JSON.stringify({summary:document.getElementById('compSelectionText').textContent,items:items}))}catch(e){}
-  bagToast(null,'Complete suit added to your bag');openBag()});
 /* tiles build deferred to init (needs PIECES) */
 /* front tiles — flip through all colours and models */
 var FLIP={'s-tailcoat':['hero_sand','hero_tar','hero_moss'],'s-jacket':['lj_tar1','lj_tar2','lj_tar3']};
@@ -716,7 +691,6 @@ function renderCTL(c,k){
   var items=[];
   garments.forEach(function(g,i){var cc=nextCol(c,i+1);
     items.push({img:PIECES[cc][g].stack[0],name:PIECES[cc][g].n,col:PIECES[cc].name,go:function(){openPiece(cc,g)}})});
-  if(k==='tailcoat'||k==='jacket')items.push({img:'belt_beige_f',name:'Belt & epaulettes',col:'Sandstone',go:function(){openPiece('sand','belt')}});
   items.forEach(function(it){
     var b=document.createElement('button');b.className='ctlc';b.type='button';
     var sp=document.createElement('span');sp.className='tile';sp.appendChild(bankImg(it.img,'gimg'));
