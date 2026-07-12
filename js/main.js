@@ -435,7 +435,10 @@ document.getElementById('wlX').addEventListener('click',wlClose);
 wlov.addEventListener('click',function(e){if(e.target===wlov)wlClose();if(e.target.closest('[data-piece-link]'))wlClose()});
 var bagov=document.getElementById('bag');
 function bagData(){try{return JSON.parse(localStorage.getItem('kc_bag')||'[]')}catch(e){return[]}}
-function bagSave(a){try{localStorage.setItem('kc_bag',JSON.stringify(a))}catch(e){};bagBadge()}
+function bagHasCoat(a){return a.some(function(x){return x.p==='Tailcoat'||x.p==='Jacket'})}
+function bagSave(a){
+  if(!bagHasCoat(a))a=a.filter(function(x){return x.p!=='Belt & epaulettes'});
+  try{localStorage.setItem('kc_bag',JSON.stringify(a))}catch(e){};bagBadge()}
 function orderData(){try{return JSON.parse(localStorage.getItem('kc_orders')||'[]')}catch(e){return[]}}
 function orderSave(a){try{localStorage.setItem('kc_orders',JSON.stringify(a))}catch(e){}}
 function bagBadge(){var n=bagData().length,el=document.getElementById('bagN');
@@ -461,7 +464,7 @@ function bagRender(){var a=bagData(),box=document.getElementById('bagItems');box
     box.appendChild(tr)}
   bagUpsell(a)}
 function bagUpsell(a){var up=document.getElementById('bagUp');up.innerHTML='';
-  var suit=null;a.forEach(function(x){if(!suit&&['Tailcoat','Jacket','Corset','Cargo breeches','Slim breeches'].indexOf(x.p)>-1)suit=x});
+  var suit=null;a.forEach(function(x){if(!suit&&['Tailcoat','Jacket'].indexOf(x.p)>-1)suit=x});
   if(!suit)return;
   if(a.some(function(x){return x.p==='Belt & epaulettes'}))return;
   var frag=document.createDocumentFragment();
@@ -494,7 +497,9 @@ function upsellRow(suitCol,size){var pn='Belt & epaulettes';
     others.forEach(function(c){var d=document.createElement('button');d.type='button';d.className=UPDOT[c];
       d.setAttribute('aria-pressed',String(c===chosen));d.setAttribute('aria-label',c);
       d.addEventListener('click',function(e){e.stopPropagation();chosen=c;render()});sw.appendChild(d)})}
-  ad.addEventListener('click',function(){var a=bagData();var it={p:pn,c:chosen,z:size||38};a.push(it);bagSave(a);bagToast(it);
+  ad.addEventListener('click',function(){var a=bagData();
+    if(!bagHasCoat(a)){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
+    var it={p:pn,c:chosen,z:size||'One size'};a.push(it);bagSave(a);bagToast(it);
     if(typeof bagRender==='function'&&document.getElementById('bag').classList.contains('open'))bagRender()});
   render();return row}
 var bagToastEl=null,bagToastT=null;
@@ -715,7 +720,7 @@ function renderCTL(c,k){
   var items=[];
   garments.forEach(function(g,i){var cc=nextCol(c,i+1);
     items.push({img:PIECES[cc][g].stack[0],name:PIECES[cc][g].n,col:PIECES[cc].name,go:function(){openPiece(cc,g)}})});
-  if(k!=='belt')items.push({img:'belt_beige_f',name:'Belt & epaulettes',col:'Sandstone',go:function(){openPiece('sand','belt')}});
+  if(k==='tailcoat'||k==='jacket')items.push({img:'belt_beige_f',name:'Belt & epaulettes',col:'Sandstone',go:function(){openPiece('sand','belt')}});
   items.forEach(function(it){
     var b=document.createElement('button');b.className='ctlc';b.type='button';
     var sp=document.createElement('span');sp.className='tile';sp.appendChild(bankImg(it.img,'gimg'));
@@ -742,7 +747,9 @@ document.getElementById('pieceBack').addEventListener('click',function(e){e.prev
 document.getElementById('pieceOrder').addEventListener('click',function(){
   var selected=document.querySelector('#pieceSizes span.on');
   var item={p:PIECES[lastColour][lastKey].n,c:PIECES[lastColour].name,z:selected?selected.textContent:(lastKey==='belt'?'One size':'38')};
-  var bag=bagData();bag.push(item);bagSave(bag);bagToast(item)});
+  var bag=bagData();
+  if(lastKey==='belt'&&!bagHasCoat(bag)){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
+  bag.push(item);bagSave(bag);bagToast(item)});
 
 /* pills generic */
 document.querySelectorAll('.pills').forEach(function(g){g.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){
