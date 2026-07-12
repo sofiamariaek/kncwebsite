@@ -850,13 +850,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .size-options button{min-width:34px;padding:7px 6px;border:1px solid var(--rule);font-size:10.5px}
 .size-options button[aria-pressed="true"]{background:var(--black);border-color:var(--black);color:var(--ivory)}
 .composition-actions button.btn{font-family:inherit;border:0;cursor:pointer}
-.look-purchase{margin-top:clamp(30px,4vw,48px);padding-top:clamp(24px,3vw,34px);border-top:1px solid var(--black)}
-.look-purchase-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px}
-.look-purchase-head span{font-family:"Greenstone",serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
-.look-purchase-head strong{font-family:"Greenstone",serif;font-size:14px;font-weight:400;letter-spacing:.08em}
-.look-purchase .composition-sizes{margin-top:18px}
-.look-purchase>.btn{width:100%;margin-top:22px}
-.look-purchase+.viewall{display:inline-block;margin-top:24px}
 
 .baggroup{margin:18px 0 8px;padding-top:14px;border-top:1px solid var(--black);font-family:"Greenstone",serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase}
 .acctcard[data-step="done"]{width:min(640px,94vw);max-height:90vh;overflow-y:auto}
