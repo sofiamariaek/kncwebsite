@@ -147,12 +147,12 @@ var PRICE={'Tailcoat':4800,'Jacket':4200,'Cargo breeches':2000,'Slim breeches':1
 var PRICEK={tailcoat:4800,jacket:4200,cargo:2000,slim:1850,corset:2000,belt:750};
 function fmtP(v){return '\u20AC'+String(v).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
 var LOOKS=[
- {kind:'tailcoat',c:'sand',name:'The Equestrian Suit',variant:'Sandstone · Tailcoat silhouette',shots:['hero_sand','lm_sand2','lm_sand3','kostym_frack_beige','lining_sand','belt_beige_f','shoulder_beige']},
- {kind:'tailcoat',c:'tar',name:'The Equestrian Suit',variant:'Tar · Tailcoat silhouette',shots:['hero_tar','lm_tar2','lm_tar3','kostym_frack_svart','lining_tar']},
- {kind:'tailcoat',c:'moss',name:'The Equestrian Suit',variant:'Moss · Tailcoat silhouette',shots:['hero_moss','lm_moss2','lm_moss3','kostym_frack_gron','lining_moss']},
- {kind:'jacket',c:'tar',name:'The Equestrian Suit',variant:'Tar · Jacket silhouette',shots:['lj_tar1','lj_tar2','lj_tar3','kostym_black','lining_tar']},
- {kind:'jacket',c:'moss',name:'The Equestrian Suit',variant:'Moss · Jacket silhouette',shots:['lj_moss4','lj_moss1','lj_moss3','kostym_jacka_gron','lining_moss']},
- {kind:'jacket',c:'sand',name:'The Equestrian Suit',variant:'Sandstone · Jacket silhouette',shots:['lj_sand1','lj_sand2','lj_sand3','kostym_jacka_beige','lining_sand']}
+ {kind:'tailcoat',c:'sand',name:'Sandstone Equestrian Suit',variant:'Tailcoat silhouette',shots:['hero_sand','lm_sand2','lm_sand3','kostym_frack_beige','lining_sand','belt_beige_f','shoulder_beige']},
+ {kind:'tailcoat',c:'tar',name:'Tar Equestrian Suit',variant:'Tailcoat silhouette',shots:['hero_tar','lm_tar2','lm_tar3','kostym_frack_svart','lining_tar']},
+ {kind:'tailcoat',c:'moss',name:'Moss Equestrian Suit',variant:'Tailcoat silhouette',shots:['hero_moss','lm_moss2','lm_moss3','kostym_frack_gron','lining_moss']},
+ {kind:'jacket',c:'tar',name:'Tar Equestrian Suit',variant:'Jacket silhouette',shots:['lj_tar1','lj_tar2','lj_tar3','kostym_black','lining_tar']},
+ {kind:'jacket',c:'moss',name:'Moss Equestrian Suit',variant:'Jacket silhouette',shots:['lj_moss4','lj_moss1','lj_moss3','kostym_jacka_gron','lining_moss']},
+ {kind:'jacket',c:'sand',name:'Sandstone Equestrian Suit',variant:'Jacket silhouette',shots:['lj_sand1','lj_sand2','lj_sand3','kostym_jacka_beige','lining_sand']}
 ];
 function lookCard(i){var L=LOOKS[i];
   var a=document.createElement('a');a.href='#';
@@ -634,10 +634,11 @@ window.__suitSet={};
   function setC(c){
     dots.forEach(function(d){d.setAttribute('aria-pressed',String(names[d.className]===c))});
     lab.textContent=PIECES[c].name;
+    var suitName=view.querySelector('[data-suitname]');if(suitName)suitName.textContent=PIECES[c].name+' Equestrian Suit';
     var slugs=SUITS[kind][c]||[];
     [].forEach.call(stack.querySelectorAll('figure'),function(fig,i){
       var im=fig.querySelector('img'),sl=slugs[i],src=sl?bankSrc(sl):'';
-      if(src){im.src=src;fig.style.display=''}else{im.removeAttribute('src');fig.style.display='none'}});
+      if(src){im.src=src;im.alt=i===0?PIECES[c].name+' Equestrian Suit, '+kind+' silhouette':'';fig.style.display=''}else{im.removeAttribute('src');fig.style.display='none'}});
     stack.scrollLeft=0;if(stack.__upd)setTimeout(stack.__upd,60);
     tiles.setAttribute('data-compose',c);buildComposeBox(tiles);
   }
