@@ -832,11 +832,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .lookmeta em{font-style:normal;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--grey);white-space:nowrap}
 .suit-introduction{max-width:1140px;margin:0 auto clamp(42px,6vw,78px)}
 .suit-introduction>p{max-width:660px;margin:0 auto clamp(28px,4vw,46px);text-align:center;font-size:clamp(16px,1.55vw,20px);line-height:1.75}
-.silhouette-links{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,40px)}
-.silhouette-links a{display:block;position:relative;background:#ece7dc;overflow:hidden}
-.silhouette-links img{width:100%;aspect-ratio:16/8;object-fit:cover;transition:transform .8s var(--ease)}
-.silhouette-links a:hover img{transform:scale(1.015)}
-.silhouette-links span{position:absolute;left:0;right:0;bottom:0;padding:18px 20px;background:linear-gradient(transparent,rgba(0,0,0,.46));color:#fff;font-family:"Greenstone",serif;font-size:clamp(15px,1.6vw,20px);letter-spacing:.13em;text-transform:uppercase}
 .availability{margin-top:10px;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey)}
 
 .suit-service-panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:clamp(36px,7vw,110px);align-items:center}
@@ -871,8 +866,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
   .campstage .fgz{width:100%!important;height:100%!important;max-width:none!important;object-fit:cover!important}
   .home-world,.suit-service-panel{grid-template-columns:1fr}
   .home-world-images{margin-top:12px}
-  .silhouette-links{grid-template-columns:1fr}
-  .silhouette-links img{aspect-ratio:4/3}
   .composition-sizes>div{grid-template-columns:1fr;gap:10px}
   .size-options{flex-wrap:wrap}
   .account-sections{grid-template-columns:1fr}
