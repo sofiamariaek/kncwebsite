@@ -147,12 +147,12 @@ var PRICE={'Tailcoat':4800,'Jacket':4200,'Cargo breeches':2000,'Slim breeches':1
 var PRICEK={tailcoat:4800,jacket:4200,cargo:2000,slim:1850,corset:2000,belt:750};
 function fmtP(v){return '\u20AC'+String(v).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
 var LOOKS=[
- {kind:'tailcoat',c:'sand',name:'Tailcoat',variant:'Sandstone',shots:['hero_sand','lm_sand2','lm_sand3','kostym_frack_beige','lining_sand','belt_beige_f','shoulder_beige']},
- {kind:'tailcoat',c:'tar',name:'Tailcoat',variant:'Tar',shots:['hero_tar','lm_tar2','lm_tar3','kostym_frack_svart','lining_tar']},
- {kind:'tailcoat',c:'moss',name:'Tailcoat',variant:'Moss',shots:['hero_moss','lm_moss2','lm_moss3','kostym_frack_gron','lining_moss']},
- {kind:'jacket',c:'tar',name:'Jacket',variant:'Tar',shots:['lj_tar1','lj_tar2','lj_tar3','kostym_black','lining_tar']},
- {kind:'jacket',c:'moss',name:'Jacket',variant:'Moss',shots:['lj_moss4','lj_moss1','lj_moss3','kostym_jacka_gron','lining_moss']},
- {kind:'jacket',c:'sand',name:'Jacket',variant:'Sandstone',shots:['lj_sand1','lj_sand2','lj_sand3','kostym_jacka_beige','lining_sand']}
+ {kind:'tailcoat',c:'sand',name:'Tailcoat Suit',variant:'Sandstone',shots:['hero_sand','lm_sand2','lm_sand3','kostym_frack_beige','lining_sand','belt_beige_f','shoulder_beige']},
+ {kind:'tailcoat',c:'tar',name:'Tailcoat Suit',variant:'Tar',shots:['hero_tar','lm_tar2','lm_tar3','kostym_frack_svart','lining_tar']},
+ {kind:'tailcoat',c:'moss',name:'Tailcoat Suit',variant:'Moss',shots:['hero_moss','lm_moss2','lm_moss3','kostym_frack_gron','lining_moss']},
+ {kind:'jacket',c:'tar',name:'Jacket Suit',variant:'Tar',shots:['lj_tar1','lj_tar2','lj_tar3','kostym_black','lining_tar']},
+ {kind:'jacket',c:'moss',name:'Jacket Suit',variant:'Moss',shots:['lj_moss4','lj_moss1','lj_moss3','kostym_jacka_gron','lining_moss']},
+ {kind:'jacket',c:'sand',name:'Jacket Suit',variant:'Sandstone',shots:['lj_sand1','lj_sand2','lj_sand3','kostym_jacka_beige','lining_sand']}
 ];
 function lookCard(i){var L=LOOKS[i];
   var a=document.createElement('a');a.href='#';
