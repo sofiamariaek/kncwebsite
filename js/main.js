@@ -156,7 +156,7 @@ var LOOKS=[
 ];
 function lookCard(i){var L=LOOKS[i];
   var a=document.createElement('a');a.href='#';
-  a.innerHTML='<figure><img src="'+bankSrc(L.shots[0])+'" alt=""></figure>';
+  a.innerHTML='<figure><img src="'+bankSrc(L.shots[0])+'" alt="'+L.name+'"></figure><span class="lookmeta"><strong>'+L.name+'</strong><em>Available</em></span>';
   a.addEventListener('click',function(e){e.preventDefault();openLook(i)});
   return a}
 function renderLooks(f){var g=document.getElementById('lookGrid');if(!g)return;g.innerHTML='';
@@ -169,7 +169,7 @@ document.querySelectorAll('#lookFilter button').forEach(function(b){
     renderLooks(b.getAttribute('data-f'))})});
 var curLook=0;
 function lookImgs(i){var L=LOOKS[i];curLook=i;
-  document.getElementById('lookTitle').textContent='Look '+('0'+(i+1)).slice(-2);
+  document.getElementById('lookTitle').textContent=L.name;
   var names={tar:'Tar',moss:'Moss',sand:'Sandstone'};
   var lab=document.getElementById('lookSwLab');if(lab)lab.textContent=names[L.c];
   document.querySelectorAll('#lookSw button').forEach(function(d){
@@ -279,7 +279,7 @@ menu.querySelectorAll('[data-mpiece]').forEach(function(a){
   a.addEventListener('click',function(e){e.preventDefault();
     var k=a.getAttribute('data-mpiece');
     menu.classList.remove('open');
-    if(k==='belt'){openSheetPiece('Belt & epaulettes');return}
+    if(k==='belt'){openPiece('sand','belt');return}
     openPiece(MPIECE_COL[k]||'tar',k)})});
 
 
@@ -418,8 +418,8 @@ function wlRender(){var box=document.getElementById('wlItems');box.innerHTML='';
     var row=document.createElement('div');row.className='wlitem';
     var im=document.createElement('img');im.src=P.stack.length?bankSrc(prodSlug(P.stack)):'';row.appendChild(im);
     var nm=document.createElement('div');nm.className='nm';nm.textContent=PIECES[x.c].name+' \u00b7 '+P.n;row.appendChild(nm);
-    var ob=document.createElement('button');ob.className='ordlink';ob.setAttribute('data-order','');
-    ob.setAttribute('data-oc',PIECES[x.c].name);ob.setAttribute('data-op',P.n);ob.textContent='Add to bag';row.appendChild(ob);
+    var ob=document.createElement('button');ob.className='ordlink';ob.setAttribute('data-piece-link',x.c+':'+x.k);
+    ob.textContent='View piece';row.appendChild(ob);
     var rm=document.createElement('button');rm.className='rm';rm.innerHTML='&#215;';
     rm.addEventListener('click',function(){wlToggle(x.c,x.k);wlRender();wlHearts()});row.appendChild(rm);
     box.appendChild(row)})}
@@ -431,19 +431,24 @@ function wlClose(){wlov.classList.remove('open');document.body.style.overflow=''
 document.getElementById('wlLink').addEventListener('click',wlOpen);
 var wlm=document.getElementById('wlLinkM');if(wlm)wlm.addEventListener('click',function(e){wlOpen(e);document.getElementById('menu').classList.remove('open')});
 document.getElementById('wlX').addEventListener('click',wlClose);
-wlov.addEventListener('click',function(e){if(e.target===wlov)wlClose();if(e.target.closest('[data-order]'))wlClose()});
+wlov.addEventListener('click',function(e){if(e.target===wlov)wlClose();if(e.target.closest('[data-piece-link]'))wlClose()});
 var bagov=document.getElementById('bag');
 function bagData(){try{return JSON.parse(localStorage.getItem('kc_bag')||'[]')}catch(e){return[]}}
 function bagSave(a){try{localStorage.setItem('kc_bag',JSON.stringify(a))}catch(e){};bagBadge()}
+function orderData(){try{return JSON.parse(localStorage.getItem('kc_orders')||'[]')}catch(e){return[]}}
+function orderSave(a){try{localStorage.setItem('kc_orders',JSON.stringify(a))}catch(e){}}
 function bagBadge(){var n=bagData().length,el=document.getElementById('bagN');
   el.style.display=n?'block':'none';el.textContent=n}
 function bagRender(){var a=bagData(),box=document.getElementById('bagItems');box.innerHTML='';
   document.getElementById('bagEmpty').style.display=a.length?'none':'block';
   document.getElementById('bagPay').style.display=a.length?'block':'none';
-  a.forEach(function(x,i){var row=document.createElement('div');row.className='wlitem';
+  var shownGroups={};
+  a.forEach(function(x,i){
+    if(x.group&&!shownGroups[x.group]){var gh=document.createElement('p');gh.className='baggroup';gh.textContent='Your composition';box.appendChild(gh);shownGroups[x.group]=true}
+    var row=document.createElement('div');row.className='wlitem';
     var ck=null;
     for(var cc in PIECES){if(PIECES[cc].name===x.c){for(var k in PIECES[cc]){if(PIECES[cc][k]&&PIECES[cc][k].n===x.p){ck=PIECES[cc][k]}}}}
-    var im=document.createElement('img');im.src=(ck&&ck.stack&&ck.stack.length)?bankSrc(prodSlug(ck.stack)):'';row.appendChild(im);
+    var im=document.createElement('img');im.src=(ck&&ck.stack&&ck.stack.length)?bankSrc(prodSlug(ck.stack)):(x.p==='Belt & epaulettes'?bankSrc('belt_beige_f'):'');row.appendChild(im);
     var nm=document.createElement('div');nm.className='nm';nm.textContent=x.c+' \u00b7 '+x.p+' \u00b7 '+x.z;row.appendChild(nm);
     var pr=document.createElement('span');pr.className='rprice';pr.textContent=fmtP(PRICE[x.p]||0);row.appendChild(pr);
     var rm=document.createElement('button');rm.className='rm';rm.innerHTML='&#215;';
@@ -460,7 +465,7 @@ function bagUpsell(a){var up=document.getElementById('bagUp');up.innerHTML='';
   if(a.some(function(x){return x.p==='Belt & epaulettes'}))return;
   var frag=document.createDocumentFragment();
   var h=document.createElement('p');h.className='upt';h.textContent='Complete the look';frag.appendChild(h);
-  var nte=document.createElement('p');nte.className='upn';nte.textContent='One belt and epaulettes set is included \u2014 a second colour elevates the suit.';frag.appendChild(nte);
+  var nte=document.createElement('p');nte.className='upn';nte.textContent='Add the house belt and epaulettes to complete the composition.';frag.appendChild(nte);
   frag.appendChild(upsellRow(suit.c,suit.z));
   up.appendChild(frag)}
 function openBag(e){if(e)e.preventDefault();bagov.classList.remove('confirmed');bagRender();bagov.classList.add('open');document.body.style.overflow='hidden'}
@@ -468,25 +473,6 @@ function closeBag(){bagov.classList.remove('open');document.body.style.overflow=
 document.getElementById('bagLink').addEventListener('click',openBag);
 document.getElementById('bagX').addEventListener('click',closeBag);
 bagov.addEventListener('click',function(e){if(e.target===bagov)closeBag()});
-document.addEventListener('click',function(e){
-  var b=e.target.closest('[data-addbag]');if(!b)return;e.preventDefault();
-  var flow=b.closest('.flow');if(!flow)return;
-  function sel(q){var x=flow.querySelector(q+' button[aria-pressed="true"]');return x?x.textContent:''}
-  var item={p:sel('[data-pc]'),c:sel('[data-cw]'),z:sel('[data-sz]')};
-  if(!item.z){var zz=flow.querySelectorAll('#pieceSizes span.on, [data-sz] span.on');if(zz.length)item.z=zz[0].textContent}
-  var a=bagData();a.push(item);bagSave(a);
-  closeSheet();bagToast(item)});
-function updateSheetUp(flow){
-  var up=flow.querySelector('[data-sheetup]');if(!up)return;
-  function sel(q){var x=flow.querySelector(q+' button[aria-pressed="true"]');return x?x.textContent:''}
-  var piece=sel('[data-pc]'),col=sel('[data-cw]');
-  var spr=flow.querySelector('[data-sheetprice]');if(spr)spr.textContent=PRICE[piece]?fmtP(PRICE[piece])+' \u00b7 Incl. 25% VAT':'';
-  up.innerHTML='';
-  if(piece!=='Tailcoat'&&piece!=='Jacket')return;
-  var contrast=col==='Sandstone'?'Tar':'Sandstone';
-  var h=document.createElement('p');h.className='sut';
-  h.textContent='Belt & epaulettes included \u2014 elevate with a second colour';up.appendChild(h);
-  up.appendChild(upsellRow(col, sel('[data-sz]')))}
 var UPIMGS={Belt:'belt_beige_f',Epaulettes:'shoulder_beige'};
 var UPDOT={Tar:'t',Moss:'m',Sandstone:'s'};
 function upsellRow(suitCol,size){var pn='Belt & epaulettes';
@@ -510,18 +496,18 @@ function upsellRow(suitCol,size){var pn='Belt & epaulettes';
   ad.addEventListener('click',function(){var a=bagData();var it={p:pn,c:chosen,z:size||38};a.push(it);bagSave(a);bagToast(it);
     if(typeof bagRender==='function'&&document.getElementById('bag').classList.contains('open'))bagRender()});
   render();return row}
-document.addEventListener('click',function(e){
-  var flow=e.target.closest('.flow');if(!flow)return;
-  if(e.target.closest('[data-pc],[data-cw]'))setTimeout(function(){updateSheetUp(flow)},30)});
-document.querySelectorAll('.flow').forEach(updateSheetUp);
 var bagToastEl=null,bagToastT=null;
-function bagToast(item){
+function bagToast(item,message){
   if(!bagToastEl){bagToastEl=document.createElement('div');bagToastEl.className='bagtoast';document.body.appendChild(bagToastEl)}
-  bagToastEl.textContent=(item?item.c+' '+item.p+' \u2014 ':'')+'added to your bag';
+  bagToastEl.textContent=message||((item?item.c+' '+item.p+' \u2014 ':'')+'added to your bag');
   bagToastEl.classList.add('show');
   clearTimeout(bagToastT);bagToastT=setTimeout(function(){bagToastEl.classList.remove('show')},2200)}
 document.querySelectorAll('[data-bagpay]').forEach(function(b){b.addEventListener('click',function(){
+  var current=bagData();if(!current.length)return;
+  var orders=orderData(),ref='KC'+String(Date.now()).slice(-8);
+  orders.unshift({reference:ref,date:new Date().toISOString(),items:current});orderSave(orders);
   bagov.classList.add('confirmed');bagSave([]);bagRender();
+  var confirmation=document.getElementById('bagConfirmation');if(confirmation)confirmation.textContent='Order '+ref+' has been confirmed. Delivery information will be provided with your order details.';
   document.getElementById('bagEmpty').style.display='none'})});
 bagBadge();
 
@@ -531,7 +517,8 @@ var COMPSEL={};
 function updateComposerSummary(){
   var order=['coat','breech','corset','belt'],parts=[],total=0;
   order.forEach(function(group){var s=COMPSEL[group];if(!s)return;
-    parts.push(s.colour+' '+s.name.toLowerCase());total+=PRICEK[s.k]||0});
+    parts.push(s.colour+' '+s.name.toLowerCase());total+=PRICEK[s.k]||0;
+    var sizeRow=document.querySelector('[data-compose-size="'+group+'"] > span');if(sizeRow)sizeRow.textContent=s.name});
   var copy=document.getElementById('compSelectionText'),price=document.getElementById('compTotal');
   if(copy&&parts.length)copy.textContent=parts.join(' \u00b7 ');
   if(price)price.textContent=fmtP(total)}
@@ -565,7 +552,9 @@ function composeCell(box,group,startCol){
       tog.appendChild(b)});
     cell.appendChild(tog)}
   var sw=document.createElement('span');sw.className='sw csw';if(!locked)cell.appendChild(sw);
-  var ord=document.createElement('button');ord.className='ordlink';ord.setAttribute('data-order','');ord.textContent='Add to bag';cell.appendChild(ord);
+  var ord=document.createElement('button');ord.className='ordlink';ord.textContent='View piece';
+  if(isComposer)ord.style.display='none';else ord.setAttribute('data-piece-link',state.c+':'+state.k);
+  cell.appendChild(ord);
   var wlb=document.createElement('button');wlb.className='wlbtn';wlb.type='button';wlb.innerHTML=WLHEART;
   wlb.setAttribute('aria-label','Save to wishlist');
   wlb.addEventListener('click',function(e){e.stopPropagation();wlToggle(state.c,state.k);
@@ -581,7 +570,7 @@ function composeCell(box,group,startCol){
     if(P.stack.length&&group!=='belt'){img.style.display='';img.src=bankSrc(prodSlug(P.stack))}else{img.style.display='none';img.removeAttribute('src')}img.setAttribute('aria-label',P.n);
     if(study)study.setAttribute('data-colour',state.c);
     cap.innerHTML=P.n+(PRICEK[state.k]?'<em class="capprice">'+fmtP(PRICEK[state.k])+'</em>':'');
-    ord.setAttribute('data-oc',PIECES[state.c].name);ord.setAttribute('data-op',P.n);
+    if(!isComposer)ord.setAttribute('data-piece-link',state.c+':'+state.k);
     if(typeof wlb!=='undefined'){wlb.setAttribute('data-wl',state.c+':'+state.k);wlb.classList.toggle('on',wlHas(state.c,state.k))}
     if(tog)[].forEach.call(tog.children,function(b,i){b.setAttribute('aria-pressed',String(variants[i]===state.k))});
     sw.innerHTML='';
@@ -597,6 +586,20 @@ function composeCell(box,group,startCol){
 }
 function buildComposeBox(box){var col=box.getAttribute('data-compose');box.innerHTML='';
   box.getAttribute('data-slots').split(',').forEach(function(g){composeCell(box,g,col)})}
+function compositionSize(group){if(group==='belt')return 'One size';var row=document.querySelector('[data-compose-size="'+group+'"]');if(!row)return '38';
+  var on=row.querySelector('button[aria-pressed="true"]');return on?on.textContent:'38'}
+document.querySelectorAll('.composition-sizes .size-options').forEach(function(group){
+  group.querySelectorAll('button').forEach(function(button){button.addEventListener('click',function(){
+    group.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',String(x===button))})})})});
+var addComposition=document.getElementById('addComposition');
+if(addComposition)addComposition.addEventListener('click',function(){
+  var order=['coat','breech','corset','belt'],items=[],group='composition-'+Date.now();
+  order.forEach(function(key){var s=COMPSEL[key];if(!s)return;
+    items.push({p:s.name,c:s.colour,z:compositionSize(key),group:group})});
+  if(!items.length)return;
+  var bag=bagData();items.forEach(function(item){bag.push(item)});bagSave(bag);
+  try{localStorage.setItem('kc_composition',JSON.stringify({summary:document.getElementById('compSelectionText').textContent,items:items}))}catch(e){}
+  bagToast(null,'Complete suit added to your bag');openBag()});
 /* tiles build deferred to init (needs PIECES) */
 /* front tiles — flip through all colours and models */
 var FLIP={'s-tailcoat':['hero_sand','hero_tar','hero_moss'],'s-jacket':['lj_tar1','lj_tar2','lj_tar3']};
@@ -643,7 +646,12 @@ window.__suitSet={};
 });
 
 var DESCR={
- tailcoat:'The Tailcoat is the most ceremonial piece in the Kiwi & Colibri wardrobe. Its standing collar, structured shoulders, sculpted waist and elongated tails create a sharper, more modern silhouette. The Tailcoat carries the presence of the dressage arena into everyday life \u2014 made not to wait in the wardrobe, but to be worn.'
+ tailcoat:'The Tailcoat is the most ceremonial piece in the Kiwi & Colibri wardrobe. Its standing collar, structured shoulders, sculpted waist and elongated tails create a sharper, more modern silhouette. The Tailcoat carries the presence of the dressage arena into everyday life \u2014 made not to wait in the wardrobe, but to be worn.',
+ jacket:'A precise equestrian jacket with a sculpted shoulder, defined waist and the house\u2019s military line. Designed to move between the stable, the city and evening.',
+ corset:'A close, architectural layer that brings definition to the complete equestrian suit while retaining freedom of movement.',
+ cargo:'Breeches cut with a clean cargo line and engineered for movement in and out of the saddle.',
+ slim:'A streamlined breech in Colibri Cr\u00eape, shaped for a close silhouette and ease in motion.',
+ belt:'The house belt and epaulettes complete the composition with a precise equestrian signature.'
 };
 var CARE={
  tailcoat:{care:['Made in Italy','Dry clean only','Remove belt and epaulettes before dry cleaning','Do not bleach','Do not tumble dry','Do not iron','Store on a shaped hanger'],comp:[['Colibri Cr\u00eape by Reggiani','80% Polyamide, 20% Elastane'],['Lining','61% Viscose, 39% Polyester (PBT)'],['Belt & epaulettes (vegan suede)','80% Polyester (approx. 20% plant-based), 20% Polyurethane (approx. 31% plant-based)']]},
@@ -652,13 +660,13 @@ var CARE={
  cargo:{care:['Made in Italy','Wash delicately inside out at 30\u00b0C','Close zippers before washing','Hang dry','Do not bleach','Do not tumble dry','Do not wring','Do not iron','Avoid fabric softeners'],comp:[['Colibri Cr\u00eape by Reggiani','80% Polyamide, 20% Elastane'],['Secondary fabric','80% Polyester (approx. 20% plant-based), 20% Polyurethane (approx. 31% plant-based)'],['Lining','73% Polyamide, 27% Elastane']]},
  slim:{care:['Made in Italy','Wash delicately inside out at 30\u00b0C','Close zippers before washing','Hang dry','Do not bleach','Do not tumble dry','Do not wring','Do not iron','Avoid fabric softeners'],comp:[['Colibri Cr\u00eape by Reggiani','80% Polyamide, 20% Elastane'],['Secondary fabric','80% Polyester (approx. 20% plant-based), 20% Polyurethane (approx. 31% plant-based)'],['Lining','73% Polyamide, 27% Elastane']]}
 };
-var lastColour='tar',lastOrigin=null;
+var lastColour='tar',lastKey='tailcoat',lastOrigin=null;
 function openPiece(c,k){
   var cv=document.querySelector('.view:not([hidden])');
   if(cv&&cv.getAttribute('data-view')!=='piece')lastOrigin=cv.getAttribute('data-view');
   var P=PIECES[c][k];
   if(!P||!P.stack.length)return;
-  lastColour=c;
+  lastColour=c;lastKey=k;
   var th=document.getElementById('pieceThumbs');th.innerHTML='';
   ['tar','moss','sand'].forEach(function(cc){if(!PIECES[cc][k]||!PIECES[cc][k].stack.length)return;
     var bt=document.createElement('button');bt.type='button';
@@ -669,8 +677,10 @@ function openPiece(c,k){
     bt.appendChild(bankImg(tsl,''));
     bt.addEventListener('click',function(){openPiece(cc,k)});
     th.appendChild(bt)});
-  var sz=document.getElementById('pieceSizes');
-  if(!sz.children.length){[34,36,38,40,42].forEach(function(s,i){
+  var sz=document.getElementById('pieceSizes');sz.innerHTML='';
+  var sizeGuide=document.querySelector('.view[data-view="piece"] .sizeguide');
+  if(k==='belt'){var one=document.createElement('span');one.textContent='One size';one.className='on';sz.appendChild(one);if(sizeGuide)sizeGuide.style.display='none'}
+  else{if(sizeGuide)sizeGuide.style.display='';[34,36,38,40,42].forEach(function(s,i){
     var sp=document.createElement('span');sp.textContent=s;if(i===2)sp.className='on';
     sp.addEventListener('click',function(){sz.querySelectorAll('span').forEach(function(x){x.classList.remove('on')});sp.classList.add('on')});
     sz.appendChild(sp)})}
@@ -685,7 +695,6 @@ function openPiece(c,k){
       pcb.innerHTML=h;pce.removeAttribute('open')}
     else pce.style.display='none'}
   document.getElementById('pieceColour').textContent=PIECES[c].name;
-  document.getElementById('pieceOrder').setAttribute('data-colour',PIECES[c].name);
   var stackBox=document.getElementById('psStack');stackBox.innerHTML='';
   P.stack.forEach(function(sl){var fr=document.createElement('div');
     fr.className='pframe tile'+(sl.indexOf('zoom_')===0?' det':'');
@@ -705,8 +714,7 @@ function renderCTL(c,k){
   var items=[];
   garments.forEach(function(g,i){var cc=nextCol(c,i+1);
     items.push({img:PIECES[cc][g].stack[0],name:PIECES[cc][g].n,col:PIECES[cc].name,go:function(){openPiece(cc,g)}})});
-  items.push({img:'belt_beige_f',name:'Belt',col:'Sandstone',go:function(){openSheetPiece('Belt')}});
-  items.push({img:'shoulder_beige',name:'Epaulettes',col:'Sandstone',go:function(){openSheetPiece(null)}});
+  if(k!=='belt')items.push({img:'belt_beige_f',name:'Belt & epaulettes',col:'Sandstone',go:function(){openPiece('sand','belt')}});
   items.forEach(function(it){
     var b=document.createElement('button');b.className='ctlc';b.type='button';
     var sp=document.createElement('span');sp.className='tile';sp.appendChild(bankImg(it.img,'gimg'));
@@ -717,53 +725,38 @@ function renderCTL(c,k){
     b.addEventListener('click',it.go);
     row.appendChild(b)});
 }
-function openSheetPiece(pname){openSheet();
-  if(pname){sheet.querySelectorAll('[data-pc] button').forEach(function(x){x.setAttribute('aria-pressed',x.textContent===pname?'true':'false')})}}
 document.addEventListener('click',function(e){
-  var b=e.target.closest('[data-order]');if(!b)return;e.preventDefault();e.stopPropagation();
-  openSheetPiece(b.getAttribute('data-op')||null);
-  var c=b.getAttribute('data-oc');
-  if(c){sheet.querySelectorAll('[data-cw] button').forEach(function(x){x.setAttribute('aria-pressed',x.textContent===c?'true':'false')})}
-  var fl=sheet.querySelector('.flow');if(fl&&typeof updateSheetUp==='function')updateSheetUp(fl)});
+  var b=e.target.closest('[data-piece-link]');if(!b)return;e.preventDefault();e.stopPropagation();
+  var parts=b.getAttribute('data-piece-link').split(':');
+  var piece=PIECES[parts[0]]&&PIECES[parts[0]][parts[1]];
+  if(piece&&piece.stack.length){openPiece(parts[0],parts[1]);return}
+  if(piece){var item={p:piece.n,c:PIECES[parts[0]].name,z:'One size'};var bag=bagData();bag.push(item);bagSave(bag);bagToast(item)}});
 document.addEventListener('click',function(e){
   var b=e.target.closest('.pc[data-piece]');if(!b)return;
   var parts=b.getAttribute('data-piece').split(':');
-  if(parts[1]==='belt'){openSheetPiece('Belt & epaulettes');return}
+  if(parts[1]==='belt'){openPiece('sand','belt');return}
   openPiece(parts[0],parts[1]);
 });
 document.getElementById('pieceBack').addEventListener('click',function(e){e.preventDefault();goBack()});
+document.getElementById('pieceOrder').addEventListener('click',function(){
+  var selected=document.querySelector('#pieceSizes span.on');
+  var item={p:PIECES[lastColour][lastKey].n,c:PIECES[lastColour].name,z:selected?selected.textContent:(lastKey==='belt'?'One size':'38')};
+  var bag=bagData();bag.push(item);bagSave(bag);bagToast(item)});
 
 /* pills generic */
 document.querySelectorAll('.pills').forEach(function(g){g.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){
   g.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')})})})});
 
-/* order sheet */
-var sheet=document.getElementById('sheet'),scrim=document.getElementById('scrim');
-function openSheet(){sheet.classList.add('open');scrim.classList.add('open');document.body.style.overflow='hidden'}
-function closeSheet(){sheet.classList.remove('open');scrim.classList.remove('open');document.body.style.overflow=''}
-document.querySelectorAll('[data-open-order]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();openSheet();
-  var c=b.getAttribute('data-colour');
-  if(c&&c!=='Compose'){sheet.querySelectorAll('[data-cw] button').forEach(function(x){x.setAttribute('aria-pressed',x.textContent===c?'true':'false')})}
-  var pv=document.querySelector('.view[data-view="piece"]');
-  if(pv&&!pv.hidden){
-    var pn=document.getElementById('pieceName').textContent;
-    sheet.querySelectorAll('[data-pc] button').forEach(function(x){x.setAttribute('aria-pressed',x.textContent===pn?'true':'false')});
-    var zon=document.querySelector('#pieceSizes span.on');
-    if(zon)sheet.querySelectorAll('[data-sz] button').forEach(function(x){x.setAttribute('aria-pressed',x.textContent===zon.textContent?'true':'false')});
-  }
-  var fl=sheet.querySelector('.flow');if(fl&&typeof updateSheetUp==='function')updateSheetUp(fl)})});
+/* shared service overlays */
+var scrim=document.getElementById('scrim');
 var sizeg=document.getElementById('sizeg');
 function openSizeg(){sizeg.classList.add('open');scrim.classList.add('show')}
-function closeSizeg(){sizeg.classList.remove('open');if(!sheet.classList.contains('open'))scrim.classList.remove('show')}
+function closeSizeg(){sizeg.classList.remove('open');scrim.classList.remove('show')}
 document.querySelectorAll('[data-open-sizeg]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();openSizeg()})});
 document.getElementById('sizegX').onclick=closeSizeg;
 sizeg.addEventListener('click',function(e){if(e.target===sizeg)closeSizeg()});
-document.getElementById('sheetX').onclick=closeSheet;scrim.addEventListener('click',function(){closeSheet();closeFilm();closeCcg();closeSizeg()});
-addEventListener('keydown',function(e){if(e.key==='Escape'){closeSheet();closeFilm();closeCcg();closeSizeg();menu.classList.remove('open')}});
-
-/* pay -> confirm */
-document.querySelectorAll('[data-pay]').forEach(function(b){b.addEventListener('click',function(){
-  b.closest('.ordbox').classList.add('done')})});
+scrim.addEventListener('click',function(){closeFilm();closeCcg();closeSizeg()});
+addEventListener('keydown',function(e){if(e.key==='Escape'){closeFilm();closeCcg();closeSizeg();menu.classList.remove('open')}});
 
 /* concierge */
 var ccg=document.getElementById('ccg'),ccgBtn=document.getElementById('ccgBtn');
@@ -789,7 +782,11 @@ function acctNav(){var d=acctData();var l1=document.getElementById('acctLink'),l
 function acctShowDone(){var d=acctData();if(!d)return acctStep('email');
   document.getElementById('acctHi').textContent='Welcome, '+d.name.split(' ')[0];
   document.getElementById('acctSummary').textContent=d.email+' \u00b7 '+d.phone+' \u00b7 '+d.address;
-  var w=document.querySelector('#waitForm input[type="email"]');if(w&&!w.value)w.value=d.email;
+  var saved=document.getElementById('acctSavedCount');if(saved)saved.textContent=wlData().length;
+  var composition=null;try{composition=JSON.parse(localStorage.getItem('kc_composition')||'null')}catch(e){}
+  var compEl=document.getElementById('acctComposition');if(compEl)compEl.textContent=composition?composition.summary:'None yet';
+  var sizes=document.getElementById('acctSizes');if(sizes&&composition&&composition.items){var labels=[];composition.items.forEach(function(item){if(labels.indexOf(item.z)<0)labels.push(item.z)});sizes.textContent=labels.join(' \u00b7 ')}
+  var orders=orderData(),ordersEl=document.getElementById('acctOrders');if(ordersEl)ordersEl.textContent=orders.length?(orders.length+' order'+(orders.length===1?'':'s')+' \u00b7 '+orders[0].reference):'No orders yet';
   acctStep('done')}
 function acctOpen(e){if(e)e.preventDefault();
   var d=acctData();
@@ -815,6 +812,9 @@ document.getElementById('acctEdit').addEventListener('click',function(){var d=ac
   acctStep('details')});
 document.getElementById('acctOut').addEventListener('click',function(){try{localStorage.removeItem('kc_account')}catch(err){}
   acctEmailForm.reset();acctForm.reset();acctNav();acctStep('email')});
+document.getElementById('acctSaved').addEventListener('click',function(){acctClose();wlOpen()});
+document.querySelectorAll('[data-account-concierge]').forEach(function(button){button.addEventListener('click',function(){acctClose();openCcg()})});
+var confirmConcierge=document.querySelector('[data-confirm-concierge]');if(confirmConcierge)confirmConcierge.addEventListener('click',function(){closeBag();openCcg()});
 acctNav();
 
 /* films */
@@ -827,9 +827,6 @@ document.querySelectorAll('[data-film]').forEach(function(c){c.addEventListener(
 function closeFilm(){film.classList.remove('open');document.body.style.overflow=''}
 document.getElementById('filmX').onclick=closeFilm;
 film.addEventListener('click',function(e){if(e.target===film)closeFilm()});
-
-/* waitlist */
-document.getElementById('waitForm').addEventListener('submit',function(e){e.preventDefault();document.getElementById('wait').classList.add('sent');this.querySelector('button').disabled=true});
 
 /* init that depends on PIECES */
 document.querySelectorAll('.tiles[data-compose]').forEach(buildComposeBox);

@@ -811,3 +811,69 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
   #compTiles .cell.is-accessory{grid-column:1/-1}
   .composer-intro{margin-top:-4px}
 }
+
+/* 2026 house architecture refresh */
+.home-world{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:clamp(38px,7vw,110px);align-items:center;padding-top:clamp(90px,14vw,180px);padding-bottom:clamp(90px,14vw,180px)}
+.home-world-copy{max-width:510px}
+.home-world-copy h2{font-size:clamp(29px,4.4vw,60px);line-height:1.18;margin-top:14px}
+.home-world-copy p{margin-top:22px;max-width:42ch}
+.home-world-copy .credit{font-size:11px;color:var(--grey);margin-top:14px}
+.home-world-copy .viewall{display:inline-block;margin-top:28px}
+.home-world-images{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(12px,2vw,26px);align-items:end}
+.home-world-images figure{overflow:hidden;background:#ece7dc}
+.home-world-images figure:first-child{aspect-ratio:4/5}
+.home-world-images figure:last-child{aspect-ratio:3/4;margin-bottom:clamp(20px,5vw,80px)}
+.home-world-images img{width:100%;height:100%;object-fit:cover}
+.world-aesthetic{padding-bottom:clamp(70px,10vw,120px)}
+.world-aesthetic + .founderfull{padding-top:clamp(70px,9vw,110px)}
+
+.lookmeta{display:flex;justify-content:space-between;gap:14px;align-items:baseline;padding-top:12px}
+.lookmeta strong{font-family:"Greenstone",serif;font-size:12.5px;font-weight:400;letter-spacing:.12em;text-transform:uppercase}
+.lookmeta em{font-style:normal;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--grey);white-space:nowrap}
+.suit-introduction{max-width:1140px;margin:0 auto clamp(42px,6vw,78px)}
+.suit-introduction>p{max-width:660px;margin:0 auto clamp(28px,4vw,46px);text-align:center;font-size:clamp(16px,1.55vw,20px);line-height:1.75}
+.silhouette-links{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,40px)}
+.silhouette-links a{display:block;position:relative;background:#ece7dc;overflow:hidden}
+.silhouette-links img{width:100%;aspect-ratio:16/8;object-fit:cover;transition:transform .8s var(--ease)}
+.silhouette-links a:hover img{transform:scale(1.015)}
+.silhouette-links span{position:absolute;left:0;right:0;bottom:0;padding:18px 20px;background:linear-gradient(transparent,rgba(0,0,0,.46));color:#fff;font-family:"Greenstone",serif;font-size:clamp(15px,1.6vw,20px);letter-spacing:.13em;text-transform:uppercase}
+.availability{margin-top:10px;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey)}
+
+.suit-service-panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:clamp(36px,7vw,110px);align-items:center}
+.suit-service-panel figure{aspect-ratio:4/3;overflow:hidden;background:#ece7dc}
+.suit-service-panel img{width:100%;height:100%;object-fit:cover}
+.suit-service-panel h2{font-size:clamp(27px,3.8vw,50px);margin-top:12px}
+.suit-service-panel p{max-width:44ch;margin-top:22px}
+.suit-service-panel .viewall{display:inline-block;margin-top:26px}
+
+.composition-sizes{margin-top:26px;border-top:1px solid var(--rule)}
+.composition-sizes>div{display:grid;grid-template-columns:minmax(130px,1fr) auto;gap:18px;align-items:center;padding:12px 0;border-bottom:1px solid var(--rule)}
+.composition-sizes>div>span{font-family:"Greenstone",serif;font-size:11.5px;letter-spacing:.13em;text-transform:uppercase}
+.composition-sizes em{font-style:normal;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey)}
+.size-options{display:flex;gap:7px}
+.size-options button{min-width:34px;padding:7px 6px;border:1px solid var(--rule);font-size:10.5px}
+.size-options button[aria-pressed="true"]{background:var(--black);border-color:var(--black);color:var(--ivory)}
+.composition-actions button.btn{font-family:inherit;border:0;cursor:pointer}
+
+.baggroup{margin:18px 0 8px;padding-top:14px;border-top:1px solid var(--black);font-family:"Greenstone",serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.acctcard[data-step="done"]{width:min(640px,94vw);max-height:90vh;overflow-y:auto}
+.acctcard .st-done{text-align:left}
+.account-sections{display:grid;grid-template-columns:1fr 1fr;margin-top:22px;border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+.account-sections>div,.account-sections>button{min-height:92px;padding:14px;text-align:left;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);display:flex;flex-direction:column;justify-content:space-between}
+.account-sections span{font-family:"Greenstone",serif;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase}
+.account-sections em{font-style:normal;font-size:11.5px;line-height:1.55;color:var(--grey);text-transform:none;letter-spacing:0}
+.acctcard .done .account-sections button{margin:0;text-decoration:none;letter-spacing:0;text-transform:none;font-size:inherit}
+#bagDone [data-confirm-concierge]{margin-top:18px;text-decoration:underline;text-underline-offset:4px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase}
+.svcb p{margin:8px auto 0;max-width:25ch;font-size:12.5px;line-height:1.6;color:var(--grey)}
+
+@media (max-width:760px){
+  .campstage{height:calc(100svh - var(--hdh,96px));min-height:520px}
+  .campstage .fgz{width:100%!important;height:100%!important;max-width:none!important;object-fit:cover!important}
+  .home-world,.suit-service-panel{grid-template-columns:1fr}
+  .home-world-images{margin-top:12px}
+  .silhouette-links{grid-template-columns:1fr}
+  .silhouette-links img{aspect-ratio:4/3}
+  .composition-sizes>div{grid-template-columns:1fr;gap:10px}
+  .size-options{flex-wrap:wrap}
+  .account-sections{grid-template-columns:1fr}
+}
