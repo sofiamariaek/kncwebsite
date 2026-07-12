@@ -344,7 +344,7 @@
     <a class="back vback" href="#" data-back>&#8592; Back</a>
     <h2 class="pagename" id="lookTitle">The Equestrian Suit</h2>
     <p class="look-identity" id="lookVariant">Tailcoat Suit · Sandstone</p>
-    <p class="look-intro">Choose your size and add each garment directly.</p>
+    <p class="look-intro">Add each garment directly. Size selection follows.</p>
 
     <div class="wrap fashion">
       <div class="fstack" id="lookStack">
@@ -712,6 +712,24 @@
   </div>
 </div>
 
+<!-- garment size selection -->
+<div class="quicksize" id="quickSize" role="dialog" aria-modal="true" aria-labelledby="quickSizeTitle">
+  <div class="quicksize-panel">
+    <button type="button" class="quicksize-x" id="quickSizeX" aria-label="Close">×</button>
+    <span class="quicksize-kicker">Select your size</span>
+    <h3 class="gs" id="quickSizeTitle">Garment</h3>
+    <p>Choose a size before adding this garment to your bag.</p>
+    <div class="quicksize-options" id="quickSizeOptions">
+      <button type="button" data-size="34">34</button>
+      <button type="button" data-size="36">36</button>
+      <button type="button" data-size="38">38</button>
+      <button type="button" data-size="40">40</button>
+      <button type="button" data-size="42">42</button>
+    </div>
+    <button type="button" class="quicksize-confirm" id="quickSizeConfirm" disabled>Add to bag</button>
+  </div>
+</div>
+
 <!-- zoom overlay -->
 <div class="zoomov" id="zoomov" aria-label="Zoom">
   <img id="zoomImg" alt="">
@@ -814,6 +832,6 @@
 <img data-slug="shoulder_beige" src="assets/img/shoulder-beige.jpg" alt="">
 </div>
 
-<script src="js/main.js?v=20260712-2129"></script>
+<script src="js/main.js?v=20260712-2205"></script>
 </body>
 </html>
