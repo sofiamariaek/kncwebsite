@@ -550,6 +550,18 @@ function composeCell(box,group,startCol){
       tog.appendChild(b)});
     cell.appendChild(tog)}
   var sw=document.createElement('span');sw.className='sw csw';if(!locked)cell.appendChild(sw);
+  var sizeSelect=null,quickAdd=null;
+  if(box.id==='lookTiles'&&group!=='belt'){
+    var quick=document.createElement('div');quick.className='quick-buy';
+    var sizeWrap=document.createElement('label');sizeWrap.className='quick-size';
+    var sizeLabel=document.createElement('span');sizeLabel.textContent='Size';sizeWrap.appendChild(sizeLabel);
+    sizeSelect=document.createElement('select');[34,36,38,40,42].forEach(function(s){var o=document.createElement('option');o.value=String(s);o.textContent=s;if(s===38)o.selected=true;sizeSelect.appendChild(o)});sizeWrap.appendChild(sizeSelect);
+    quickAdd=document.createElement('button');quickAdd.type='button';quickAdd.className='quick-add';quickAdd.textContent='Add to bag';
+    quickAdd.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();var P=PIECES[state.c][state.k];
+      var item={p:P.n,c:PIECES[state.c].name,z:sizeSelect.value};
+      if(state.k==='tailcoat'||state.k==='jacket')item.includedSet=PIECES[state.c].name;
+      var bag=bagData();bag.push(item);bagSave(bag);bagToast(item)});
+    quick.appendChild(sizeWrap);quick.appendChild(quickAdd);cell.appendChild(quick)}
   var wlb=document.createElement('button');wlb.className='wlbtn';wlb.type='button';wlb.innerHTML=WLHEART;
   wlb.setAttribute('aria-label','Save to wishlist');
   wlb.addEventListener('click',function(e){e.stopPropagation();wlToggle(state.c,state.k);
@@ -567,6 +579,7 @@ function composeCell(box,group,startCol){
     if(study)study.setAttribute('data-colour',state.c);
     if(group==='belt'&&box.id==='compTiles')window.__composerIncludedSet=PIECES[state.c].name;
     cap.innerHTML=P.n+(group==='belt'&&box.id==='compTiles'?'<em class="capprice">Included</em>':(PRICEK[state.k]?'<em class="capprice">'+fmtP(PRICEK[state.k])+'</em>':''));
+    if(sizeSelect)sizeSelect.setAttribute('aria-label','Size for '+P.n);
     if(typeof wlb!=='undefined'){wlb.setAttribute('data-wl',state.c+':'+state.k);wlb.classList.toggle('on',wlHas(state.c,state.k))}
     if(tog)[].forEach.call(tog.children,function(b,i){b.setAttribute('aria-pressed',String(variants[i]===state.k))});
     sw.innerHTML='';
