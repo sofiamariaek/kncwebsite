@@ -85,6 +85,9 @@ test('composer — add to bag, then checkout confirms the order', async ({ page 
   await gotoHome(page);
   await navFromMenu(page, 'composer');
   await page.locator('#compTiles .cell').first().locator('.quick-add').click();
+  await expect(page.locator('#quickSize')).toHaveClass(/open/);
+  await page.locator('#quickSizeOptions [data-size="38"]').click();
+  await page.locator('#quickSizeConfirm').click();
   await expect(page.locator('#bagN')).toHaveText('1');
   await page.locator('#bagLink').click();
   await expect(page.locator('#bag')).toHaveClass(/open/);
@@ -101,10 +104,14 @@ test('piece page — opens from a composer tile, order uses chosen size', async 
   await page.locator('#compTiles .pc[data-piece]').first().click();
   await expect(view(page, 'piece')).toBeVisible();
   await expect(page.locator('#pieceName')).toHaveText('Tailcoat');
-  await page.locator('#pieceSizes span', { hasText: '40' }).click();
   await page.locator('#pieceOrder').click();
+  await expect(page.locator('#quickSize')).toHaveClass(/open/);
+  await page.locator('#quickSizeOptions [data-size="40"]').click();
+  await page.locator('#quickSizeConfirm').click();
   await expect(page.locator('.bagtoast')).toHaveClass(/show/);
   await expect(page.locator('#bagN')).toHaveText('1');
+  await page.locator('#bagLink').click();
+  await expect(page.locator('#bagItems .nm').first()).toContainText('40');
 });
 
 test('wishlist — heart saves a piece, it appears in the wishlist panel', async ({ page }) => {
