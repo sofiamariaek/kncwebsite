@@ -594,7 +594,9 @@ function composeCell(box,group,startCol){
     if(P.stack.length&&group!=='belt'){img.style.display='';img.src=bankSrc(prodSlug(P.stack))}else{img.style.display='none';img.removeAttribute('src')}img.setAttribute('aria-label',P.n);
     if(study)study.setAttribute('data-colour',state.c);
     if(group==='belt'&&box.id==='compTiles')window.__composerIncludedSet=PIECES[state.c].name;
-    cap.innerHTML=P.n+(group==='belt'&&box.id==='compTiles'?'<em class="capprice">Included</em>':(PRICEK[state.k]?'<em class="capprice">'+fmtP(PRICEK[state.k])+'</em>':''));
+    cap.innerHTML=(group==='belt'&&box.id==='compTiles'
+      ? P.n+'<em class="capprice">Included · '+PIECES[state.c].name+'</em>'
+      : P.n+' · '+PIECES[state.c].name+(PRICEK[state.k]?'<em class="capprice">'+fmtP(PRICEK[state.k])+'</em>':''));
     quickAdd.setAttribute('aria-label','Add '+P.n+' to bag');
     if(typeof wlb!=='undefined'){wlb.setAttribute('data-wl',state.c+':'+state.k);wlb.classList.toggle('on',wlHas(state.c,state.k))}
     if(tog)[].forEach.call(tog.children,function(b,i){b.setAttribute('aria-pressed',String(variants[i]===state.k))});
