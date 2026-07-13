@@ -8,6 +8,19 @@
 - `assets/` — `img/`, `video/`, `fonts/`. Referenced by relative path; the folder must stay next to index.html.
 - `source/` — original photography/print files. Not used by the site.
 - `archive/` — superseded monofile builds (`_39`, `_40`). Never edit these.
+- `tests/` — Playwright smoke tests (see Tests below).
+
+## Tests (run before every PR)
+
+`npm install` once per clone, then `npx playwright test`. The suite serves
+the site locally and runs every test on two viewports: desktop Chromium and
+an emulated iPhone (WebKit). It checks that the page loads with no JS errors
+or broken asset paths, and walks the real journeys: menu navigation, looks
+grid, composer, add-to-bag, checkout, wishlist, size guide. Takes ~20s.
+
+If your change makes a test fail, fix the change — or, if the feature
+intentionally changed, update the test in the same PR. Never delete or skip
+a test to get to green.
 
 ## Multi-agent lanes (always follow)
 
