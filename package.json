@@ -1,0 +1,13 @@
+{
+  "name": "kncwebsite",
+  "private": true,
+  "description": "Kiwi & Colibri website — static site with Playwright smoke tests",
+  "scripts": {
+    "test": "playwright test",
+    "test:desktop": "playwright test --project=desktop",
+    "test:mobile": "playwright test --project=mobile"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1"
+  }
+}
