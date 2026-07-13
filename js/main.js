@@ -512,9 +512,11 @@ function bagToast(item,message){
   clearTimeout(bagToastT);bagToastT=setTimeout(function(){bagToastEl.classList.remove('show')},2200)}
 var quickSize=document.getElementById('quickSize'),quickSizeTitle=document.getElementById('quickSizeTitle');
 var quickSizeOptions=document.getElementById('quickSizeOptions'),quickSizeConfirm=document.getElementById('quickSizeConfirm');
+var quickSizePrice=document.getElementById('quickSizePrice');
 var pendingQuickItem=null;
 function closeQuickSize(){quickSize.classList.remove('open');pendingQuickItem=null;document.body.style.overflow=''}
 function openQuickSize(item){pendingQuickItem=item;quickSizeTitle.textContent=item.c+' '+item.p;
+  quickSizePrice.textContent=PRICE[item.p]?fmtP(PRICE[item.p]):'';
   [].forEach.call(quickSizeOptions.children,function(b){b.setAttribute('aria-pressed','false')});
   quickSizeConfirm.disabled=true;quickSize.classList.add('open');document.body.style.overflow='hidden'}
 quickSizeOptions.addEventListener('click',function(e){var b=e.target.closest('[data-size]');if(!b||!pendingQuickItem)return;
@@ -564,23 +566,18 @@ function composeCell(box,group,startCol){
       tog.appendChild(b)});
     cell.appendChild(tog)}
   var sw=document.createElement('span');sw.className='sw csw';if(!locked)cell.appendChild(sw);
-  var sizeSelect=null,quickAdd=null;
-  if(box.id==='lookTiles'||box.id==='compTiles'){
-    var quick=document.createElement('div');quick.className='quick-buy';
-    var sizeWrap=null;
-    if(group==='belt'){sizeWrap=document.createElement('label');sizeWrap.className='quick-size one-size';var oneSize=document.createElement('span');oneSize.textContent='One size';sizeWrap.appendChild(oneSize)}
-    else if(box.id==='compTiles'){sizeWrap=document.createElement('label');sizeWrap.className='quick-size';var sizeLabel=document.createElement('span');sizeLabel.textContent='Size';sizeWrap.appendChild(sizeLabel);
-      sizeSelect=document.createElement('select');[34,36,38,40,42].forEach(function(s){var o=document.createElement('option');o.value=String(s);o.textContent=s;if(s===38)o.selected=true;sizeSelect.appendChild(o)});sizeWrap.appendChild(sizeSelect)}
-    quickAdd=document.createElement('button');quickAdd.type='button';quickAdd.className='quick-add';quickAdd.textContent='Add to bag';
-    quickAdd.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();var P=PIECES[state.c][state.k],bag=bagData();
-      if(group==='belt'){var coatIndex=-1;for(var bi=bag.length-1;bi>=0;bi--){if(bag[bi].p==='Tailcoat'||bag[bi].p==='Jacket'){coatIndex=bi;break}}
-        if(coatIndex<0){bagToast(null,'Add your Tailcoat or Jacket first, then include this set');return}
-        bag[coatIndex].includedSet=PIECES[state.c].name;bagSave(bag);bagToast(null,PIECES[state.c].name+' Belt & Epaulettes included with your suit');return}
-      var item={p:P.n,c:PIECES[state.c].name,z:sizeSelect?sizeSelect.value:null};
-      if(state.k==='tailcoat'||state.k==='jacket')item.includedSet=box.id==='compTiles'?(window.__composerIncludedSet||PIECES[state.c].name):PIECES[state.c].name;
-      if(box.id==='lookTiles'){openQuickSize(item);return}
-      bag.push(item);bagSave(bag);bagToast(item)});
-    if(sizeWrap)quick.appendChild(sizeWrap);quick.appendChild(quickAdd);cell.appendChild(quick)}
+  var quick=document.createElement('div');quick.className='quick-buy';
+  var sizeWrap=null;
+  if(group==='belt'){quick.classList.add('with-size');sizeWrap=document.createElement('label');sizeWrap.className='quick-size one-size';var oneSize=document.createElement('span');oneSize.textContent='One size';sizeWrap.appendChild(oneSize)}
+  var quickAdd=document.createElement('button');quickAdd.type='button';quickAdd.className='quick-add';quickAdd.textContent='Add to bag';
+  quickAdd.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();var P=PIECES[state.c][state.k];
+    if(group==='belt'){var bag=bagData(),coatIndex=-1;for(var bi=bag.length-1;bi>=0;bi--){if(bag[bi].p==='Tailcoat'||bag[bi].p==='Jacket'){coatIndex=bi;break}}
+      if(coatIndex<0){bagToast(null,'Add your Tailcoat or Jacket first, then include this set');return}
+      bag[coatIndex].includedSet=PIECES[state.c].name;bagSave(bag);bagToast(null,PIECES[state.c].name+' Belt & Epaulettes included with your suit');return}
+    var item={p:P.n,c:PIECES[state.c].name,z:null};
+    if(state.k==='tailcoat'||state.k==='jacket')item.includedSet=box.id==='compTiles'?(window.__composerIncludedSet||PIECES[state.c].name):PIECES[state.c].name;
+    openQuickSize(item)});
+  if(sizeWrap)quick.appendChild(sizeWrap);quick.appendChild(quickAdd);cell.appendChild(quick);
   var wlb=document.createElement('button');wlb.className='wlbtn';wlb.type='button';wlb.innerHTML=WLHEART;
   wlb.setAttribute('aria-label','Save to wishlist');
   wlb.addEventListener('click',function(e){e.stopPropagation();wlToggle(state.c,state.k);
@@ -598,7 +595,7 @@ function composeCell(box,group,startCol){
     if(study)study.setAttribute('data-colour',state.c);
     if(group==='belt'&&box.id==='compTiles')window.__composerIncludedSet=PIECES[state.c].name;
     cap.innerHTML=P.n+(group==='belt'&&box.id==='compTiles'?'<em class="capprice">Included</em>':(PRICEK[state.k]?'<em class="capprice">'+fmtP(PRICEK[state.k])+'</em>':''));
-    if(sizeSelect)sizeSelect.setAttribute('aria-label','Size for '+P.n);
+    quickAdd.setAttribute('aria-label','Add '+P.n+' to bag');
     if(typeof wlb!=='undefined'){wlb.setAttribute('data-wl',state.c+':'+state.k);wlb.classList.toggle('on',wlHas(state.c,state.k))}
     if(tog)[].forEach.call(tog.children,function(b,i){b.setAttribute('aria-pressed',String(variants[i]===state.k))});
     sw.innerHTML='';
@@ -690,13 +687,6 @@ function openPiece(c,k,includedSet){
     bt.appendChild(bankImg(tsl,''));
     bt.addEventListener('click',function(){openPiece(cc,k,lastIncludedSet)});
     th.appendChild(bt)});
-  var sz=document.getElementById('pieceSizes');sz.innerHTML='';
-  var sizeGuide=document.querySelector('.view[data-view="piece"] .sizeguide');
-  if(k==='belt'){var one=document.createElement('span');one.textContent='One size';one.className='on';sz.appendChild(one);if(sizeGuide)sizeGuide.style.display='none'}
-  else{if(sizeGuide)sizeGuide.style.display='';[34,36,38,40,42].forEach(function(s,i){
-    var sp=document.createElement('span');sp.textContent=s;if(i===2)sp.className='on';
-    sp.addEventListener('click',function(){sz.querySelectorAll('span').forEach(function(x){x.classList.remove('on')});sp.classList.add('on')});
-    sz.appendChild(sp)})}
   document.getElementById('pieceName').textContent=P.n;
   var pp=document.getElementById('piecePrice');if(pp&&PRICEK[k])pp.innerHTML=fmtP(PRICEK[k])+'<span class="vat">Incl. 25% VAT</span>';
   var pd=document.getElementById('pieceDesc');if(pd)pd.textContent=DESCR[k]||'';
@@ -751,12 +741,13 @@ document.addEventListener('click',function(e){
 });
 document.getElementById('pieceBack').addEventListener('click',function(e){e.preventDefault();goBack()});
 document.getElementById('pieceOrder').addEventListener('click',function(){
-  var selected=document.querySelector('#pieceSizes span.on');
-  var item={p:PIECES[lastColour][lastKey].n,c:PIECES[lastColour].name,z:selected?selected.textContent:(lastKey==='belt'?'One size':'38')};
+  var item={p:PIECES[lastColour][lastKey].n,c:PIECES[lastColour].name,z:null};
   if(lastIncludedSet)item.includedSet=lastIncludedSet;
-  var bag=bagData();
-  if(lastKey==='belt'&&!bagHasCoat(bag)){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
-  bag.push(item);bagSave(bag);bagToast(item)});
+  if(lastKey==='belt'){
+    var bag=bagData();
+    if(!bagHasCoat(bag)){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
+    item.z='One size';bag.push(item);bagSave(bag);bagToast(item);return}
+  openQuickSize(item)});
 
 /* pills generic */
 document.querySelectorAll('.pills').forEach(function(g){g.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){

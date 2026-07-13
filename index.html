@@ -315,7 +315,7 @@
   <section class="cpage">
     <a class="back vback" href="#" data-back>Back</a>
     <h2 class="pagename">Compose Your Suit</h2>
-    <p class="composer-intro"><strong>Four components, composed as one suit.</strong> Choose Tailcoat or Jacket, breeches, corset and the colour of the included belt and epaulettes. Select sizes and add each component directly.</p>
+    <p class="composer-intro"><strong>Four components, composed as one suit.</strong> Choose Tailcoat or Jacket, breeches, corset and the colour of the included belt and epaulettes. Add each component directly. Size selection follows.</p>
     <div class="compwrap">
       <div class="tiles" id="compTiles" data-compose="tar" data-slots="coat,breech,corset,belt"></div>
     </div>
@@ -561,10 +561,6 @@
         <p class="availability">Available</p>
         <p class="pdesc" id="pieceDesc"></p>
         <div class="cthumbs" id="pieceThumbs"></div>
-        <div class="sizerow">
-          <div class="sizes" id="pieceSizes"></div>
-          <a href="#" class="sizeguide" data-open-sizeg>Find your size</a>
-        </div>
         <button class="btn solid wide" type="button" id="pieceOrder">Add to bag</button>
         <div class="perks">
           <span>Made in Italy</span>
@@ -718,6 +714,7 @@
     <button type="button" class="quicksize-x" id="quickSizeX" aria-label="Close">×</button>
     <span class="quicksize-kicker">Select your size</span>
     <h3 class="gs" id="quickSizeTitle">Garment</h3>
+    <div class="quicksize-price" id="quickSizePrice"></div>
     <p>Choose a size before adding this garment to your bag.</p>
     <div class="quicksize-options" id="quickSizeOptions">
       <button type="button" data-size="34">34</button>
@@ -726,6 +723,7 @@
       <button type="button" data-size="40">40</button>
       <button type="button" data-size="42">42</button>
     </div>
+    <a href="#" class="sizeguide quicksize-guide" data-open-sizeg>Find your size</a>
     <button type="button" class="quicksize-confirm" id="quickSizeConfirm" disabled>Add to bag</button>
   </div>
 </div>
@@ -832,6 +830,6 @@
 <img data-slug="shoulder_beige" src="assets/img/shoulder-beige.jpg" alt="">
 </div>
 
-<script src="js/main.js?v=20260712-2205"></script>
+<script src="js/main.js?v=20260713-0900"></script>
 </body>
 </html>

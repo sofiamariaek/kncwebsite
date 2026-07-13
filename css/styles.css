@@ -428,7 +428,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .sheet .x{position:absolute;top:18px;right:20px;font-size:22px}
 @media (max-width:640px){.sheet{top:auto;left:0;width:100%;max-height:92vh;transform:translateY(103%)}.sheet.open{transform:none}}
 
-.sizeg{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:60}
+.sizeg{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:98}
 .sizeg.open{display:flex}
 .sg-panel{background:var(--ivory);width:min(480px,92vw);max-height:86vh;overflow:auto;padding:clamp(22px,3.4vw,36px);border:1px solid var(--rule)}
 .sg-head{display:flex;align-items:baseline;justify-content:space-between}
@@ -647,12 +647,9 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .cthumbs button{width:64px;height:80px;background:#F5F5F5;border:1px solid var(--rule);padding:0;overflow:hidden}
 .cthumbs button.on{border-color:var(--black)}
 .cthumbs img{width:100%;height:100%;object-fit:contain;padding:6%;box-sizing:border-box;display:block}
-.sizerow{display:flex;align-items:center;justify-content:space-between;margin-top:22px;gap:12px;flex-wrap:wrap}
-.sizes{display:flex;gap:clamp(10px,1.4vw,18px);flex-wrap:wrap}
-.sizes span{font-size:12.5px;letter-spacing:.14em;padding-bottom:4px;border-bottom:1.5px solid transparent;cursor:pointer}
-.sizes span.on{border-bottom-color:var(--black)}
 .sizeguide{font-size:11px;letter-spacing:.18em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px}
-.pbuy .btn.wide{display:block;width:100%;margin-top:24px;text-align:center}
+.pbuy .btn.wide{display:block;width:100%;margin-top:24px;text-align:center;border-color:var(--control-grey);background:var(--control-grey)}
+.pbuy .btn.wide:hover{background:#96938C;color:var(--ivory)}
 .shopbtn{display:block;width:100%;margin-top:10px;background:transparent;color:var(--black);border:1px solid var(--black);padding:13px 10px;font-size:13px;letter-spacing:.04em;transition:all .4s var(--ease)}
 .shopbtn:hover{background:var(--black);color:var(--ivory)}
 .shopbtn b{font-weight:700;letter-spacing:0}
@@ -839,17 +836,15 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 #lookTiles .capprice{font-family:"FK Roman Standard",serif;font-size:11px;letter-spacing:.06em;text-transform:none}
 #lookTiles .cell{align-items:stretch}
 #lookTiles .vtog{align-self:center}
-.quick-buy{display:grid;grid-template-columns:86px minmax(0,1fr);gap:7px;width:100%;margin-top:14px}
+.quick-buy{display:grid;grid-template-columns:1fr;gap:7px;width:100%;margin-top:14px}
+.quick-buy.with-size{grid-template-columns:86px minmax(0,1fr)}
 .quick-size{display:flex;align-items:center;border:1px solid var(--rule);min-height:39px;padding:0 9px}
 .quick-size span{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey);margin-right:5px}
-.quick-size select{width:100%;border:0;background:transparent;color:var(--black);font:inherit;font-size:11px;outline:0;cursor:pointer}
 .quick-size.one-size{justify-content:center}
 .quick-size.one-size span{margin:0;color:var(--black);font-size:9px}
-.quick-add{min-height:39px;background:var(--black);color:var(--ivory);font-size:9px;letter-spacing:.18em;text-transform:uppercase;transition:background .3s,color .3s}
-.quick-add:hover{background:transparent;color:var(--black);outline:1px solid var(--black)}
-#lookTiles .quick-buy{grid-template-columns:1fr;margin-top:16px}
-#lookTiles .quick-add,#compTiles .quick-add{background:var(--control-grey)}
-#lookTiles .quick-add:hover,#compTiles .quick-add:hover{background:#96938C;color:var(--ivory);outline:0}
+.quick-add{min-height:39px;background:var(--control-grey);color:var(--ivory);font-size:9px;letter-spacing:.18em;text-transform:uppercase;transition:background .3s,color .3s}
+.quick-add:hover{background:#96938C;color:var(--ivory)}
+#lookTiles .quick-buy{margin-top:16px}
 #lookTiles .vtog button[aria-pressed="true"],#compTiles .vtog button[aria-pressed="true"]{background:var(--control-grey);color:var(--ivory)}
 #lookTiles + .viewall{align-self:center;margin-top:clamp(48px,5vw,70px)}
 
@@ -860,10 +855,13 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .quicksize-x{position:absolute;top:20px;right:22px;font-size:25px;line-height:1}
 .quicksize-kicker{font-size:9.5px;letter-spacing:.25em;text-transform:uppercase;color:var(--grey)}
 .quicksize-panel h3{margin-top:14px;font-size:clamp(23px,2.7vw,32px)}
+.quicksize-price{margin-top:10px;font-size:14.5px}
+.quicksize-price:empty{display:none}
 .quicksize-panel>p{margin-top:14px;max-width:30ch;font-size:13px;line-height:1.7;color:var(--grey)}
 .quicksize-options{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:30px}
 .quicksize-options button{min-height:44px;border:1px solid var(--rule);font-size:12px;transition:background .25s,color .25s,border-color .25s}
 .quicksize-options button[aria-pressed="true"]{background:var(--control-grey);border-color:var(--control-grey);color:var(--ivory)}
+.quicksize-guide{align-self:flex-start;margin-top:16px;color:var(--grey)}
 .quicksize-confirm{margin-top:12px;min-height:46px;background:var(--control-grey);color:var(--ivory);font-size:10px;letter-spacing:.2em;text-transform:uppercase;transition:opacity .25s}
 .quicksize-confirm[disabled]{opacity:.35;cursor:default}
 @media (max-width:640px){
@@ -914,7 +912,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
   .composition-sizes>div{grid-template-columns:1fr;gap:10px}
   .size-options{flex-wrap:wrap}
   .account-sections{grid-template-columns:1fr}
-  .quick-buy{grid-template-columns:94px minmax(0,1fr)}
+  .quick-buy.with-size{grid-template-columns:94px minmax(0,1fr)}
 }
 
 /* Homepage image direction — campaign scale and editorial rhythm */
