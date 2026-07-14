@@ -156,7 +156,7 @@ var LOOKS=[
 ];
 function lookCard(i){var L=LOOKS[i];
   var a=document.createElement('a');a.href='#';
-  a.innerHTML='<figure><img src="'+bankSrc(L.shots[0])+'" alt="'+L.name+', '+L.variant+'"></figure><span class="lookmeta"><strong>'+L.name+'</strong><em>Available</em></span><span class="lookvariant">'+L.variant+'</span>';
+  a.innerHTML='<figure><img loading="lazy" src="'+bankSrc(L.shots[0])+'" alt="'+L.name+', '+L.variant+'"></figure><span class="lookmeta"><strong>'+L.name+'</strong><em>Available</em></span><span class="lookvariant">'+L.variant+'</span>';
   a.addEventListener('click',function(e){e.preventDefault();openLook(i)});
   return a}
 function renderLooks(f){var g=document.getElementById('lookGrid');if(!g)return;g.innerHTML='';
@@ -171,10 +171,6 @@ var curLook=0;
 function lookImgs(i){var L=LOOKS[i];curLook=i;
   document.getElementById('lookTitle').textContent='The Equestrian Suit';
   document.getElementById('lookVariant').textContent=L.name+' · '+L.variant;
-  var names={tar:'Tar',moss:'Moss',sand:'Sandstone'};
-  var lab=document.getElementById('lookSwLab');if(lab)lab.textContent=names[L.c];
-  document.querySelectorAll('#lookSw button').forEach(function(d){
-    d.setAttribute('aria-pressed',String({t:'tar',m:'moss',s:'sand'}[d.className]===L.c))});
   var figs=document.querySelectorAll('#lookStack figure');
   [].forEach.call(figs,function(fig,j){var im=fig.querySelector('img');var sl=L.shots[j];var src=sl?bankSrc(sl):'';
     if(src){im.src=src;fig.style.display=''}else{im.removeAttribute('src');fig.style.display='none'}})}
@@ -185,17 +181,6 @@ function openLook(i){var L=LOOKS[i];
   tiles.setAttribute('data-slots',L.kind==='jacket'?'jacket,corset,breech':'tailcoat,breech,corset');
   buildComposeBox(tiles);
   showView('look')}
-function setLookColour(c){
-  var base=LOOKS[curLook];
-  for(var j=0;j<LOOKS.length;j++){
-    if(LOOKS[j].kind===base.kind&&LOOKS[j].c===c){
-      lookImgs(j);
-      var tiles=document.getElementById('lookTiles');
-      tiles.setAttribute('data-compose',c);
-      buildComposeBox(tiles);
-      break}}}
-document.querySelectorAll('#lookSw button').forEach(function(d){
-  d.addEventListener('click',function(){setLookColour({t:'tar',m:'moss',s:'sand'}[d.className])})});
 
 /* compose your suit — pieces only; model logic reads the coat bucket */
 (function(){
@@ -245,13 +230,13 @@ document.addEventListener('click',function(e){
   e.preventDefault();
   showView(name==='home'?'home':name);
   if(name==='home'&&href.length>1){var el=document.querySelector(href);if(el)setTimeout(function(){el.scrollIntoView()},60)}
-  menu.classList.remove('open');
+  if(menu.classList.contains('open')){menu.classList.remove('open');focusBack(menu)}
 });
 
 /* side drawer menu */
 var menu=document.getElementById('menu');
 document.getElementById('burger').onclick=function(){menu.classList.add('open')};
-document.getElementById('menuX').onclick=function(){menu.classList.remove('open')};
+document.getElementById('menuX').onclick=function(){menu.classList.remove('open');focusBack(menu)};
 function openMenuGroup(g){
   menu.querySelectorAll('.mitem').forEach(function(mi){
     var mine=mi.getAttribute('data-group')===g;
@@ -264,7 +249,7 @@ document.querySelectorAll('.hd [data-mgroup]').forEach(function(a){
 document.getElementById('burger').onclick=function(){
   menu.querySelectorAll('.mitem').forEach(function(mi){mi.style.display='';mi.classList.remove('open')});
   var mf=menu.querySelector('.mfoot');if(mf)mf.style.display='';
-  menu.classList.add('open')};
+  menu.classList.add('open');focusInto(menu,'#menuX')};
 menu.querySelectorAll('.mhead[data-sub]').forEach(function(h){
   h.addEventListener('click',function(){
     var it=h.parentElement,was=it.classList.contains('open');
@@ -284,101 +269,17 @@ menu.querySelectorAll('[data-mpiece]').forEach(function(a){
     openPiece(MPIECE_COL[k]||'tar',k)})});
 
 
-/* compose — piece boxes with colour arrows */
-var CDATA={
- coat:{variants:{tailcoat:{n:'Tailcoat',c:{Tar:'frack_svart_fram',Moss:'frack_gron_fram',Sandstone:'frack_beige_fram'}},
-                 jacket:{n:'Jacket',c:{Tar:'jacka_svart_fram',Moss:'jacka_gron_fram',Sandstone:'jacka_beige'}}},cur:'tailcoat',ci:0},
- corset:{variants:{corset:{n:'Corset',c:{Tar:'vast_svart_fram',Moss:'vast_gron_fram',Sandstone:'vast_beige_fram'}}},cur:'corset',ci:1},
- breech:{variants:{cargo:{n:'Cargo breeches',c:{Tar:'byxa_svart_cargo_fram',Moss:'byxa_gron_cargo_sida',Sandstone:'byxa_beige_cargo_fram'}},
-                   slim:{n:'Slim breeches',c:{Moss:'byxa_gron_slim_fram',Sandstone:'byxa_beige_slim_fram'}}},cur:'cargo',ci:2}
-};
-function cPaint(box){var d=CDATA[box],v=d.variants[d.cur],cols=Object.keys(v.c);
-  if(d.ci>=cols.length)d.ci=0;
-  var col=cols[d.ci];
-  var el=document.querySelector('.cbox[data-box="'+box+'"]');
-  el.querySelector('img').src=bankSrc(v.c[col]);
-  el.querySelector('.ccol').textContent=col;
-  el.querySelectorAll('.cnav').forEach(function(b){b.style.display=cols.length>1?'flex':'none'});
-  cSummary()}
-function cSummary(){var parts=[];
-  ['coat','corset','breech'].forEach(function(box){var d=CDATA[box],v=d.variants[d.cur];
-    var col=Object.keys(v.c)[d.ci];parts.push(col+' '+v.n.toLowerCase())});
-  document.getElementById('summary').textContent='A '+parts.join(' \u00b7 ')+'.'}
-document.querySelectorAll('.cbox').forEach(function(el){var box=el.getAttribute('data-box');
-  el.querySelectorAll('.ctog button').forEach(function(b){b.addEventListener('click',function(){
-    CDATA[box].cur=b.getAttribute('data-v');
-    el.querySelectorAll('.ctog button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
-    cPaint(box)})});
-  el.querySelector('.cnav.prev').addEventListener('click',function(){var d=CDATA[box];
-    var n=Object.keys(d.variants[d.cur].c).length;d.ci=(d.ci-1+n)%n;cPaint(box)});
-  el.querySelector('.cnav.next').addEventListener('click',function(){var d=CDATA[box];
-    var n=Object.keys(d.variants[d.cur].c).length;d.ci=(d.ci+1)%n;cPaint(box)});
-});
-['coat','corset','breech'].forEach(cPaint);
-
 
 /* piece slider */
-function bankImg(slug,cls){var b=document.querySelector('#bank [data-slug="'+slug+'"]');
-  var i=document.createElement('img');i.src=b?b.src:'';i.alt='';i.className=cls;return i}
-function bankSrc(slug){var b=document.querySelector('#bank [data-slug="'+slug+'"]');return b?b.src:''}
+function bankImg(slug,cls){var i=document.createElement('img');i.src=bankSrc(slug);i.alt='';i.className=cls;return i}
+function bankSrc(slug){var b=document.querySelector('#bank [data-slug="'+slug+'"]');return b?(b.getAttribute('data-src')||''):''}
 function prodSlug(stack){if(!stack||!stack.length)return null;
   for(var i=0;i<stack.length;i++){if(!/^(hero_|lj_|lm_)/.test(stack[i]))return stack[i]}
   return stack[0]}
 
-/* colour-page lady slider — extra frames after the fashion shot */
-var LADY_EXTRA={};
-document.querySelectorAll('.cpage').forEach(function(pg){
-  var view=pg.closest('.view');if(!view)return;
-  var key=view.getAttribute('data-view');var extras=LADY_EXTRA[key];if(!extras||!extras.length)return;
-  var fig=pg.querySelector('.wrap figure');var img=fig&&fig.querySelector('img');if(!img)return;
-  fig.classList.add('lslide');fig.style.position='relative';
-  var slides=[img.src].concat(extras.map(bankSrc));var li=0;
-  var prev=document.createElement('button');prev.className='pnav prev';prev.setAttribute('aria-label','Previous');prev.textContent='\u2039';
-  var next=document.createElement('button');next.className='pnav next';next.setAttribute('aria-label','Next');next.textContent='\u203a';
-  var dots=document.createElement('div');dots.className='pdots';
-  slides.forEach(function(_,i){var d=document.createElement('i');if(i===0)d.className='on';dots.appendChild(d)});
-  fig.appendChild(prev);fig.appendChild(next);fig.appendChild(dots);
-  img.style.transition='opacity .45s var(--ease)';
-  function show(n){li=(n+slides.length)%slides.length;
-    img.style.opacity=0;
-    setTimeout(function(){img.src=slides[li];img.onload=function(){img.style.opacity=1};setTimeout(function(){img.style.opacity=1},250)},240);
-    dots.querySelectorAll('i').forEach(function(d,i){d.classList.toggle('on',i===li)})}
-  prev.addEventListener('click',function(e){e.preventDefault();show(li-1)});
-  next.addEventListener('click',function(e){e.preventDefault();show(li+1)});
-  var x0=null;
-  fig.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
-  fig.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;
-    if(Math.abs(dx)>40)show(dx<0?li+1:li-1);x0=null},{passive:true});
-});
 
 /* stacked fashion frames + tar suit — fed from the bank */
 document.querySelectorAll('img[data-bank]').forEach(function(im){im.src=bankSrc(im.getAttribute('data-bank'))});
-
-/* the four women — hover changes: fashion shot, then a piece, then fashion again… */
-var LADY_CARD={
- 'c-tar':['lm_tar2','lm_tar3','vast_svart_fram','byxa_svart_cargo_fram'],
- 'c-tar-jacket':['kostym_black','jacka_svart_fram','vast_svart_fram','byxa_svart_cargo_fram'],
- 'c-moss-jacket':['kostym_jacka_gron','jacka_gron_fram','vast_gron_fram','byxa_gron_cargo_sida'],
- 'c-moss':['kostym_frack_gron','lm_moss2','jacka_gron_fram','lm_moss3','vast_gron_fram','byxa_gron_cargo_sida','byxa_gron_slim_fram'],
- 'c-sand':['kostym_frack_beige','lm_sand2','jacka_beige','lm_sand3','vast_beige_fram','byxa_beige_cargo_fram','belt_beige_f','shoulder_beige']
-};
-document.querySelectorAll('.ladies a[data-nav]').forEach(function(aEl){
-  var key=aEl.getAttribute('data-nav');var extra=LADY_CARD[key];if(!extra)return;
-  var img=aEl.querySelector('img');if(!img)return;
-  var frames=[img.src].concat(extra.map(bankSrc));var fi=0;
-  img.style.transition='opacity .35s var(--ease)';
-  function adv(step){fi=(fi+step+frames.length)%frames.length;
-    img.style.opacity=0;
-    setTimeout(function(){img.src=frames[fi];img.onload=function(){img.style.opacity=1};setTimeout(function(){img.style.opacity=1},200)},180)}
-  aEl.addEventListener('mouseenter',function(){adv(1)});
-  aEl.addEventListener('mouseleave',function(){if(fi!==0){fi=0;
-    img.style.opacity=0;
-    setTimeout(function(){img.src=frames[0];img.onload=function(){img.style.opacity=1};setTimeout(function(){img.style.opacity=1},200)},180)}});
-  var x0=null;
-  aEl.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
-  aEl.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;
-    if(Math.abs(dx)>40){e.preventDefault();adv(dx<0?1:-1)}x0=null});
-});
 
 /* pieces — Dior-style: everything stacked under the big picture; named details in the rail */
 var PIECES={
@@ -419,6 +320,11 @@ function wlRender(){var box=document.getElementById('wlItems');box.innerHTML='';
     var row=document.createElement('div');row.className='wlitem';
     var im=document.createElement('img');im.src=P.stack.length?bankSrc(prodSlug(P.stack)):'';row.appendChild(im);
     var nm=document.createElement('div');nm.className='nm';nm.textContent=PIECES[x.c].name+' \u00b7 '+P.n;row.appendChild(nm);
+    if(P.stack.length){var ab=document.createElement('button');ab.className='ordlink';ab.textContent='Add to bag';
+      ab.addEventListener('click',function(){var item={p:P.n,c:PIECES[x.c].name,z:null};
+        if(x.k==='tailcoat'||x.k==='jacket')item.includedSet=PIECES[x.c].name;
+        openQuickSize(item)});
+      row.appendChild(ab)}
     var ob=document.createElement('button');ob.className='ordlink';ob.setAttribute('data-piece-link',x.c+':'+x.k);
     ob.textContent='View piece';row.appendChild(ob);
     var rm=document.createElement('button');rm.className='rm';rm.innerHTML='&#215;';
@@ -426,9 +332,14 @@ function wlRender(){var box=document.getElementById('wlItems');box.innerHTML='';
     box.appendChild(row)})}
 function wlHearts(){document.querySelectorAll('.wlbtn[data-wl]').forEach(function(b){
   var p=b.getAttribute('data-wl').split(':');b.classList.toggle('on',wlHas(p[0],p[1]))})}
+/* move focus into overlays on open; hand it back on close */
+function focusInto(box,sel){box.__pf=document.activeElement;
+  var t=(sel&&box.querySelector(sel))||box.querySelector('button,[href],input,select,textarea');
+  if(t)t.focus()}
+function focusBack(box){if(box.__pf&&box.__pf.focus)box.__pf.focus();box.__pf=null}
 var wlov=document.getElementById('wl');
-function wlOpen(e){if(e)e.preventDefault();wlRender();wlov.classList.add('open');document.body.style.overflow='hidden'}
-function wlClose(){wlov.classList.remove('open');document.body.style.overflow=''}
+function wlOpen(e){if(e)e.preventDefault();wlRender();wlov.classList.add('open');document.body.style.overflow='hidden';focusInto(wlov,'#wlX')}
+function wlClose(){wlov.classList.remove('open');document.body.style.overflow='';focusBack(wlov)}
 document.getElementById('wlLink').addEventListener('click',wlOpen);
 var wlm=document.getElementById('wlLinkM');if(wlm)wlm.addEventListener('click',function(e){wlOpen(e);document.getElementById('menu').classList.remove('open')});
 document.getElementById('wlX').addEventListener('click',wlClose);
@@ -453,7 +364,12 @@ function bagRender(){var a=bagData(),box=document.getElementById('bagItems');box
     var ck=null;
     for(var cc in PIECES){if(PIECES[cc].name===x.c){for(var k in PIECES[cc]){if(PIECES[cc][k]&&PIECES[cc][k].n===x.p){ck=PIECES[cc][k]}}}}
     var im=document.createElement('img');im.src=(ck&&ck.stack&&ck.stack.length)?bankSrc(prodSlug(ck.stack)):(x.p==='Belt & epaulettes'?bankSrc('belt_beige_f'):'');row.appendChild(im);
-    var nm=document.createElement('div');nm.className='nm';nm.textContent=x.c+' \u00b7 '+(x.extra?'Extra Belt & Epaulettes':x.p)+' \u00b7 '+x.z;
+    var nm=document.createElement('div');nm.className='nm';nm.textContent=x.c+' \u00b7 '+(x.extra?'Extra Belt & Epaulettes':x.p)+' \u00b7 ';
+    if(x.z==='One size'){nm.appendChild(document.createTextNode('One size'))}
+    else{var zb=document.createElement('button');zb.type='button';zb.className='zedit';zb.textContent=x.z;
+      zb.setAttribute('aria-label','Change size for '+x.p);zb.title='Change size';
+      zb.addEventListener('click',function(){openQuickSize({p:x.p,c:x.c,z:null,__edit:i})});
+      nm.appendChild(zb)}
     if(x.includedSet){var included=document.createElement('em');included.className='included-set';included.textContent='Included Belt & Epaulettes \u00b7 '+x.includedSet;nm.appendChild(included)}
     row.appendChild(nm);
     var pr=document.createElement('span');pr.className='rprice';pr.textContent=fmtP(PRICE[x.p]||0);row.appendChild(pr);
@@ -474,8 +390,8 @@ function bagUpsell(a){var up=document.getElementById('bagUp');up.innerHTML='';
   var nte=document.createElement('p');nte.className='upn';nte.textContent='Your Tailcoat or Jacket includes the belt and epaulettes colour you selected. Add an extra set in another colour, if desired.';frag.appendChild(nte);
   frag.appendChild(upsellRow(suit.includedSet||suit.c,suit.z));
   up.appendChild(frag)}
-function openBag(e){if(e)e.preventDefault();bagov.classList.remove('confirmed');bagRender();bagov.classList.add('open');document.body.style.overflow='hidden'}
-function closeBag(){bagov.classList.remove('open');document.body.style.overflow=''}
+function openBag(e){if(e)e.preventDefault();bagov.classList.remove('confirmed');bagRender();bagov.classList.add('open');document.body.style.overflow='hidden';focusInto(bagov,'#bagX')}
+function closeBag(){bagov.classList.remove('open');document.body.style.overflow='';focusBack(bagov)}
 document.getElementById('bagLink').addEventListener('click',openBag);
 document.getElementById('bagX').addEventListener('click',closeBag);
 bagov.addEventListener('click',function(e){if(e.target===bagov)closeBag()});
@@ -506,7 +422,10 @@ function upsellRow(suitCol,size){var pn='Belt & epaulettes';
   render();return row}
 var bagToastEl=null,bagToastT=null;
 function bagToast(item,message){
-  if(!bagToastEl){bagToastEl=document.createElement('div');bagToastEl.className='bagtoast';document.body.appendChild(bagToastEl)}
+  if(!bagToastEl){bagToastEl=document.createElement('button');bagToastEl.type='button';bagToastEl.className='bagtoast';
+    bagToastEl.setAttribute('aria-label','Open bag');
+    bagToastEl.addEventListener('click',function(){bagToastEl.classList.remove('show');openBag()});
+    document.body.appendChild(bagToastEl)}
   bagToastEl.textContent=message||((item?item.c+' '+item.p+' \u2014 ':'')+'added to your bag');
   bagToastEl.classList.add('show');
   clearTimeout(bagToastT);bagToastT=setTimeout(function(){bagToastEl.classList.remove('show')},2200)}
@@ -514,24 +433,34 @@ var quickSize=document.getElementById('quickSize'),quickSizeTitle=document.getEl
 var quickSizeOptions=document.getElementById('quickSizeOptions'),quickSizeConfirm=document.getElementById('quickSizeConfirm');
 var quickSizePrice=document.getElementById('quickSizePrice');
 var pendingQuickItem=null;
-function closeQuickSize(){quickSize.classList.remove('open');pendingQuickItem=null;document.body.style.overflow=''}
+function closeQuickSize(){quickSize.classList.remove('open');pendingQuickItem=null;
+  document.body.style.overflow=(bagov.classList.contains('open')||wlov.classList.contains('open')||acct.classList.contains('open'))?'hidden':'';
+  focusBack(quickSize)}
 function openQuickSize(item){pendingQuickItem=item;quickSizeTitle.textContent=item.c+' '+item.p;
   quickSizePrice.textContent=PRICE[item.p]?fmtP(PRICE[item.p]):'';
   [].forEach.call(quickSizeOptions.children,function(b){b.setAttribute('aria-pressed','false')});
-  quickSizeConfirm.disabled=true;quickSize.classList.add('open');document.body.style.overflow='hidden'}
+  quickSizeConfirm.disabled=true;quickSize.classList.add('open');document.body.style.overflow='hidden';
+  focusInto(quickSize,'#quickSizeOptions button')}
 quickSizeOptions.addEventListener('click',function(e){var b=e.target.closest('[data-size]');if(!b||!pendingQuickItem)return;
   [].forEach.call(quickSizeOptions.children,function(x){x.setAttribute('aria-pressed',String(x===b))});
   pendingQuickItem.z=b.getAttribute('data-size');quickSizeConfirm.disabled=false});
 quickSizeConfirm.addEventListener('click',function(){if(!pendingQuickItem||!pendingQuickItem.z)return;
-  var item=pendingQuickItem,bag=bagData();bag.push(item);bagSave(bag);closeQuickSize();bagToast(item)});
+  var item=pendingQuickItem,bag=bagData();
+  if(item.__edit!=null){if(bag[item.__edit]){bag[item.__edit].z=item.z;bagSave(bag);
+    if(bagov.classList.contains('open'))bagRender()}
+    closeQuickSize();bagToast(null,item.c+' '+item.p+' · size updated to '+item.z);return}
+  bag.push(item);bagSave(bag);closeQuickSize();bagToast(item)});
 document.getElementById('quickSizeX').addEventListener('click',closeQuickSize);
 quickSize.addEventListener('click',function(e){if(e.target===quickSize)closeQuickSize()});
 document.querySelectorAll('[data-bagpay]').forEach(function(b){b.addEventListener('click',function(){
   var current=bagData();if(!current.length)return;
+  var d=acctData();
+  if(!d||!d.name||!d.address){window.__payPending=true;closeBag();acctOpen();
+    bagToast(null,'Tell us where to deliver — then confirm your order');return}
   var orders=orderData(),ref='KC'+String(Date.now()).slice(-8);
   orders.unshift({reference:ref,date:new Date().toISOString(),items:current});orderSave(orders);
   bagov.classList.add('confirmed');bagSave([]);bagRender();
-  var confirmation=document.getElementById('bagConfirmation');if(confirmation)confirmation.textContent='Order '+ref+' has been confirmed. Delivery information will be provided with your order details.';
+  var confirmation=document.getElementById('bagConfirmation');if(confirmation)confirmation.textContent='Order '+ref+' has been confirmed — delivering to '+d.name+', '+d.address+'.';
   document.getElementById('bagEmpty').style.display='none'})});
 bagBadge();
 
@@ -613,50 +542,6 @@ function composeCell(box,group,startCol){
 function buildComposeBox(box){var col=box.getAttribute('data-compose');box.innerHTML='';
   box.getAttribute('data-slots').split(',').forEach(function(g){composeCell(box,g,col)})}
 /* tiles build deferred to init (needs PIECES) */
-/* front tiles — flip through all colours and models */
-var FLIP={'s-tailcoat':['hero_sand','hero_tar','hero_moss'],'s-jacket':['lj_tar1','lj_tar2','lj_tar3']};
-var FLIPMARK='assets/img/asset.png';
-document.querySelectorAll('.ladies.two a[data-nav]').forEach(function(aEl,ti){
-  var list=FLIP[aEl.getAttribute('data-nav')];if(!list)return;
-  var img=aEl.querySelector('img');var i=0;
-  var fig=aEl.querySelector('figure');fig.style.position='relative';
-  var mk=document.createElement('span');mk.className='flipmark';
-  mk.innerHTML='<img style="width:16px;height:auto" src="'+FLIPMARK+'" alt="">';fig.appendChild(mk);
-  img.style.transition='opacity .9s var(--ease)';
-  setTimeout(function(){setInterval(function(){
-    i=(i+1)%list.length;var src=bankSrc(list[i]);if(!src)return;
-    img.style.opacity=0;mk.classList.add('show');
-    setTimeout(function(){img.src=src;img.style.opacity=1;mk.classList.remove('show')},950)},5800)},ti*2600);
-});
-
-/* silhouette pages — colour dots swap the whole suit */
-var SUITS={
- tailcoat:{tar:['hero_tar','lm_tar2','lm_tar3','kostym_frack_svart'],moss:['hero_moss','lm_moss2','lm_moss3','kostym_frack_gron'],sand:['hero_sand','lm_sand2','lm_sand3','kostym_frack_beige','belt_beige_f','shoulder_beige']},
- jacket:{tar:['lj_tar1','lj_tar2','lj_tar3','kostym_black'],moss:['lj_moss1','lj_moss2','lj_moss3'],sand:['jacka_beige','kostym_jacka_beige','belt_beige_f','shoulder_beige']}
-};
-window.__suitSet={};
-['tailcoat','jacket'].forEach(function(kind){
-  var view=document.querySelector('.view[data-view="s-'+kind+'"]');if(!view)return;
-  var dots=view.querySelectorAll('[data-suitsw] button');
-  var stack=view.querySelector('[data-suitstack]');
-  var tiles=view.querySelector('.tiles[data-compose]');
-  var lab=view.querySelector('[data-swlab]');
-  var names={t:'tar',m:'moss',s:'sand'};
-  function setC(c){
-    dots.forEach(function(d){d.setAttribute('aria-pressed',String(names[d.className]===c))});
-    lab.textContent=PIECES[c].name;
-    var slugs=SUITS[kind][c]||[];
-    [].forEach.call(stack.querySelectorAll('figure'),function(fig,i){
-      var im=fig.querySelector('img'),sl=slugs[i],src=sl?bankSrc(sl):'';
-      if(src){im.src=src;im.alt=i===0?'The Equestrian Suit, '+(kind==='tailcoat'?'Tailcoat':'Jacket')+' in '+PIECES[c].name:'';fig.style.display=''}else{im.removeAttribute('src');fig.style.display='none'}});
-    stack.scrollLeft=0;if(stack.__upd)setTimeout(stack.__upd,60);
-    tiles.setAttribute('data-compose',c);buildComposeBox(tiles);
-  }
-  dots.forEach(function(d){d.addEventListener('click',function(){setC(names[d.className])})});
-  window.__suitSet['s-'+kind]=setC;
-  setC(kind==='tailcoat'?'sand':'tar');
-});
-
 var DESCR={
  tailcoat:'The Tailcoat is the most ceremonial piece in the Kiwi & Colibri wardrobe. Its standing collar, structured shoulders, sculpted waist and elongated tails create a sharper, more modern silhouette. The Tailcoat carries the presence of the dressage arena into everyday life \u2014 made not to wait in the wardrobe, but to be worn.',
  jacket:'A precise equestrian jacket with a sculpted shoulder, defined waist and the house\u2019s military line. Designed to move between the stable, the city and evening.',
@@ -758,8 +643,8 @@ document.querySelectorAll('.pills').forEach(function(g){g.querySelectorAll('butt
 /* shared service overlays */
 var scrim=document.getElementById('scrim');
 var sizeg=document.getElementById('sizeg');
-function openSizeg(){sizeg.classList.add('open');scrim.classList.add('show')}
-function closeSizeg(){sizeg.classList.remove('open');scrim.classList.remove('show')}
+function openSizeg(){sizeg.classList.add('open');scrim.classList.add('open');focusInto(sizeg,'.sg-x')}
+function closeSizeg(){if(sizeg.classList.contains('open'))focusBack(sizeg);sizeg.classList.remove('open');scrim.classList.remove('open')}
 document.querySelectorAll('[data-open-sizeg]').forEach(function(b){b.addEventListener('click',function(e){e.preventDefault();openSizeg()})});
 document.getElementById('sizegX').onclick=closeSizeg;
 sizeg.addEventListener('click',function(e){if(e.target===sizeg)closeSizeg()});
@@ -795,7 +680,9 @@ function acctShowDone(){var d=acctData();if(!d)return acctStep('email');
   var compEl=document.getElementById('acctComposition');if(compEl)compEl.textContent=composition?composition.summary:'None yet';
   var sizes=document.getElementById('acctSizes');if(sizes&&composition&&composition.items){var labels=[];composition.items.forEach(function(item){if(labels.indexOf(item.z)<0)labels.push(item.z)});sizes.textContent=labels.join(' \u00b7 ')}
   var orders=orderData(),ordersEl=document.getElementById('acctOrders');if(ordersEl)ordersEl.textContent=orders.length?(orders.length+' order'+(orders.length===1?'':'s')+' \u00b7 '+orders[0].reference):'No orders yet';
-  acctStep('done')}
+  acctStep('done');
+  if(window.__payPending){window.__payPending=false;acctClose();openBag();
+    bagToast(null,'Delivery details saved \u2014 confirm your order')}}
 function acctOpen(e){if(e)e.preventDefault();
   var d=acctData();
   if(d&&d.name){acctShowDone()}else{acctStep('email');if(d&&d.email)acctEmailForm.elements.email.value=d.email}
@@ -847,4 +734,10 @@ document.querySelectorAll('a.vback').forEach(function(bk){
 var nf=document.getElementById('newsForm');
 if(nf)nf.addEventListener('submit',function(e){e.preventDefault();nf.hidden=true;document.getElementById('newsOk').hidden=false});
 if(window.__composerInit)window.__composerInit();
+
+/* boot to the view named in the URL, so reload and shared links land right */
+(function(){var v=location.hash.slice(1);
+  if(['about','atelier','services','delivery','looks','composer'].indexOf(v)<0)return;
+  if(window.__histOn){try{history.replaceState({v:v},'','#'+v)}catch(e){}}
+  NAVSTACK.push(v);__showViewRaw(v)})();
 })();

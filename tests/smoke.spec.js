@@ -93,8 +93,18 @@ test('composer — add to bag, then checkout confirms the order', async ({ page 
   await expect(page.locator('#bag')).toHaveClass(/open/);
   await expect(page.locator('#bagItems .wlitem')).toHaveCount(1);
   await expect(page.locator('#bagItems .bagtot')).toContainText('4,800');
+  // First confirm asks where to deliver; details are saved once, then the order confirms.
   await page.locator('[data-bagpay]').first().click();
-  await expect(page.locator('#bagConfirmation')).toContainText('has been confirmed');
+  await expect(page.locator('#acct')).toHaveClass(/open/);
+  await page.locator('#acctEmailForm input[name="email"]').fill('smoke@kiwicolibri.test');
+  await page.locator('#acctEmailForm button[type="submit"]').click();
+  await page.locator('#acctForm input[name="name"]').fill('Smoke Rider');
+  await page.locator('#acctForm input[name="phone"]').fill('+46 70 000 00 00');
+  await page.locator('#acctForm textarea[name="address"]').fill('Stallgatan 1, Stockholm');
+  await page.locator('#acctForm button.save').click();
+  await expect(page.locator('#bag')).toHaveClass(/open/);
+  await page.locator('[data-bagpay]').first().click();
+  await expect(page.locator('#bagConfirmation')).toContainText('Smoke Rider');
   await expect(page.locator('#bagN')).toBeHidden();
 });
 
