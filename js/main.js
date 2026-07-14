@@ -277,6 +277,52 @@ function prodSlug(stack){if(!stack||!stack.length)return null;
   for(var i=0;i<stack.length;i++){if(!/^(hero_|lj_|lm_)/.test(stack[i]))return stack[i]}
   return stack[0]}
 
+/* garment gallery — front, back and details in place; arrows step through */
+var gal=document.getElementById('gal'),galImg=document.getElementById('galImg'),
+    galDots=document.getElementById('galDots'),galState=null;
+function galShots(c,k){var prod=[],model=[];
+  PIECES[c][k].stack.forEach(function(sl){(/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl)?model:prod).push(sl)});
+  var out=prod.concat(model.slice(0,2));
+  return out.length?out:PIECES[c][k].stack}
+function galShow(i){var st=galState.shots;galState.i=(i+st.length)%st.length;
+  var src=bankSrc(st[galState.i]);
+  galImg.style.opacity=0;
+  setTimeout(function(){galImg.src=src;galImg.onload=function(){galImg.style.opacity=1};setTimeout(function(){galImg.style.opacity=1},220)},160);
+  [].forEach.call(galDots.children,function(d,j){d.classList.toggle('on',j===galState.i)})}
+function openGal(c,k,includedSet){var P=PIECES[c][k];if(!P||!P.stack.length)return;
+  galState={c:c,k:k,i:0,includedSet:includedSet||null,shots:galShots(c,k)};
+  document.getElementById('galName').textContent=PIECES[c].name+' '+P.n;
+  document.getElementById('galPrice').textContent=PRICEK[k]?fmtP(PRICEK[k]):'';
+  galDots.innerHTML='';galState.shots.forEach(function(_,j){var d=document.createElement('i');if(!j)d.className='on';galDots.appendChild(d)});
+  var one=galState.shots.length<2;
+  document.getElementById('galPrev').style.display=one?'none':'flex';
+  document.getElementById('galNext').style.display=one?'none':'flex';
+  galDots.style.display=one?'none':'flex';
+  galImg.src=bankSrc(galState.shots[0]);galImg.style.opacity=1;galImg.alt=PIECES[c].name+' '+P.n;
+  gal.classList.add('open');document.body.style.overflow='hidden';focusInto(gal,'#galX')}
+function closeGal(){if(!gal.classList.contains('open'))return;gal.classList.remove('open');galState=null;
+  document.body.style.overflow='';focusBack(gal)}
+document.getElementById('galX').addEventListener('click',closeGal);
+document.getElementById('galPrev').addEventListener('click',function(){if(galState)galShow(galState.i-1)});
+document.getElementById('galNext').addEventListener('click',function(){if(galState)galShow(galState.i+1)});
+document.getElementById('galAdd').addEventListener('click',function(){if(!galState)return;
+  var P=PIECES[galState.c][galState.k];
+  var item={p:P.n,c:PIECES[galState.c].name,z:null};
+  if(galState.includedSet)item.includedSet=galState.includedSet;
+  else if(galState.k==='tailcoat'||galState.k==='jacket')item.includedSet=PIECES[galState.c].name;
+  openQuickSize(item)});
+document.getElementById('galView').addEventListener('click',function(){if(!galState)return;
+  var s=galState;closeGal();openPiece(s.c,s.k,s.includedSet)});
+gal.addEventListener('click',function(e){if(e.target===gal)closeGal()});
+galImg.addEventListener('click',function(e){openZoom(galImg.src,e)});
+(function(){var x0=null;
+  gal.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  gal.addEventListener('touchend',function(e){if(x0===null||!galState)return;var dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>40)galShow(dx<0?galState.i+1:galState.i-1);x0=null},{passive:true})})();
+addEventListener('keydown',function(e){if(!galState||!gal.classList.contains('open'))return;
+  if(e.key==='ArrowRight')galShow(galState.i+1);
+  if(e.key==='ArrowLeft')galShow(galState.i-1)});
+
 
 /* stacked fashion frames + tar suit — fed from the bank */
 document.querySelectorAll('img[data-bank]').forEach(function(im){im.src=bankSrc(im.getAttribute('data-bank'))});
@@ -417,7 +463,7 @@ function upsellRow(suitCol,size){var pn='Belt & epaulettes';
       d.addEventListener('click',function(e){e.stopPropagation();chosen=c;render()});sw.appendChild(d)})}
   ad.addEventListener('click',function(){var a=bagData();
     if(!bagHasCoat(a)){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
-    var it={p:pn,c:chosen,z:'One size',extra:true};a.push(it);bagSave(a);bagToast(null,chosen+' extra belt & epaulettes added to your bag');
+    var it={p:pn,c:chosen,z:size,extra:true};a.push(it);bagSave(a);bagToast(null,chosen+' extra belt & epaulettes added to your bag');
     if(typeof bagRender==='function'&&document.getElementById('bag').classList.contains('open'))bagRender()});
   render();return row}
 var bagToastEl=null,bagToastT=null;
@@ -434,7 +480,7 @@ var quickSizeOptions=document.getElementById('quickSizeOptions'),quickSizeConfir
 var quickSizePrice=document.getElementById('quickSizePrice');
 var pendingQuickItem=null;
 function closeQuickSize(){quickSize.classList.remove('open');pendingQuickItem=null;
-  document.body.style.overflow=(bagov.classList.contains('open')||wlov.classList.contains('open')||acct.classList.contains('open'))?'hidden':'';
+  document.body.style.overflow=(bagov.classList.contains('open')||wlov.classList.contains('open')||acct.classList.contains('open')||gal.classList.contains('open'))?'hidden':'';
   focusBack(quickSize)}
 function openQuickSize(item){pendingQuickItem=item;quickSizeTitle.textContent=item.c+' '+item.p;
   quickSizePrice.textContent=PRICE[item.p]?fmtP(PRICE[item.p]):'';
@@ -496,8 +542,6 @@ function composeCell(box,group,startCol){
     cell.appendChild(tog)}
   var sw=document.createElement('span');sw.className='sw csw';if(!locked)cell.appendChild(sw);
   var quick=document.createElement('div');quick.className='quick-buy';
-  var sizeWrap=null;
-  if(group==='belt'){quick.classList.add('with-size');sizeWrap=document.createElement('label');sizeWrap.className='quick-size one-size';var oneSize=document.createElement('span');oneSize.textContent='One size';sizeWrap.appendChild(oneSize)}
   var quickAdd=document.createElement('button');quickAdd.type='button';quickAdd.className='quick-add';quickAdd.textContent='Add to bag';
   quickAdd.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();var P=PIECES[state.c][state.k];
     if(group==='belt'){var bag=bagData(),coatIndex=-1;for(var bi=bag.length-1;bi>=0;bi--){if(bag[bi].p==='Tailcoat'||bag[bi].p==='Jacket'){coatIndex=bi;break}}
@@ -506,7 +550,7 @@ function composeCell(box,group,startCol){
     var item={p:P.n,c:PIECES[state.c].name,z:null};
     if(state.k==='tailcoat'||state.k==='jacket')item.includedSet=box.id==='compTiles'?(window.__composerIncludedSet||PIECES[state.c].name):PIECES[state.c].name;
     openQuickSize(item)});
-  if(sizeWrap)quick.appendChild(sizeWrap);quick.appendChild(quickAdd);cell.appendChild(quick);
+  quick.appendChild(quickAdd);cell.appendChild(quick);
   var wlb=document.createElement('button');wlb.className='wlbtn';wlb.type='button';wlb.innerHTML=WLHEART;
   wlb.setAttribute('aria-label','Save to wishlist');
   wlb.addEventListener('click',function(e){e.stopPropagation();wlToggle(state.c,state.k);
@@ -515,7 +559,7 @@ function composeCell(box,group,startCol){
   if(group==='belt'){
     if(box.id==='compTiles')wlb.style.display='none';
     var accessoryNote=document.createElement('p');accessoryNote.className='accessory-note';
-    accessoryNote.textContent='One set is included with your Tailcoat or Jacket. Choose the vegan-suede colour you would like with your suit.';
+    accessoryNote.textContent='One set is included with your Tailcoat or Jacket, cut to its size. Choose the vegan-suede colour you would like with your suit.';
     cell.appendChild(accessoryNote)}
   function render(){
     var P=PIECES[state.c][state.k];
@@ -623,8 +667,7 @@ document.addEventListener('click',function(e){
 document.addEventListener('click',function(e){
   var b=e.target.closest('.pc[data-piece]');if(!b)return;
   var parts=b.getAttribute('data-piece').split(':');
-  if(parts[1]==='belt'){openPiece('sand','belt');return}
-  openPiece(parts[0],parts[1],b.closest('#compTiles')?window.__composerIncludedSet:null);
+  openGal(parts[0],parts[1],b.closest('#compTiles')?window.__composerIncludedSet:null);
 });
 document.getElementById('pieceBack').addEventListener('click',function(e){e.preventDefault();goBack()});
 document.getElementById('pieceOrder').addEventListener('click',function(){
@@ -633,7 +676,8 @@ document.getElementById('pieceOrder').addEventListener('click',function(){
   if(lastKey==='belt'){
     var bag=bagData();
     if(!bagHasCoat(bag)){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
-    item.z='One size';bag.push(item);bagSave(bag);bagToast(item);return}
+    var coat=null;for(var ci=bag.length-1;ci>=0;ci--){if(bag[ci].p==='Tailcoat'||bag[ci].p==='Jacket'){coat=bag[ci];break}}
+    item.z=coat.z;bag.push(item);bagSave(bag);bagToast(item);return}
   openQuickSize(item)});
 
 /* pills generic */
@@ -649,7 +693,7 @@ document.querySelectorAll('[data-open-sizeg]').forEach(function(b){b.addEventLis
 document.getElementById('sizegX').onclick=closeSizeg;
 sizeg.addEventListener('click',function(e){if(e.target===sizeg)closeSizeg()});
 scrim.addEventListener('click',function(){closeFilm();closeCcg();closeSizeg()});
-addEventListener('keydown',function(e){if(e.key==='Escape'){closeFilm();closeCcg();closeSizeg();closeQuickSize();menu.classList.remove('open')}});
+addEventListener('keydown',function(e){if(e.key==='Escape'){closeFilm();closeCcg();closeSizeg();closeQuickSize();closeGal();menu.classList.remove('open')}});
 
 /* concierge */
 var ccg=document.getElementById('ccg'),ccgBtn=document.getElementById('ccgBtn');
