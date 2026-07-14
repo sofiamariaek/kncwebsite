@@ -280,9 +280,21 @@ function prodSlug(stack){if(!stack||!stack.length)return null;
 /* garment gallery — front, back and details in place; arrows step through */
 var gal=document.getElementById('gal'),galImg=document.getElementById('galImg'),
     galDots=document.getElementById('galDots'),galState=null;
-function galShots(c,k){var prod=[],model=[];
-  PIECES[c][k].stack.forEach(function(sl){(/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl)?model:prod).push(sl)});
-  var out=prod.concat(model.slice(0,2));
+/* gallery order: garment front, back (and side/top), model front, model back,
+   lining, belt & epaulettes. Fashion shots (hero_/lj_/lm_) never appear here. */
+function galRank(sl){
+  if(/^(hero_|lj_|lm_)/.test(sl))return -1;
+  if(/^(kostym_|mj_)/.test(sl))return /_bak/.test(sl)?5:4;
+  if(/^lining_/.test(sl))return 6;
+  if(/^(belt_|shoulder_)/.test(sl))return 7;
+  if(/_fram/.test(sl))return 1;
+  if(/_bak/.test(sl))return 2;
+  return 3}
+function galShots(c,k){var out=PIECES[c][k].stack
+  .map(function(sl,i){return {sl:sl,r:galRank(sl),i:i}})
+  .filter(function(x){return x.r>-1&&bankSrc(x.sl)})
+  .sort(function(a,b){return a.r-b.r||a.i-b.i})
+  .map(function(x){return x.sl});
   return out.length?out:PIECES[c][k].stack}
 function galShow(i){var st=galState.shots;galState.i=(i+st.length)%st.length;
   var src=bankSrc(st[galState.i]);

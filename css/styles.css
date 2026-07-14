@@ -832,10 +832,11 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .gal.open{opacity:1;visibility:visible;transition:opacity .45s var(--ease)}
 .gal .x{position:absolute;top:16px;right:22px;font-size:26px;line-height:1}
 .galstage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;margin:0}
+.galframe{position:relative;display:flex;align-items:center;justify-content:center;max-width:100%;height:100%}
 .galstage img{max-width:min(92vw,760px);max-height:100%;object-fit:contain;transition:opacity .3s var(--ease)}
 .gnav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,250,235,.88);border:1px solid rgba(0,0,0,.14);font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .4s}
 .gnav:hover{background:var(--white)}
-.gnav.prev{left:clamp(8px,2vw,26px)}.gnav.next{right:clamp(8px,2vw,26px)}
+.gnav.prev{left:10px}.gnav.next{right:10px}
 .galfoot{margin-top:14px;text-align:center}
 .galcap{font-family:"Greenstone",serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
 .galcap em{font-style:normal;display:block;margin-top:4px;font-family:"Jost",sans-serif;font-size:12px;letter-spacing:.06em;color:var(--grey)}

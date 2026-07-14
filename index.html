@@ -551,9 +551,10 @@
 <!-- garment gallery -->
 <div class="gal" id="gal" role="dialog" aria-modal="true" aria-label="Garment photographs">
   <button class="x" id="galX" aria-label="Close">&#215;</button>
-  <figure class="galstage"><img id="galImg" alt=""></figure>
-  <button type="button" class="gnav prev" id="galPrev" aria-label="Previous photograph">&#8249;</button>
-  <button type="button" class="gnav next" id="galNext" aria-label="Next photograph">&#8250;</button>
+  <figure class="galstage"><span class="galframe"><img id="galImg" alt="">
+    <button type="button" class="gnav prev" id="galPrev" aria-label="Previous photograph">&#8249;</button>
+    <button type="button" class="gnav next" id="galNext" aria-label="Next photograph">&#8250;</button>
+  </span></figure>
   <div class="galfoot">
     <p class="galcap"><span id="galName"></span><em id="galPrice"></em></p>
     <div class="galdots" id="galDots" aria-hidden="true"></div>
@@ -666,6 +667,6 @@
 <img data-slug="shoulder_beige" data-src="assets/img/shoulder-beige.jpg" alt="">
 </div>
 
-<script src="js/main.js?v=20260714-1430"></script>
+<script src="js/main.js?v=20260714-1600"></script>
 </body>
 </html>
