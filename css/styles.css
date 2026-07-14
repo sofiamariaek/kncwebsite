@@ -10,9 +10,9 @@
 @media (max-width:760px){.wrap.fashion .tiles{position:static}}
 
 @font-face{font-family:"Greenstone";src:url(../assets/fonts/greenstone.otf) format("opentype");font-weight:normal;font-style:normal;font-display:swap}
-@font-face{font-family:"FK Roman Standard";src:url(../assets/fonts/fk-roman-standard-normal.ttf) format("truetype");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"FK Roman Standard";src:url(../assets/fonts/fk-roman-standard-300.ttf) format("truetype");font-weight:300;font-style:normal;font-display:swap}
-@font-face{font-family:"FK Roman Standard";src:url(../assets/fonts/fk-roman-standard-700.ttf) format("truetype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"FK Roman Standard";src:url(../assets/fonts/fk-roman-standard-light.ttf) format("truetype");font-weight:300 400;font-style:normal;font-display:swap}
+@font-face{font-family:"FK Roman Standard";src:url(../assets/fonts/fk-roman-standard-light-oblique.ttf) format("truetype");font-weight:300 400;font-style:italic;font-display:swap}
+@font-face{font-family:"FK Roman Standard";src:url(../assets/fonts/fk-roman-standard-bold.ttf) format("truetype");font-weight:700;font-style:normal;font-display:swap}
 
 :root{
   --black:#000; --ivory:#FFFAEB; --white:#fff;
