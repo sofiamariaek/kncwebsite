@@ -108,14 +108,15 @@ test('composer — add to bag, then checkout confirms the order', async ({ page 
   await expect(page.locator('#bagN')).toBeHidden();
 });
 
-test('piece page — tile opens the garment gallery, View piece leads on, order uses chosen size', async ({ page }) => {
+test('tiles browse photos in place; caption opens the piece page; order uses chosen size', async ({ page }) => {
   await gotoHome(page);
   await navFromMenu(page, 'composer');
-  await page.locator('#compTiles .pc[data-piece]').first().click();
-  await expect(page.locator('#gal')).toHaveClass(/open/);
-  await expect(page.locator('#galName')).toContainText('Tailcoat');
-  await page.locator('#galNext').click(); // arrows step through front/back/details
-  await page.locator('#galView').click();
+  // photo arrows sit on the tile from the start — no click needed
+  const firstTile = page.locator('#compTiles .cell').first();
+  await expect(firstTile.locator('.tnav.next')).toBeVisible();
+  await firstTile.locator('.tnav.next').click(); // steps to the back shot in place
+  await expect(view(page, 'composer')).toBeVisible();
+  await firstTile.locator('.cap2').click();
   await expect(view(page, 'piece')).toBeVisible();
   await expect(page.locator('#pieceName')).toHaveText('Tailcoat');
   await page.locator('#pieceOrder').click();
