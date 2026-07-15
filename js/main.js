@@ -168,12 +168,18 @@ document.querySelectorAll('#lookFilter button').forEach(function(b){
     document.querySelectorAll('#lookFilter button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});
     renderLooks(b.getAttribute('data-f'))})});
 var curLook=0;
+function lookStackShow(slugs){var st=document.getElementById('lookStack');st.innerHTML='';
+  slugs.forEach(function(sl,j){var src=bankSrc(sl);if(!src)return;
+    var fig=document.createElement('figure');fig.className=j===0?'main fframe':'fframe';
+    var im=document.createElement('img');im.src=src;im.alt='';
+    if(/^(frack_|jacka_|vast_|byxa_)/.test(sl))im.className='flat';
+    fig.appendChild(im);st.appendChild(fig)});
+  st.scrollLeft=0;if(st.__upd)setTimeout(st.__upd,80)}
+window.__lookStackShow=lookStackShow;
 function lookImgs(i){var L=LOOKS[i];curLook=i;
   document.getElementById('lookTitle').textContent='The Equestrian Suit';
   document.getElementById('lookVariant').textContent=L.name+' · '+L.variant;
-  var figs=document.querySelectorAll('#lookStack figure');
-  [].forEach.call(figs,function(fig,j){var im=fig.querySelector('img');var sl=L.shots[j];var src=sl?bankSrc(sl):'';
-    if(src){im.src=src;fig.style.display=''}else{im.removeAttribute('src');fig.style.display='none'}})}
+  lookStackShow(L.shots)}
 function openLook(i){var L=LOOKS[i];
   lookImgs(i);
   var tiles=document.getElementById('lookTiles');
@@ -286,15 +292,15 @@ document.querySelectorAll('img[data-bank]').forEach(function(im){im.src=bankSrc(
 /* pieces — Dior-style: everything stacked under the big picture; named details in the rail */
 var PIECES={
  tar:{name:'Tar',
-   tailcoat:{n:'Tailcoat',stack:['hero_tar','frack_svart_fram','frack_svart_bak','kostym_frack_svart','lining_tar'],rail:[]},
-   jacket:{n:'Jacket',stack:['lj_tar1','jacka_svart_fram','jacka_svart_bak','kostym_black','lining_tar'],rail:[]},
+   tailcoat:{n:'Tailcoat',stack:['hero_tar','frack_svart_fram','frack_svart_bak','kostym_frack_svart','lining_tar','belt_beige_f','shoulder_beige'],rail:[]},
+   jacket:{n:'Jacket',stack:['lj_tar1','jacka_svart_fram','jacka_svart_bak','kostym_black','lining_tar','belt_beige_f','shoulder_beige'],rail:[]},
    corset:{n:'Corset',stack:['vast_svart_fram','vast_svart_bak'],rail:[]},
    cargo:{n:'Cargo breeches',stack:['byxa_svart_cargo_fram','byxa_svart_cargo_bak','byxa_svart_cargo_sida'],rail:[]},
    slim:{n:'Slim breeches',stack:['byxa_svart_slim_fram','byxa_svart_slim_bak','byxa_svart_slim_sida'],rail:[]},
    belt:{n:'Belt & epaulettes',stack:[],rail:[]}},
  moss:{name:'Moss',
-   tailcoat:{n:'Tailcoat',stack:['hero_moss','frack_gron_fram','frack_gron_bak','kostym_frack_gron','lining_moss'],rail:[]},
-   jacket:{n:'Jacket',stack:['lj_moss4','lj_moss1','lj_moss3','jacka_gron_fram','kostym_jacka_gron','lining_moss'],rail:[]},
+   tailcoat:{n:'Tailcoat',stack:['hero_moss','frack_gron_fram','frack_gron_bak','kostym_frack_gron','lining_moss','belt_beige_f','shoulder_beige'],rail:[]},
+   jacket:{n:'Jacket',stack:['lj_moss4','lj_moss1','lj_moss3','jacka_gron_fram','kostym_jacka_gron','lining_moss','belt_beige_f','shoulder_beige'],rail:[]},
    corset:{n:'Corset',stack:['vast_gron_fram','vast_gron_bak'],rail:[]},
    cargo:{n:'Cargo breeches',stack:['byxa_gron_cargo_fram','byxa_gron_cargo_bak','byxa_gron_cargo_sida'],rail:[]},
    slim:{n:'Slim breeches',stack:['byxa_gron_slim_fram','byxa_gron_slim_bak','byxa_gron_slim_sida'],rail:[]},
@@ -315,7 +321,7 @@ var MODEL_SHOTS={
 /* tile photo order: garment front, back (side/top), model front, model back, lining, belt & epaulettes */
 function shotOrder(c,k){var st=PIECES[c][k].stack,out=[],seen={};
   function add(sl){if(sl&&!seen[sl]&&bankSrc(sl)){seen[sl]=1;out.push(sl)}}
-  st.forEach(function(sl){if(/_fram/.test(sl)&&!/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl))add(sl)});
+  st.forEach(function(sl){if((/_fram/.test(sl)||sl==='jacka_beige')&&!/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl))add(sl)});
   st.forEach(function(sl){if(/_bak/.test(sl)&&!/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl))add(sl)});
   st.forEach(function(sl){if(/(_sida|_topp)/.test(sl))add(sl)});
   ((MODEL_SHOTS[k]||{})[c]||[]).forEach(add);
@@ -497,12 +503,15 @@ function composeCell(box,group,startCol){
   var tp=document.createElement('button');tp.type='button';tp.className='tnav prev';tp.innerHTML='&#8249;';tp.setAttribute('aria-label','Previous photograph');
   var tn=document.createElement('button');tn.type='button';tn.className='tnav next';tn.innerHTML='&#8250;';tn.setAttribute('aria-label','Next photograph');
   function tstep(d,e){if(e){e.preventDefault();e.stopPropagation()}if(shots.length<2)return;
-    state.si=(state.si+d+shots.length)%shots.length;img.src=bankSrc(shots[state.si])}
+    state.si=(state.si+d+shots.length)%shots.length;img.src=bankSrc(shots[state.si]);
+    img.classList.toggle('cover',/^lining_/.test(shots[state.si]))}
   tp.addEventListener('click',function(e){tstep(-1,e)});
   tn.addEventListener('click',function(e){tstep(1,e)});
   tile.appendChild(tp);tile.appendChild(tn);
   pc.appendChild(tile);
-  pc.addEventListener('click',function(e){if(group==='belt'||!shots.length)return;openZoom(bankSrc(shots[state.si]),e)});
+  pc.addEventListener('click',function(e){if(group==='belt'||!shots.length)return;
+    if(box.id==='lookTiles'&&window.__lookStackShow){window.__lookStackShow(shotOrder(state.c,state.k));return}
+    openZoom(bankSrc(shots[state.si]),e)});
   pc.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pc.click()}});
   var study=null;
   if(group==='belt'){
@@ -550,8 +559,9 @@ function composeCell(box,group,startCol){
   function render(){
     var P=PIECES[state.c][state.k];
     if(group==='belt')pc.removeAttribute('data-piece');else pc.setAttribute('data-piece',state.c+':'+state.k);
-    state.si=0;shots=(P.stack.length&&group!=='belt')?shotOrder(state.c,state.k):[];
-    if(shots.length){img.style.display='';img.src=bankSrc(shots[0])}else{img.style.display='none';img.removeAttribute('src')}img.setAttribute('aria-label',P.n);
+    state.si=0;var allShots=(P.stack.length&&group!=='belt')?shotOrder(state.c,state.k):[];
+    shots=box.id==='compTiles'?allShots:allShots.slice(0,1);
+    if(shots.length){img.style.display='';img.src=bankSrc(shots[0]);img.classList.remove('cover')}else{img.style.display='none';img.removeAttribute('src')}img.setAttribute('aria-label',P.n);
     tp.style.display=shots.length>1?'flex':'none';tn.style.display=shots.length>1?'flex':'none';
     if(study)study.setAttribute('data-colour',state.c);
     if(group==='belt'&&box.id==='compTiles')window.__composerIncludedSet=PIECES[state.c].name;

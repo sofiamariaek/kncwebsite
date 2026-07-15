@@ -6,6 +6,7 @@
 .fstack figure{flex:0 0 100%;scroll-snap-align:start}
 .fstack .fframe{margin:0;aspect-ratio:3/4;background:#F5F5F5;overflow:hidden}
 .fstack .fframe img{display:block;width:100%;height:100%;object-fit:cover}
+.fstack .fframe img.flat{object-fit:contain}
 .wrap.fashion .tiles{position:sticky;top:clamp(76px,10vh,104px)}
 @media (max-width:760px){.wrap.fashion .tiles{position:static}}
 
@@ -596,6 +597,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .cpage .suitshot{width:100%;margin:0;background:#F5F5F5;aspect-ratio:16/10;overflow:hidden}
 .cpage .suitshot img{width:100%;height:100%;object-fit:contain;padding:3%;box-sizing:border-box;display:block}
 .tile .gimg{display:block;width:100%;height:100%;object-fit:contain;padding:5%;box-sizing:border-box}
+.tile .gimg.cover{object-fit:cover;padding:0}
 .tile .dimg{display:block;width:100%;height:100%;object-fit:cover}
 .prail .tile{aspect-ratio:1/1;background:#F5F5F5}
 .pvstack{display:flex;flex-direction:row;gap:0;overflow-x:auto;overflow-y:hidden;
