@@ -154,6 +154,7 @@ function lookStackShow(slugs){var st=document.getElementById('lookStack');st.inn
     var fig=document.createElement('figure');fig.className=j===0?'main fframe':'fframe';
     var im=document.createElement('img');im.src=src;im.alt='';
     if(/^(frack_|jacka_|vast_|byxa_)/.test(sl))im.className='flat';
+    if(/^(belt_|shoulder_)/.test(sl))im.className='det';
     fig.appendChild(im);st.appendChild(fig)});
   st.scrollLeft=0;if(st.__upd)setTimeout(st.__upd,80)}
 window.__lookStackShow=lookStackShow;
@@ -353,8 +354,15 @@ wlov.addEventListener('click',function(e){if(e.target===wlov)wlClose();if(e.targ
 var bagov=document.getElementById('bag');
 function bagData(){try{return JSON.parse(localStorage.getItem('kc_bag')||'[]')}catch(e){return[]}}
 function bagHasCoat(a){return a.some(function(x){return x.p==='Tailcoat'||x.p==='Jacket'})}
+function coatFromOrders(){var o=orderData();
+  for(var j=0;j<o.length;j++){var it=o[j].items||[];
+    for(var k=it.length-1;k>=0;k--){if(it[k].p==='Tailcoat'||it[k].p==='Jacket')return it[k]}}
+  return null}
+function lastCoat(){var b=bagData();
+  for(var i=b.length-1;i>=0;i--){if(b[i].p==='Tailcoat'||b[i].p==='Jacket')return b[i]}
+  return coatFromOrders()}
 function bagSave(a){
-  if(!bagHasCoat(a))a=a.filter(function(x){return x.p!=='Belt & epaulettes'});
+  if(!bagHasCoat(a)&&!coatFromOrders())a=a.filter(function(x){return x.p!=='Belt & epaulettes'});
   try{localStorage.setItem('kc_bag',JSON.stringify(a))}catch(e){};bagBadge()}
 function orderData(){try{return JSON.parse(localStorage.getItem('kc_orders')||'[]')}catch(e){return[]}}
 function orderSave(a){try{localStorage.setItem('kc_orders',JSON.stringify(a))}catch(e){}}
@@ -389,6 +397,7 @@ function bagRender(){var a=bagData(),box=document.getElementById('bagItems');box
   bagUpsell(a)}
 function bagUpsell(a){var up=document.getElementById('bagUp');up.innerHTML='';
   var suit=null;a.forEach(function(x){if(!suit&&['Tailcoat','Jacket'].indexOf(x.p)>-1)suit=x});
+  if(!suit)suit=coatFromOrders();
   if(!suit)return;
   if(a.some(function(x){return x.p==='Belt & epaulettes'}))return;
   var frag=document.createDocumentFragment();
@@ -422,7 +431,7 @@ function upsellRow(suitCol,size){var pn='Belt & epaulettes';
       d.setAttribute('aria-pressed',String(c===chosen));d.setAttribute('aria-label',c);
       d.addEventListener('click',function(e){e.stopPropagation();chosen=c;render()});sw.appendChild(d)})}
   ad.addEventListener('click',function(){var a=bagData();
-    if(!bagHasCoat(a)){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
+    if(!bagHasCoat(a)&&!coatFromOrders()){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
     var it={p:pn,c:chosen,z:size,extra:true};a.push(it);bagSave(a);bagToast(null,chosen+' extra belt & epaulettes added to your bag');
     if(typeof bagRender==='function'&&document.getElementById('bag').classList.contains('open'))bagRender()});
   render();return row}
@@ -496,11 +505,6 @@ function composeCell(box,group,startCol){
     if(box.id==='lookTiles'&&window.__lookStackShow){window.__lookStackShow(shotOrder(state.c,state.k,true));return}
     openZoom(bankSrc(shots[state.si]),e)});
   pc.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pc.click()}});
-  var study=null;
-  if(group==='belt'){
-    study=document.createElement('span');study.className='accessory-study';study.setAttribute('aria-hidden','true');
-    study.innerHTML='<span class="accessory-forms"><i class="accessory-belt"></i><i class="accessory-epaulettes"></i></span>';
-    tile.appendChild(study)}
   var cap=document.createElement('span');cap.className='cap2';pc.appendChild(cap);
   cap.addEventListener('click',function(e){e.stopPropagation();
     if(group==='belt'){openPiece('sand','belt');return}
@@ -542,11 +546,11 @@ function composeCell(box,group,startCol){
   function render(){
     var P=PIECES[state.c][state.k];
     if(group==='belt')pc.removeAttribute('data-piece');else pc.setAttribute('data-piece',state.c+':'+state.k);
-    state.si=0;var allShots=(P.stack.length&&group!=='belt')?shotOrder(state.c,state.k):[];
+    state.si=0;
+    var allShots=group==='belt'?['belt_beige_f','shoulder_beige']:(P.stack.length?shotOrder(state.c,state.k):[]);
     shots=box.id==='compTiles'?allShots:allShots.slice(0,1);
     if(shots.length){img.style.display='';img.src=bankSrc(shots[0]);img.classList.remove('cover')}else{img.style.display='none';img.removeAttribute('src')}img.setAttribute('aria-label',P.n);
     tp.style.display=shots.length>1?'flex':'none';tn.style.display=shots.length>1?'flex':'none';
-    if(study)study.setAttribute('data-colour',state.c);
     if(group==='belt'&&box.id==='compTiles')window.__composerIncludedSet=PIECES[state.c].name;
     cap.innerHTML=(group==='belt'&&box.id==='compTiles'
       ? P.n+'<em class="capprice">Included · '+PIECES[state.c].name+'</em>'
@@ -613,7 +617,7 @@ function openPiece(c,k,includedSet){
   var stackBox=document.getElementById('psStack');stackBox.innerHTML='';
   P.stack.forEach(function(sl){var fr=document.createElement('div');
     fr.className='pframe tile'+(sl.indexOf('zoom_')===0?' det':'');
-    fr.appendChild(bankImg(sl, sl.indexOf('zoom_')===0?'dimg':(sl.indexOf('lining_')===0?'gimg cover':'gimg')));
+    fr.appendChild(bankImg(sl, sl.indexOf('zoom_')===0?'dimg':(sl.indexOf('lining_')===0?'gimg cover':(/^(belt_|shoulder_)/.test(sl)?'gimg det':'gimg'))));
     stackBox.appendChild(fr)});
   stackBox.scrollLeft=0;if(stackBox.__upd)setTimeout(stackBox.__upd,60);
 
@@ -650,9 +654,9 @@ document.getElementById('pieceOrder').addEventListener('click',function(){
   var item={p:PIECES[lastColour][lastKey].n,c:PIECES[lastColour].name,z:null};
   if(lastIncludedSet)item.includedSet=lastIncludedSet;
   if(lastKey==='belt'){
+    var coat=lastCoat();
+    if(!coat){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
     var bag=bagData();
-    if(!bagHasCoat(bag)){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
-    var coat=null;for(var ci=bag.length-1;ci>=0;ci--){if(bag[ci].p==='Tailcoat'||bag[ci].p==='Jacket'){coat=bag[ci];break}}
     item.z=coat.z;bag.push(item);bagSave(bag);bagToast(item);return}
   openQuickSize(item)});
 
