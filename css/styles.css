@@ -604,14 +604,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
   scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none}
 .pvstack::-webkit-scrollbar{display:none}
 .pvstack .pframe{flex:0 0 100%;scroll-snap-align:start}
-.striphost{position:relative;min-width:0}
-.snav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;
-  background:var(--ivory);border:1px solid var(--black);font-size:19px;line-height:1;z-index:5;
-  transition:background .3s var(--ease),color .3s var(--ease),opacity .3s}
-.snav:hover{background:var(--black);color:var(--ivory)}
-.snav.prev{left:12px}
-.snav.next{right:12px}
-.snav[disabled]{opacity:.25;pointer-events:none}
 
 .pvstack .pframe img,.fstack figure img{cursor:zoom-in}
 .zoomov{position:fixed;inset:0;background:var(--ivory);z-index:95;display:none;overflow:hidden;cursor:zoom-out}
@@ -767,8 +759,8 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .pgrid.pdp .pframe img{width:100%;height:auto;padding:0;object-fit:unset}
 .pgrid.pdp .pbuy{position:sticky;top:0;align-self:start;padding:clamp(48px,6vh,84px) clamp(28px,4.5vw,84px) clamp(28px,4vw,64px) clamp(28px,4vw,72px)}
 .ppage .navrow{position:absolute;z-index:5;top:clamp(16px,2.6vh,30px);left:calc(58% + clamp(28px,4vw,72px));justify-content:flex-start;gap:22px;margin:0}
-.ppage .vback,.ppage .vhome{position:static;background:none;padding:0;border:0;box-shadow:none;font-size:10px;letter-spacing:.24em;color:var(--grey)}
-.ppage .vback:hover,.ppage .vhome:hover{background:none;color:var(--black);border:0}
+.ppage .vback,.ppage .vhome,.lookpage .vback,.lookpage .vhome{position:static;background:none;padding:0;border:0;box-shadow:none;font-size:10px;letter-spacing:.24em;color:var(--grey)}
+.ppage .vback:hover,.ppage .vhome:hover,.lookpage .vback:hover,.lookpage .vhome:hover{background:none;color:var(--black);border:0}
 .pgrid.pdp .pagename{font-size:clamp(34px,3.6vw,52px);line-height:1.05}
 .pgrid.pdp .pprice{font-size:clamp(18px,1.9vw,24px);margin-top:18px}
 .pgrid.pdp .pdesc{margin-top:20px}
@@ -957,4 +949,22 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
   .hlooks #lookStrip::-webkit-scrollbar{display:none}
   .hlooks #lookStrip>a:nth-child(1),.hlooks #lookStrip>a:nth-child(2),.hlooks #lookStrip>a:nth-child(3){flex:0 0 78vw;width:auto;margin:0;scroll-snap-align:start}
   .hlooks>.viewall{margin-left:0}
+}
+
+/* look page — the look's photography flows, its rail stays beside it */
+.lookpage{padding:0 0 clamp(64px,8vh,110px);position:relative;text-align:left}
+.lookpage .wrap.fashion{display:grid;grid-template-columns:minmax(0,58fr) minmax(0,42fr);gap:0;max-width:none;margin:0;align-items:start}
+.lookpage .fstack{display:block;overflow:visible}
+.lookpage .fstack figure{flex:none}
+.lookpage .fstack .fframe{aspect-ratio:auto;background:none;overflow:visible;margin:0}
+.lookpage .fstack .fframe img{width:100%;height:auto;object-fit:unset;display:block}
+.lookpage .pcolw{position:sticky;top:0;align-self:start;padding:clamp(48px,6vh,84px) clamp(28px,4.5vw,84px) 28px clamp(28px,4vw,72px)}
+.lookpage .navrow{position:absolute;z-index:5;top:clamp(16px,2.6vh,30px);left:calc(58% + clamp(28px,4vw,72px));justify-content:flex-start;gap:22px;margin:0}
+.lookpage .pagename{font-size:clamp(30px,3.2vw,46px);text-align:left;margin:0;line-height:1.05}
+.lookpage .look-identity{margin:10px 0 0}
+.lookpage .look-intro{margin:14px 0 26px}
+@media (max-width:760px){
+  .lookpage .wrap.fashion{grid-template-columns:1fr}
+  .lookpage .navrow{position:static;padding:16px var(--pad) 0}
+  .lookpage .pcolw{position:static;padding:26px var(--pad) 8px}
 }

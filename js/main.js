@@ -97,26 +97,7 @@ document.querySelectorAll('video[data-reel]').forEach(function(v){
   })},{threshold:.35});
   vio.observe(host)});
 
-/* photo strips — arrows step through the pictures (piece-page photos flow vertically instead) */
-document.querySelectorAll('.fstack').forEach(function(strip){
-  var host=document.createElement('div');host.className='striphost';
-  strip.parentNode.insertBefore(host,strip);host.appendChild(strip);
-  var pv=document.createElement('button');pv.className='snav prev';pv.setAttribute('aria-label','Previous');pv.innerHTML='&#8249;';
-  var nx=document.createElement('button');nx.className='snav next';nx.setAttribute('aria-label','Next');nx.innerHTML='&#8250;';
-  host.appendChild(pv);host.appendChild(nx);
-  function items(){return [].filter.call(strip.children,function(el){return el.offsetParent!==null&&el.offsetWidth>0})}
-  function curIdx(){var it=items(),sl=strip.scrollLeft,best=0,bd=1e9;
-    it.forEach(function(el,i){var d=Math.abs(el.offsetLeft-strip.offsetLeft-sl);if(d<bd){bd=d;best=i}});return best}
-  function step(d){var it=items();if(!it.length)return;
-    var i=Math.max(0,Math.min(it.length-1,curIdx()+d));
-    var x=it[i].offsetLeft-strip.offsetLeft;
-    try{strip.scrollTo({left:x,behavior:'smooth'})}catch(e){strip.scrollLeft=x}}
-  pv.onclick=function(){step(-1)};nx.onclick=function(){step(1)};
-  function upd(){var it=items();var i=curIdx();
-    pv.disabled=i<=0;nx.disabled=i>=it.length-1}
-  strip.addEventListener('scroll',function(){requestAnimationFrame(upd)},{passive:true});
-  addEventListener('resize',upd);setTimeout(upd,300);
-  strip.__upd=upd});
+/* photographs flow vertically; no strip arrows anywhere */
 
 /* zoom on product pictures */
 var zo=document.getElementById('zoomov'),zi=document.getElementById('zoomImg');
@@ -179,7 +160,8 @@ window.__lookStackShow=lookStackShow;
 function lookImgs(i){var L=LOOKS[i];curLook=i;
   document.getElementById('lookTitle').textContent='The Equestrian Suit';
   document.getElementById('lookVariant').textContent=L.name+' · '+L.variant;
-  lookStackShow(L.shots)}
+  var lead=((MODEL_SHOTS[L.kind]||{})[L.c]||[]).slice();
+  lookStackShow(lead.concat(L.shots.filter(function(sl){return lead.indexOf(sl)<0})))}
 function openLook(i){var L=LOOKS[i];
   lookImgs(i);
   var tiles=document.getElementById('lookTiles');
@@ -318,13 +300,14 @@ var MODEL_SHOTS={
  tailcoat:{tar:['lm_tar2','lm_tar3'],moss:['lm_moss2','lm_moss3'],sand:['lm_sand2','lm_sand3']},
  jacket:{tar:['mj_tar2','mj_tar3'],moss:['lj_moss1','lj_moss3'],sand:['lj_sand2','lj_sand3']}
 };
-/* tile photo order: garment front, back (side/top), model front, model back, lining, belt & epaulettes */
-function shotOrder(c,k){var st=PIECES[c][k].stack,out=[],seen={};
+/* tile photo order: garment front, back (side/top), then — only where asked — model front
+   and back, then lining, belt & epaulettes. The composer never shows the model. */
+function shotOrder(c,k,withModel){var st=PIECES[c][k].stack,out=[],seen={};
   function add(sl){if(sl&&!seen[sl]&&bankSrc(sl)){seen[sl]=1;out.push(sl)}}
   st.forEach(function(sl){if((/_fram/.test(sl)||sl==='jacka_beige')&&!/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl))add(sl)});
   st.forEach(function(sl){if(/_bak/.test(sl)&&!/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl))add(sl)});
   st.forEach(function(sl){if(/(_sida|_topp)/.test(sl))add(sl)});
-  ((MODEL_SHOTS[k]||{})[c]||[]).forEach(add);
+  if(withModel)((MODEL_SHOTS[k]||{})[c]||[]).forEach(add);
   st.forEach(function(sl){if(/^lining_/.test(sl))add(sl)});
   st.forEach(function(sl){if(/^(belt_|shoulder_)/.test(sl))add(sl)});
   return out.length?out:st.slice()}
@@ -510,7 +493,7 @@ function composeCell(box,group,startCol){
   tile.appendChild(tp);tile.appendChild(tn);
   pc.appendChild(tile);
   pc.addEventListener('click',function(e){if(group==='belt'||!shots.length)return;
-    if(box.id==='lookTiles'&&window.__lookStackShow){window.__lookStackShow(shotOrder(state.c,state.k));return}
+    if(box.id==='lookTiles'&&window.__lookStackShow){window.__lookStackShow(shotOrder(state.c,state.k,true));return}
     openZoom(bankSrc(shots[state.si]),e)});
   pc.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pc.click()}});
   var study=null;
