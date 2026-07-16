@@ -301,6 +301,18 @@ var MODEL_SHOTS={
  tailcoat:{tar:['lm_tar2','lm_tar3'],moss:['lm_moss2','lm_moss3'],sand:['lm_sand2','lm_sand3']},
  jacket:{tar:['mj_tar2','mj_tar3'],moss:['lj_moss1','lj_moss3'],sand:['lj_sand2','lj_sand3']}
 };
+/* piece-page order: the fashion shot, garment front, back (side/top), lining,
+   epaulettes, belt. Never the whole-suit shot — that belongs to the looks. */
+function pdpShots(c,k){var st=PIECES[c][k].stack,out=[],seen={},ms=((MODEL_SHOTS[k]||{})[c]||[]);
+  function add(sl){if(sl&&!seen[sl]&&bankSrc(sl)){seen[sl]=1;out.push(sl)}}
+  for(var i=0;i<st.length;i++){var sl=st[i];
+    if(/^(hero_|lj_|lm_|mj_)/.test(sl)&&ms.indexOf(sl)<0){add(sl);break}}
+  st.forEach(function(sl){if((/_fram/.test(sl)||sl==='jacka_beige')&&!/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl))add(sl)});
+  st.forEach(function(sl){if(/_bak/.test(sl)&&!/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl))add(sl)});
+  st.forEach(function(sl){if(/(_sida|_topp)/.test(sl))add(sl)});
+  st.forEach(function(sl){if(/^lining_/.test(sl))add(sl)});
+  st.forEach(function(sl){if(/^(belt_|shoulder_)/.test(sl))add(sl)});
+  return out.length?out:st.slice()}
 /* tile photo order: garment front, back (side/top), then — only where asked — model front
    and back, then lining, belt & epaulettes. The composer never shows the model. */
 function shotOrder(c,k,withModel){var st=PIECES[c][k].stack,out=[],seen={};
@@ -615,7 +627,7 @@ function openPiece(c,k,includedSet){
     else pce.style.display='none'}
   document.getElementById('pieceColour').textContent=PIECES[c].name;
   var stackBox=document.getElementById('psStack');stackBox.innerHTML='';
-  P.stack.forEach(function(sl){var fr=document.createElement('div');
+  pdpShots(c,k).forEach(function(sl){var fr=document.createElement('div');
     fr.className='pframe tile'+(sl.indexOf('zoom_')===0?' det':'');
     fr.appendChild(bankImg(sl, sl.indexOf('zoom_')===0?'dimg':(sl.indexOf('lining_')===0?'gimg cover':(/^(belt_|shoulder_)/.test(sl)?'gimg det':'gimg'))));
     stackBox.appendChild(fr)});
