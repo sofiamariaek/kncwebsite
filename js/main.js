@@ -97,8 +97,8 @@ document.querySelectorAll('video[data-reel]').forEach(function(v){
   })},{threshold:.35});
   vio.observe(host)});
 
-/* photo strips — arrows step through the pictures */
-document.querySelectorAll('.fstack,.pvstack').forEach(function(strip){
+/* photo strips — arrows step through the pictures (piece-page photos flow vertically instead) */
+document.querySelectorAll('.fstack').forEach(function(strip){
   var host=document.createElement('div');host.className='striphost';
   strip.parentNode.insertBefore(host,strip);host.appendChild(strip);
   var pv=document.createElement('button');pv.className='snav prev';pv.setAttribute('aria-label','Previous');pv.innerHTML='&#8249;';

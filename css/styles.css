@@ -758,6 +758,30 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .composition-actions .btn{white-space:nowrap}
 .composition-actions a:not(.btn){font-size:10px;letter-spacing:.16em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px}
 .navrow .vhome::before{content:"";margin:0}
+
+/* piece page — full-bleed photography left, sticky buy rail right */
+.ppage{padding:0 0 clamp(64px,8vh,110px);position:relative}
+.pgrid.pdp{max-width:none;margin:0;grid-template-columns:minmax(0,58fr) minmax(0,42fr);gap:0;align-items:start}
+.pgrid.pdp .pvstack{display:block;overflow:visible}
+.pgrid.pdp .pframe{aspect-ratio:auto;background:none;overflow:visible}
+.pgrid.pdp .pframe img{width:100%;height:auto;padding:0;object-fit:unset}
+.pgrid.pdp .pbuy{position:sticky;top:0;align-self:start;padding:clamp(48px,6vh,84px) clamp(28px,4.5vw,84px) clamp(28px,4vw,64px) clamp(28px,4vw,72px)}
+.ppage .navrow{position:absolute;z-index:5;top:clamp(16px,2.6vh,30px);left:calc(58% + clamp(28px,4vw,72px));justify-content:flex-start;gap:22px;margin:0}
+.ppage .vback,.ppage .vhome{position:static;background:none;padding:0;border:0;box-shadow:none;font-size:10px;letter-spacing:.24em;color:var(--grey)}
+.ppage .vback:hover,.ppage .vhome:hover{background:none;color:var(--black);border:0}
+.pgrid.pdp .pagename{font-size:clamp(34px,3.6vw,52px);line-height:1.05}
+.pgrid.pdp .pprice{font-size:clamp(18px,1.9vw,24px);margin-top:18px}
+.pgrid.pdp .pdesc{margin-top:20px}
+.pgrid.pdp .cthumbs{margin-top:22px}
+.pgrid.pdp .cthumbs button{background:none}
+.pgrid.pdp .btn.wide{background:var(--black);border-color:var(--black);margin-top:28px;padding-top:17px;padding-bottom:16px}
+.pgrid.pdp .btn.wide:hover{background:transparent;color:var(--black)}
+.ctl{padding:0 var(--pad)}
+@media (max-width:760px){
+  .pgrid.pdp{grid-template-columns:1fr}
+  .ppage .navrow{position:static;justify-content:flex-start;padding:16px var(--pad) 0;margin-bottom:6px}
+  .pgrid.pdp .pbuy{position:static;padding:26px var(--pad) 8px}
+}
 @media (max-width:760px){
   #compTiles .cell.is-accessory{grid-template-columns:1fr;grid-template-areas:"visual" "details";padding-bottom:18px}
   #compTiles .cell.is-accessory .tile{aspect-ratio:4/3}
