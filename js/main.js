@@ -137,7 +137,7 @@ var LOOKS=[
 ];
 function lookCard(i){var L=LOOKS[i];
   var a=document.createElement('a');a.href='#';
-  a.innerHTML='<figure><img loading="lazy" src="'+bankSrc(L.shots[0])+'" alt="'+L.name+', '+L.variant+'"></figure><span class="lookmeta"><strong>'+L.name+' · '+L.variant+'</strong><em>Available</em></span>';
+  a.innerHTML='<figure><img loading="lazy" src="'+bankSrc(L.shots[0])+'" alt="'+L.name+', '+L.variant+'"></figure><span class="lookmeta"><strong>'+L.name+' · '+L.variant+'</strong></span>';
   a.addEventListener('click',function(e){e.preventDefault();openLook(i)});
   return a}
 function renderLooks(f){var g=document.getElementById('lookGrid');if(!g)return;g.innerHTML='';

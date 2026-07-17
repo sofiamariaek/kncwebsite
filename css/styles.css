@@ -820,9 +820,8 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 
 
 
-.lookmeta{display:flex;justify-content:space-between;gap:14px;align-items:baseline;padding-top:12px}
+.lookmeta{display:flex;justify-content:center;gap:14px;align-items:baseline;padding-top:12px}
 .lookmeta strong{font-family:"Greenstone",serif;font-size:clamp(13.5px,1.25vw,16px);font-weight:400;letter-spacing:.12em;text-transform:uppercase}
-.lookmeta em{font-style:normal;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--grey);white-space:nowrap}
 .suit-introduction{max-width:1140px;margin:0 auto clamp(42px,6vw,78px)}
 .suit-introduction>p{max-width:660px;margin:0 auto clamp(28px,4vw,46px);text-align:center;font-size:clamp(16px,1.55vw,20px);line-height:1.75}
 
