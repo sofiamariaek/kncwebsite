@@ -313,14 +313,13 @@ function pdpShots(c,k){var st=PIECES[c][k].stack,out=[],seen={},ms=((MODEL_SHOTS
   st.forEach(function(sl){if(/^lining_/.test(sl))add(sl)});
   st.forEach(function(sl){if(/^(belt_|shoulder_)/.test(sl))add(sl)});
   return out.length?out:st.slice()}
-/* tile photo order: garment front, back (side/top), then — only where asked — model front
-   and back, then lining, belt & epaulettes. The composer never shows the model. */
-function shotOrder(c,k,withModel){var st=PIECES[c][k].stack,out=[],seen={};
+/* garment-only order for tiles and square-presses: front, back (side/top),
+   lining, belt & epaulettes. Models appear only in the look's own flow. */
+function shotOrder(c,k){var st=PIECES[c][k].stack,out=[],seen={};
   function add(sl){if(sl&&!seen[sl]&&bankSrc(sl)){seen[sl]=1;out.push(sl)}}
   st.forEach(function(sl){if((/_fram/.test(sl)||sl==='jacka_beige')&&!/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl))add(sl)});
   st.forEach(function(sl){if(/_bak/.test(sl)&&!/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl))add(sl)});
   st.forEach(function(sl){if(/(_sida|_topp)/.test(sl))add(sl)});
-  if(withModel)((MODEL_SHOTS[k]||{})[c]||[]).forEach(add);
   st.forEach(function(sl){if(/^lining_/.test(sl))add(sl)});
   st.forEach(function(sl){if(/^(belt_|shoulder_)/.test(sl))add(sl)});
   return out.length?out:st.slice()}
@@ -514,7 +513,7 @@ function composeCell(box,group,startCol){
   tile.appendChild(tp);tile.appendChild(tn);
   pc.appendChild(tile);
   pc.addEventListener('click',function(e){if(group==='belt'||!shots.length)return;
-    if(box.id==='lookTiles'&&window.__lookStackShow){window.__lookStackShow(shotOrder(state.c,state.k,true));return}
+    if(box.id==='lookTiles'&&window.__lookStackShow){window.__lookStackShow(shotOrder(state.c,state.k));return}
     openZoom(bankSrc(shots[state.si]),e)});
   pc.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pc.click()}});
   var cap=document.createElement('span');cap.className='cap2';pc.appendChild(cap);
