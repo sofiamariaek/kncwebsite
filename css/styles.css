@@ -957,5 +957,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
   .lookpage .pcolw{position:static;padding:26px var(--pad) 8px}
 }
 
-/* belt & epaulette detail shots fill a shorter frame — no dead white in the flow */
-.lookpage .fstack .fframe img.det,.pgrid.pdp .pframe img.det{aspect-ratio:4/3;object-fit:cover}
+/* belt & epaulettes side by side, air around each — one calm white band */
+.lookpage .fstack .fframe.pair,.pgrid.pdp .pframe.pair{display:grid;grid-template-columns:1fr 1fr;background:var(--white);aspect-ratio:auto}
+.lookpage .fstack .fframe.pair img,.pgrid.pdp .pframe.pair img{width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;padding:13%;box-sizing:border-box}

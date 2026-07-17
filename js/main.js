@@ -150,12 +150,16 @@ document.querySelectorAll('#lookFilter button').forEach(function(b){
     renderLooks(b.getAttribute('data-f'))})});
 var curLook=0;
 function lookStackShow(slugs){var st=document.getElementById('lookStack');st.innerHTML='';
-  slugs.forEach(function(sl,j){var src=bankSrc(sl);if(!src)return;
-    var fig=document.createElement('figure');fig.className=j===0?'main fframe':'fframe';
-    var im=document.createElement('img');im.src=src;im.alt='';
-    if(/^(frack_|jacka_|vast_|byxa_)/.test(sl))im.className='flat';
-    if(/^(belt_|shoulder_)/.test(sl))im.className='det';
-    fig.appendChild(im);st.appendChild(fig)});
+  for(var j=0;j<slugs.length;j++){var sl=slugs[j],src=bankSrc(sl);if(!src)continue;
+    var fig=document.createElement('figure');fig.className=st.children.length===0?'main fframe':'fframe';
+    if(/^(belt_|shoulder_)/.test(sl)){fig.classList.add('pair');
+      var im1=document.createElement('img');im1.src=src;im1.alt='';fig.appendChild(im1);
+      var nx=slugs[j+1];
+      if(nx&&/^(belt_|shoulder_)/.test(nx)&&bankSrc(nx)){var im2=document.createElement('img');im2.src=bankSrc(nx);im2.alt='';fig.appendChild(im2);j++}}
+    else{var im=document.createElement('img');im.src=src;im.alt='';
+      if(/^(frack_|jacka_|vast_|byxa_)/.test(sl))im.className='flat';
+      fig.appendChild(im)}
+    st.appendChild(fig)}
   st.scrollLeft=0;if(st.__upd)setTimeout(st.__upd,80)}
 window.__lookStackShow=lookStackShow;
 function lookImgs(i){var L=LOOKS[i];curLook=i;
@@ -626,10 +630,15 @@ function openPiece(c,k,includedSet){
     else pce.style.display='none'}
   document.getElementById('pieceColour').textContent=PIECES[c].name;
   var stackBox=document.getElementById('psStack');stackBox.innerHTML='';
-  pdpShots(c,k).forEach(function(sl){var fr=document.createElement('div');
-    fr.className='pframe tile'+(sl.indexOf('zoom_')===0?' det':'');
-    fr.appendChild(bankImg(sl, sl.indexOf('zoom_')===0?'dimg':(sl.indexOf('lining_')===0?'gimg cover':(/^(belt_|shoulder_)/.test(sl)?'gimg det':'gimg'))));
-    stackBox.appendChild(fr)});
+  var shots=pdpShots(c,k);
+  for(var si=0;si<shots.length;si++){var sl=shots[si],fr=document.createElement('div');
+    if(/^(belt_|shoulder_)/.test(sl)){fr.className='pframe pair';
+      fr.appendChild(bankImg(sl,'gimg'));
+      var nx=shots[si+1];
+      if(nx&&/^(belt_|shoulder_)/.test(nx)){fr.appendChild(bankImg(nx,'gimg'));si++}}
+    else{fr.className='pframe tile'+(sl.indexOf('zoom_')===0?' det':'');
+      fr.appendChild(bankImg(sl, sl.indexOf('zoom_')===0?'dimg':(sl.indexOf('lining_')===0?'gimg cover':'gimg')))}
+    stackBox.appendChild(fr)}
   stackBox.scrollLeft=0;if(stackBox.__upd)setTimeout(stackBox.__upd,60);
 
   renderCTL(c,k);
