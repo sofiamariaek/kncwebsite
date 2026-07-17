@@ -594,7 +594,7 @@ var DESCR={
  corset:'A close, architectural layer that brings definition to the complete equestrian suit while retaining freedom of movement.',
  cargo:'Breeches cut with a clean cargo line and engineered for movement in and out of the saddle.',
  slim:'A streamlined breech in Colibri Cr\u00eape, shaped for a close silhouette and ease in motion.',
- belt:'One set, in the colour you choose, is included with every Tailcoat and Jacket. This additional set is for evolving your suit \u2014 another colour, cut to your coat\u2019s size.'
+ belt:'One set, in the colour you choose, is included with every Tailcoat and Jacket. This additional set is for evolving your suit \u2014 another colour, cut to the size of your Tailcoat or Jacket.'
 };
 var CARE={
  tailcoat:{care:['Made in Italy','Dry clean only','Remove belt and epaulettes before dry cleaning','Do not bleach','Do not tumble dry','Do not iron','Store on a shaped hanger'],comp:[['Colibri Cr\u00eape by Reggiani','80% Polyamide, 20% Elastane'],['Lining','61% Viscose, 39% Polyester (PBT)'],['Belt & epaulettes (vegan suede)','80% Polyester (approx. 20% plant-based), 20% Polyurethane (approx. 31% plant-based)']]},
