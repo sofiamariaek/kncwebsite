@@ -162,7 +162,9 @@ function lookImgs(i){var L=LOOKS[i];curLook=i;
   document.getElementById('lookTitle').textContent='The Equestrian Suit';
   document.getElementById('lookVariant').textContent=L.name+' · '+L.variant;
   var lead=((MODEL_SHOTS[L.kind]||{})[L.c]||[]).slice();
-  lookStackShow(lead.concat(L.shots.filter(function(sl){return lead.indexOf(sl)<0})))}
+  var seq=lead.concat(L.shots.filter(function(sl){return lead.indexOf(sl)<0}));
+  ['belt_beige_f','shoulder_beige'].forEach(function(sl){if(seq.indexOf(sl)<0)seq.push(sl)});
+  lookStackShow(seq)}
 function openLook(i){var L=LOOKS[i];
   lookImgs(i);
   var tiles=document.getElementById('lookTiles');
