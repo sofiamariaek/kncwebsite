@@ -85,26 +85,48 @@ test('composer — add to bag, then checkout confirms the order', async ({ page 
   await gotoHome(page);
   await navFromMenu(page, 'composer');
   await page.locator('#compTiles .cell').first().locator('.quick-add').click();
+  await expect(page.locator('#quickSize')).toHaveClass(/open/);
+  await page.locator('#quickSizeOptions [data-size="38"]').click();
+  await page.locator('#quickSizeConfirm').click();
   await expect(page.locator('#bagN')).toHaveText('1');
   await page.locator('#bagLink').click();
   await expect(page.locator('#bag')).toHaveClass(/open/);
   await expect(page.locator('#bagItems .wlitem')).toHaveCount(1);
   await expect(page.locator('#bagItems .bagtot')).toContainText('4,800');
+  // First confirm asks where to deliver; details are saved once, then the order confirms.
   await page.locator('[data-bagpay]').first().click();
-  await expect(page.locator('#bagConfirmation')).toContainText('has been confirmed');
+  await expect(page.locator('#acct')).toHaveClass(/open/);
+  await page.locator('#acctEmailForm input[name="email"]').fill('smoke@kiwicolibri.test');
+  await page.locator('#acctEmailForm button[type="submit"]').click();
+  await page.locator('#acctForm input[name="name"]').fill('Smoke Rider');
+  await page.locator('#acctForm input[name="phone"]').fill('+46 70 000 00 00');
+  await page.locator('#acctForm textarea[name="address"]').fill('Stallgatan 1, Stockholm');
+  await page.locator('#acctForm button.save').click();
+  await expect(page.locator('#bag')).toHaveClass(/open/);
+  await page.locator('[data-bagpay]').first().click();
+  await expect(page.locator('#bagConfirmation')).toContainText('Smoke Rider');
   await expect(page.locator('#bagN')).toBeHidden();
 });
 
-test('piece page — opens from a composer tile, order uses chosen size', async ({ page }) => {
+test('tiles browse photos in place; caption opens the piece page; order uses chosen size', async ({ page }) => {
   await gotoHome(page);
   await navFromMenu(page, 'composer');
-  await page.locator('#compTiles .pc[data-piece]').first().click();
+  // photo arrows sit on the tile from the start — no click needed
+  const firstTile = page.locator('#compTiles .cell').first();
+  await expect(firstTile.locator('.tnav.next')).toBeVisible();
+  await firstTile.locator('.tnav.next').click(); // steps to the back shot in place
+  await expect(view(page, 'composer')).toBeVisible();
+  await firstTile.locator('.cap2').click();
   await expect(view(page, 'piece')).toBeVisible();
   await expect(page.locator('#pieceName')).toHaveText('Tailcoat');
-  await page.locator('#pieceSizes span', { hasText: '40' }).click();
   await page.locator('#pieceOrder').click();
+  await expect(page.locator('#quickSize')).toHaveClass(/open/);
+  await page.locator('#quickSizeOptions [data-size="40"]').click();
+  await page.locator('#quickSizeConfirm').click();
   await expect(page.locator('.bagtoast')).toHaveClass(/show/);
   await expect(page.locator('#bagN')).toHaveText('1');
+  await page.locator('#bagLink').click();
+  await expect(page.locator('#bagItems .nm').first()).toContainText('40');
 });
 
 test('wishlist — heart saves a piece, it appears in the wishlist panel', async ({ page }) => {
