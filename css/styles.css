@@ -947,3 +947,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 /* composer: all four squares on one row; two by two on small screens */
 #compTiles{grid-template-columns:repeat(4,1fr)}
 @media (max-width:820px){#compTiles{grid-template-columns:1fr 1fr}}
+
+/* The Name reads like the founder text above it */
+.namesec .story{max-width:36em}
+.namesec .story p{font-size:clamp(16px,1.8vw,21px);line-height:1.9}
