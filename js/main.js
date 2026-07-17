@@ -413,7 +413,6 @@ function bagUpsell(a){var up=document.getElementById('bagUp');up.innerHTML='';
   var suit=null;a.forEach(function(x){if(!suit&&['Tailcoat','Jacket'].indexOf(x.p)>-1)suit=x});
   if(!suit)suit=coatFromOrders();
   if(!suit)return;
-  if(a.some(function(x){return x.p==='Belt & epaulettes'}))return;
   var frag=document.createDocumentFragment();
   var h=document.createElement('p');h.className='upt';h.textContent='Add an extra set';frag.appendChild(h);
   var nte=document.createElement('p');nte.className='upn';nte.textContent='Your Tailcoat or Jacket includes the belt and epaulettes colour you selected. Add an extra set in another colour, if desired.';frag.appendChild(nte);
@@ -595,7 +594,7 @@ var DESCR={
  corset:'A close, architectural layer that brings definition to the complete equestrian suit while retaining freedom of movement.',
  cargo:'Breeches cut with a clean cargo line and engineered for movement in and out of the saddle.',
  slim:'A streamlined breech in Colibri Cr\u00eape, shaped for a close silhouette and ease in motion.',
- belt:'The house belt and epaulettes complete the composition with a precise equestrian signature.'
+ belt:'One set, in the colour you choose, is included with every Tailcoat and Jacket. This additional set is for evolving your suit \u2014 another colour, cut to your coat\u2019s size.'
 };
 var CARE={
  tailcoat:{care:['Made in Italy','Dry clean only','Remove belt and epaulettes before dry cleaning','Do not bleach','Do not tumble dry','Do not iron','Store on a shaped hanger'],comp:[['Colibri Cr\u00eape by Reggiani','80% Polyamide, 20% Elastane'],['Lining','61% Viscose, 39% Polyester (PBT)'],['Belt & epaulettes (vegan suede)','80% Polyester (approx. 20% plant-based), 20% Polyurethane (approx. 31% plant-based)']]},
@@ -671,7 +670,9 @@ document.getElementById('pieceBack').addEventListener('click',function(e){e.prev
 document.getElementById('pieceOrder').addEventListener('click',function(){
   var item={p:PIECES[lastColour][lastKey].n,c:PIECES[lastColour].name,z:null};
   if(lastIncludedSet)item.includedSet=lastIncludedSet;
-  if(lastKey==='belt'&&!lastCoat()){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
+  if(lastKey==='belt'){
+    if(!lastCoat()){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
+    item.extra=true}
   openQuickSize(item)});
 
 /* pills generic */
