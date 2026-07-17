@@ -516,7 +516,10 @@ function composeCell(box,group,startCol){
   tile.appendChild(tp);tile.appendChild(tn);
   pc.appendChild(tile);
   pc.addEventListener('click',function(e){if(!shots.length)return;
-    if(box.id==='lookTiles'&&window.__lookStackShow){window.__lookStackShow(shotOrder(state.c,state.k));return}
+    if(box.id==='lookTiles'&&window.__lookStackShow){window.__lookStackShow(shotOrder(state.c,state.k));
+      var st=document.getElementById('lookStack');
+      if(st)try{st.scrollIntoView({behavior:'smooth',block:'start'})}catch(err){st.scrollIntoView()}
+      return}
     openZoom(bankSrc(shots[state.si]),e)});
   pc.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pc.click()}});
   var cap=document.createElement('span');cap.className='cap2';pc.appendChild(cap);
