@@ -502,8 +502,6 @@ function composeCell(box,group,startCol){
   var tile=document.createElement('span');tile.className='tile';
   var img=document.createElement('img');img.className='gimg';img.setAttribute('role','img');
   tile.appendChild(img);
-  var img2=document.createElement('img');img2.className='gimg';img2.alt='';img2.style.display='none';
-  tile.appendChild(img2);
   var shots=[];
   var tp=document.createElement('button');tp.type='button';tp.className='tnav prev';tp.innerHTML='&#8249;';tp.setAttribute('aria-label','Previous photograph');
   var tn=document.createElement('button');tn.type='button';tn.className='tnav next';tn.innerHTML='&#8250;';tn.setAttribute('aria-label','Next photograph');
@@ -514,7 +512,7 @@ function composeCell(box,group,startCol){
   tn.addEventListener('click',function(e){tstep(1,e)});
   tile.appendChild(tp);tile.appendChild(tn);
   pc.appendChild(tile);
-  pc.addEventListener('click',function(e){if(group==='belt'||!shots.length)return;
+  pc.addEventListener('click',function(e){if(!shots.length)return;
     if(box.id==='lookTiles'&&window.__lookStackShow){window.__lookStackShow(shotOrder(state.c,state.k));return}
     openZoom(bankSrc(shots[state.si]),e)});
   pc.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pc.click()}});
@@ -560,15 +558,10 @@ function composeCell(box,group,startCol){
     var P=PIECES[state.c][state.k];
     if(group==='belt')pc.removeAttribute('data-piece');else pc.setAttribute('data-piece',state.c+':'+state.k);
     state.si=0;
-    if(group==='belt'){tile.classList.add('pair');shots=['belt_beige_f'];
-      img.style.display='';img.src=bankSrc('belt_beige_f');img.classList.remove('cover');img.setAttribute('aria-label','Belt');
-      img2.style.display='';img2.src=bankSrc('shoulder_beige');img2.setAttribute('aria-label','Epaulettes');
-      tp.style.display='none';tn.style.display='none'}
-    else{tile.classList.remove('pair');img2.style.display='none';
-      var allShots=P.stack.length?shotOrder(state.c,state.k):[];
-      shots=box.id==='compTiles'?allShots:allShots.slice(0,1);
-      if(shots.length){img.style.display='';img.src=bankSrc(shots[0]);img.classList.remove('cover')}else{img.style.display='none';img.removeAttribute('src')}img.setAttribute('aria-label',P.n);
-      tp.style.display=shots.length>1?'flex':'none';tn.style.display=shots.length>1?'flex':'none'}
+    var allShots=group==='belt'?['belt_beige_f','shoulder_beige']:(P.stack.length?shotOrder(state.c,state.k):[]);
+    shots=box.id==='compTiles'?allShots:allShots.slice(0,1);
+    if(shots.length){img.style.display='';img.src=bankSrc(shots[0]);img.classList.remove('cover')}else{img.style.display='none';img.removeAttribute('src')}img.setAttribute('aria-label',P.n);
+    tp.style.display=shots.length>1?'flex':'none';tn.style.display=shots.length>1?'flex':'none';
     if(group==='belt'&&box.id==='compTiles')window.__composerIncludedSet=PIECES[state.c].name;
     cap.innerHTML=(group==='belt'&&box.id==='compTiles'
       ? P.n+'<em class="capprice">Included · '+PIECES[state.c].name+'</em>'
