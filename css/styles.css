@@ -784,10 +784,10 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 }
 
 /* 2026 house architecture refresh */
-.home-world{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:clamp(38px,7vw,110px);align-items:center;padding-top:clamp(90px,14vw,180px);padding-bottom:clamp(90px,14vw,180px)}
-.home-world-copy{max-width:510px}
-.home-world-copy h2{font-size:clamp(29px,4.4vw,60px);line-height:1.18;margin-top:14px}
-.home-world-copy p{margin-top:22px;max-width:42ch}
+.home-world{text-align:center}
+.home-world-images{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,28px)}
+.home-world-copy{max-width:none;margin-top:clamp(26px,4vh,46px)}
+.home-world-copy p{margin:12px auto 0;max-width:52ch}
 .home-world-copy .credit{font-size:11px;color:var(--grey);margin-top:14px}
 .home-world-copy .viewall{display:inline-block;margin-top:28px}
 .home-world-images{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(12px,2vw,26px);align-items:end}
@@ -963,3 +963,9 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 /* composer: belt and epaulettes together in one white square, air around each */
 #compTiles .tile.pair,#compTiles .cell.is-accessory .tile.pair{display:grid;grid-template-columns:1fr 1fr;background:var(--white)}
 #compTiles .tile.pair .gimg{width:100%;height:100%;object-fit:contain;padding:14%;box-sizing:border-box}
+
+/* home rhythm — closer sections, one continuous scroll */
+.view[data-view="home"] section:not(.campstage){padding-top:clamp(52px,7vh,92px);padding-bottom:clamp(52px,7vh,92px)}
+.view[data-view="home"] .stmt{padding-bottom:clamp(18px,3vh,34px)}
+.view[data-view="home"] .hlooks{padding-top:clamp(18px,3vh,34px)}
+@media (max-width:640px){.home-world-images{grid-template-columns:1fr}}
