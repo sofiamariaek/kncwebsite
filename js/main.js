@@ -312,6 +312,8 @@ function pdpShots(c,k){var st=PIECES[c][k].stack,out=[],seen={},ms=((MODEL_SHOTS
     if(/^(hero_|lj_|lm_|mj_)/.test(sl)&&ms.indexOf(sl)<0){add(sl);break}}
   st.forEach(function(sl){if((/_fram/.test(sl)||sl==='jacka_beige')&&!/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl))add(sl)});
   st.forEach(function(sl){if(/_bak/.test(sl)&&!/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl))add(sl)});
+  if(!st.some(function(sl){return /_bak/.test(sl)&&!/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl)&&bankSrc(sl)})){
+    var mb=((MODEL_SHOTS[k]||{})[c]||[])[1];if(mb)add(mb)}
   st.forEach(function(sl){if(/(_sida|_topp)/.test(sl))add(sl)});
   st.forEach(function(sl){if(/^lining_/.test(sl))add(sl)});
   st.forEach(function(sl){if(/^(belt_|shoulder_)/.test(sl))add(sl)});
@@ -322,6 +324,8 @@ function shotOrder(c,k){var st=PIECES[c][k].stack,out=[],seen={};
   function add(sl){if(sl&&!seen[sl]&&bankSrc(sl)){seen[sl]=1;out.push(sl)}}
   st.forEach(function(sl){if((/_fram/.test(sl)||sl==='jacka_beige')&&!/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl))add(sl)});
   st.forEach(function(sl){if(/_bak/.test(sl)&&!/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl))add(sl)});
+  if(!st.some(function(sl){return /_bak/.test(sl)&&!/^(hero_|lj_|lm_|mj_|kostym_)/.test(sl)&&bankSrc(sl)})){
+    var mb=((MODEL_SHOTS[k]||{})[c]||[])[1];if(mb)add(mb)}
   st.forEach(function(sl){if(/(_sida|_topp)/.test(sl))add(sl)});
   st.forEach(function(sl){if(/^lining_/.test(sl))add(sl)});
   st.forEach(function(sl){if(/^(belt_|shoulder_)/.test(sl))add(sl)});
