@@ -124,8 +124,8 @@ var i=0;setInterval(function(){
   i=ni},5200)})();
 
 /* shop the look — numbered looks, filter, mini-pages */
-var PRICE={'Tailcoat':4800,'Jacket':4200,'Cargo breeches':2000,'Slim breeches':1850,'Corset':2000,'Belt & epaulettes':500};
-var PRICEK={tailcoat:4800,jacket:4200,cargo:2000,slim:1850,corset:2000,belt:500};
+var PRICE={'Tailcoat':4800,'Jacket':4200,'Cargo breeches':2000,'Slim breeches':1850,'Corset':2000,'Belt & epaulettes':750};
+var PRICEK={tailcoat:4800,jacket:4200,cargo:2000,slim:1850,corset:2000,belt:750};
 function fmtP(v){return '\u20AC'+String(v).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
 var LOOKS=[
  {kind:'tailcoat',c:'sand',name:'Tailcoat Suit',variant:'Sandstone',shots:['hero_sand','lm_sand2','lm_sand3','kostym_frack_beige','lining_sand','belt_beige_f','shoulder_beige']},
@@ -648,7 +648,7 @@ function renderCTL(c,k){
   items.forEach(function(it){
     var b=document.createElement('button');b.className='ctlc';b.type='button';
     var sp=document.createElement('span');sp.className='tile';sp.appendChild(bankImg(it.img,'gimg'));
-    var pc=document.createElement('span');pc.className='pcap';pc.innerHTML='<span>'+it.name+'</span><span>'+fmtP(PRICE[it.name]||500)+'</span>';sp.appendChild(pc);
+    var pc=document.createElement('span');pc.className='pcap';pc.innerHTML='<span>'+it.name+'</span><span>'+fmtP(PRICE[it.name]||750)+'</span>';sp.appendChild(pc);
     var nm=document.createElement('span');nm.className='nm';nm.textContent=it.name;
     var cl=document.createElement('span');cl.className='cl';cl.textContent=it.col;
     b.appendChild(sp);b.appendChild(nm);b.appendChild(cl);
