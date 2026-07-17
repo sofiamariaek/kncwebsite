@@ -124,8 +124,8 @@ var i=0;setInterval(function(){
   i=ni},5200)})();
 
 /* shop the look — numbered looks, filter, mini-pages */
-var PRICE={'Tailcoat':4800,'Jacket':4200,'Cargo breeches':2000,'Slim breeches':1850,'Corset':2000,'Belt & epaulettes':750};
-var PRICEK={tailcoat:4800,jacket:4200,cargo:2000,slim:1850,corset:2000,belt:750};
+var PRICE={'Tailcoat':4800,'Jacket':4200,'Cargo breeches':2000,'Slim breeches':1850,'Corset':2000,'Belt & epaulettes':500};
+var PRICEK={tailcoat:4800,jacket:4200,cargo:2000,slim:1850,corset:2000,belt:500};
 function fmtP(v){return '\u20AC'+String(v).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
 var LOOKS=[
  {kind:'tailcoat',c:'sand',name:'Tailcoat Suit',variant:'Sandstone',shots:['hero_sand','lm_sand2','lm_sand3','kostym_frack_beige','lining_sand','belt_beige_f','shoulder_beige']},
@@ -436,15 +436,14 @@ function upsellRow(suitCol,size){var pn='Belt & epaulettes';
   row.appendChild(ad);
   function render(){
     if(chosen==='Sandstone'){im.src=bankSrc(UPIMGS.Belt);im.style.display=''}else{im.removeAttribute('src');im.style.display='none'}
-    nm.innerHTML='Extra belt & epaulettes<em style="display:block;font-style:normal;font-size:11px;color:var(--grey);margin-top:2px">'+fmtP(750)+'</em>';
+    nm.innerHTML='Extra belt & epaulettes<em style="display:block;font-style:normal;font-size:11px;color:var(--grey);margin-top:2px">'+fmtP(PRICE['Belt & epaulettes'])+'</em>';
     sw.innerHTML='';
     others.forEach(function(c){var d=document.createElement('button');d.type='button';d.className=UPDOT[c];
       d.setAttribute('aria-pressed',String(c===chosen));d.setAttribute('aria-label',c);
       d.addEventListener('click',function(e){e.stopPropagation();chosen=c;render()});sw.appendChild(d)})}
   ad.addEventListener('click',function(){var a=bagData();
     if(!bagHasCoat(a)&&!coatFromOrders()){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
-    var it={p:pn,c:chosen,z:size,extra:true};a.push(it);bagSave(a);bagToast(null,chosen+' extra belt & epaulettes added to your bag');
-    if(typeof bagRender==='function'&&document.getElementById('bag').classList.contains('open'))bagRender()});
+    openQuickSize({p:pn,c:chosen,z:null,extra:true})});
   render();return row}
 var bagToastEl=null,bagToastT=null;
 function bagToast(item,message){
@@ -475,7 +474,9 @@ quickSizeConfirm.addEventListener('click',function(){if(!pendingQuickItem||!pend
   if(item.__edit!=null){if(bag[item.__edit]){bag[item.__edit].z=item.z;bagSave(bag);
     if(bagov.classList.contains('open'))bagRender()}
     closeQuickSize();bagToast(null,item.c+' '+item.p+' · size updated to '+item.z);return}
-  bag.push(item);bagSave(bag);closeQuickSize();bagToast(item)});
+  bag.push(item);bagSave(bag);closeQuickSize();
+  if(bagov.classList.contains('open'))bagRender();
+  bagToast(item)});
 document.getElementById('quickSizeX').addEventListener('click',closeQuickSize);
 quickSize.addEventListener('click',function(e){if(e.target===quickSize)closeQuickSize()});
 document.querySelectorAll('[data-bagpay]').forEach(function(b){b.addEventListener('click',function(){
@@ -647,7 +648,7 @@ function renderCTL(c,k){
   items.forEach(function(it){
     var b=document.createElement('button');b.className='ctlc';b.type='button';
     var sp=document.createElement('span');sp.className='tile';sp.appendChild(bankImg(it.img,'gimg'));
-    var pc=document.createElement('span');pc.className='pcap';pc.innerHTML='<span>'+it.name+'</span><span>'+fmtP(PRICE[it.name]||750)+'</span>';sp.appendChild(pc);
+    var pc=document.createElement('span');pc.className='pcap';pc.innerHTML='<span>'+it.name+'</span><span>'+fmtP(PRICE[it.name]||500)+'</span>';sp.appendChild(pc);
     var nm=document.createElement('span');nm.className='nm';nm.textContent=it.name;
     var cl=document.createElement('span');cl.className='cl';cl.textContent=it.col;
     b.appendChild(sp);b.appendChild(nm);b.appendChild(cl);
@@ -664,11 +665,7 @@ document.getElementById('pieceBack').addEventListener('click',function(e){e.prev
 document.getElementById('pieceOrder').addEventListener('click',function(){
   var item={p:PIECES[lastColour][lastKey].n,c:PIECES[lastColour].name,z:null};
   if(lastIncludedSet)item.includedSet=lastIncludedSet;
-  if(lastKey==='belt'){
-    var coat=lastCoat();
-    if(!coat){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
-    var bag=bagData();
-    item.z=coat.z;bag.push(item);bagSave(bag);bagToast(item);return}
+  if(lastKey==='belt'&&!lastCoat()){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
   openQuickSize(item)});
 
 /* pills generic */
