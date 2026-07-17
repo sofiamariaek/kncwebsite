@@ -292,7 +292,7 @@ var PIECES={
    belt:{n:'Belt & epaulettes',stack:[],rail:[]}},
  sand:{name:'Sandstone',
    tailcoat:{n:'Tailcoat',stack:['hero_sand','frack_beige_fram','frack_beige_bak','kostym_frack_beige','lining_sand','belt_beige_f','shoulder_beige'],rail:[]},
-   jacket:{n:'Jacket',stack:['lj_sand1','lj_sand2','lj_sand3','jacka_beige','kostym_jacka_beige','lining_sand','belt_beige_f','shoulder_beige'],rail:[]},
+   jacket:{n:'Jacket',stack:['lj_sand1','lj_sand2','lj_sand3','jacka_beige','jacka_beige_bak','kostym_jacka_beige','lining_sand','belt_beige_f','shoulder_beige'],rail:[]},
    corset:{n:'Corset',stack:['vast_beige_fram','vast_beige_bak'],rail:[]},
    cargo:{n:'Cargo breeches',stack:['byxa_beige_cargo_fram','byxa_beige_cargo_bak','byxa_beige_cargo_sida','byxa_beige_topp'],rail:[]},
    slim:{n:'Slim breeches',stack:['byxa_beige_slim_fram','byxa_beige_slim_bak'],rail:[]},
