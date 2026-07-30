@@ -248,11 +248,9 @@ footer .fsig p{margin-top:18px;font-size:9.5px;letter-spacing:.24em;text-transfo
 .moment{margin:0 auto clamp(48px,7vw,90px);max-width:1080px}
 .moment:last-child{margin-bottom:0}
 .mpair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,28px)}
-.moment.single figure{max-width:640px;margin:0 auto}
 .moment figure{margin:0}
 @media (max-width:700px){.mpair{grid-template-columns:1fr;gap:14px}}
 .edit .fash .fr{aspect-ratio:4/5;overflow:hidden;display:block;background:#EDE7D8}
-.moment.single .fr{aspect-ratio:4/5}
 .edit .fash .fr.empty{background:#F1ECDF}
 .edit .fash img{width:100%;height:100%;object-fit:cover}
 .fash .fr video{width:100%;height:100%;object-fit:cover;display:block}
