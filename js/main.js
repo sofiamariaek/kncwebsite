@@ -116,7 +116,7 @@ document.addEventListener('click',function(e){
 addEventListener('keydown',function(e){if(e.key==='Escape')closeZoom()});
 
 /* campaign stage — rotating stills, ends on the connection shot */
-(function(){var cs=document.querySelectorAll('.campstage .csv');if(!cs.length)return;
+(function(){var cs=document.querySelectorAll('.campstage .csv');if(cs.length<2)return;
 var i=0;setInterval(function(){
   cs[i].classList.remove('on');
   var ni=(i+1)%cs.length;
