@@ -963,4 +963,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 
 /* Evening: the Paris picture full width and uncropped */
 .edit .fash .fr.mwide{aspect-ratio:auto;background:none;margin:0 0 clamp(14px,2vw,28px)}
+.edit .fash .fr.mhalf{aspect-ratio:auto;background:none;max-width:640px;margin:0 auto}
+.moment .mhalf img{width:100%;height:auto;object-fit:unset;display:block}
 .moment .mwide img{width:100%;height:auto;object-fit:unset;display:block}
