@@ -961,7 +961,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .namesec .story p{font-size:clamp(16px,1.8vw,21px);line-height:1.9}
 
 
-/* Evening: the Paris picture full width and uncropped, the corset beneath */
-.moment .mwide{aspect-ratio:auto;margin:0 0 clamp(14px,2vw,28px)}
+/* Evening: the Paris picture full width and uncropped */
+.edit .fash .fr.mwide{aspect-ratio:auto;background:none;margin:0}
 .moment .mwide img{width:100%;height:auto;object-fit:unset;display:block}
-.moment .mhalf{max-width:640px;margin:0 auto}
