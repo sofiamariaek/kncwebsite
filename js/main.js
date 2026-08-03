@@ -229,6 +229,13 @@ document.addEventListener('click',function(e){
 var menu=document.getElementById('menu');
 document.getElementById('burger').onclick=function(){menu.classList.add('open')};
 document.getElementById('menuX').onclick=function(){menu.classList.remove('open');focusBack(menu)};
+document.addEventListener('click',function(e){
+  if(!menu.classList.contains('open'))return;
+  if(menu.contains(e.target))return;
+  var b=document.getElementById('burger');if(b&&b.contains(e.target))return;
+  var ov=e.target.closest&&e.target.closest('.ccg,.scrim,.acctov,.quicksize,.zoomov,.sizeg');
+  menu.classList.remove('open');focusBack(menu);
+  if(!ov){e.preventDefault();e.stopPropagation()}},true);
 function openMenuGroup(g){
   menu.querySelectorAll('.mitem').forEach(function(mi){
     var mine=mi.getAttribute('data-group')===g;
@@ -414,14 +421,31 @@ function bagRender(){var a=bagData(),box=document.getElementById('bagItems');box
     box.appendChild(tr)}
   bagUpsell(a)}
 function bagUpsell(a){var up=document.getElementById('bagUp');up.innerHTML='';
+  if(!a.length)return;
+  var wl=wlData().filter(function(x){var P=PIECES[x.c]&&PIECES[x.c][x.k];
+    return P&&P.stack.length&&!a.some(function(it){return it.p===P.n&&it.c===PIECES[x.c].name})});
+  if(wl.length){var hw=document.createElement('p');hw.className='upt';hw.textContent='From your wishlist';up.appendChild(hw);
+    wl.forEach(function(x){var P=PIECES[x.c][x.k];
+      var row=document.createElement('div');row.className='suprow';
+      var im=document.createElement('img');im.src=bankSrc(prodSlug(P.stack));row.appendChild(im);
+      var nm=document.createElement('i');nm.style.fontStyle='normal';nm.style.flex='1';
+      nm.innerHTML=PIECES[x.c].name+' \u00b7 '+P.n+'<em style="display:block;font-style:normal;font-size:11px;color:var(--grey);margin-top:2px">'+fmtP(PRICEK[x.k]||0)+'</em>';
+      row.appendChild(nm);
+      var ad=document.createElement('button');ad.type='button';ad.className='add';ad.textContent='Add';
+      ad.style.textDecoration='underline';ad.style.textUnderlineOffset='3px';
+      ad.style.fontSize='10.5px';ad.style.letterSpacing='.18em';ad.style.textTransform='uppercase';
+      ad.addEventListener('click',function(){var item={p:P.n,c:PIECES[x.c].name,z:null};
+        if(x.k==='tailcoat'||x.k==='jacket')item.includedSet=PIECES[x.c].name;
+        openQuickSize(item)});
+      row.appendChild(ad);up.appendChild(row)})}
   var suit=null;a.forEach(function(x){if(!suit&&['Tailcoat','Jacket'].indexOf(x.p)>-1)suit=x});
   if(!suit)suit=coatFromOrders();
   if(!suit)return;
-  var frag=document.createDocumentFragment();
-  var h=document.createElement('p');h.className='upt';h.textContent='Add an extra set';frag.appendChild(h);
-  var nte=document.createElement('p');nte.className='upn';nte.textContent='Your Tailcoat or Jacket includes the belt and epaulettes colour you selected. Add an extra set in another colour, if desired.';frag.appendChild(nte);
-  frag.appendChild(upsellRow(suit.includedSet||suit.c,suit.z));
-  up.appendChild(frag)}
+  var h=document.createElement('p');h.className='upt';h.textContent='Add an extra set';
+  if(wl.length)h.style.marginTop='18px';
+  up.appendChild(h);
+  var nte=document.createElement('p');nte.className='upn';nte.textContent='Your Tailcoat or Jacket includes the belt and epaulettes colour you selected. Add an extra set in another colour, if desired.';up.appendChild(nte);
+  up.appendChild(upsellRow(suit.includedSet||suit.c,suit.z))}
 function openBag(e){if(e)e.preventDefault();bagov.classList.remove('confirmed');bagRender();bagov.classList.add('open');document.body.style.overflow='hidden';focusInto(bagov,'#bagX')}
 function closeBag(){bagov.classList.remove('open');document.body.style.overflow='';focusBack(bagov)}
 document.getElementById('bagLink').addEventListener('click',openBag);
@@ -543,6 +567,10 @@ function composeCell(box,group,startCol){
         if(kk&&window.__suitSet&&window.__suitSet[kk])window.__suitSet[kk](state.c,false)});
       tog.appendChild(b)});
     cell.appendChild(tog)}
+  else if(/(^|,)(coat|breech)(,|$)/.test(box.getAttribute('data-slots')||'')){
+    var ghost=document.createElement('span');ghost.className='vtog vghost';ghost.setAttribute('aria-hidden','true');
+    var gb=document.createElement('button');gb.type='button';gb.tabIndex=-1;gb.textContent='Corset';ghost.appendChild(gb);
+    cell.appendChild(ghost)}
   var sw=document.createElement('span');sw.className='sw csw';if(!locked)cell.appendChild(sw);
   var quick=document.createElement('div');quick.className='quick-buy';
   var quickAdd=document.createElement('button');quickAdd.type='button';quickAdd.className='quick-add';quickAdd.textContent='Add to bag';
@@ -652,8 +680,11 @@ function renderCTL(c,k){
   var row=document.getElementById('ctlRow');row.innerHTML='';
   var garments=['tailcoat','corset','cargo'].filter(function(x){return x!==k});
   var items=[];
-  garments.forEach(function(g,i){var cc=nextCol(c,i+1);
-    items.push({img:PIECES[cc][g].stack[0],name:PIECES[cc][g].n,col:PIECES[cc].name,go:function(){openPiece(cc,g)}})});
+  garments.forEach(function(g){var cc=c;
+    if(!PIECES[cc][g]||!PIECES[cc][g].stack.length){for(var s=1;s<3;s++){var alt=nextCol(c,s);
+      if(PIECES[alt][g]&&PIECES[alt][g].stack.length){cc=alt;break}}}
+    if(!PIECES[cc][g]||!PIECES[cc][g].stack.length)return;
+    items.push({img:prodSlug(PIECES[cc][g].stack),name:PIECES[cc][g].n,col:PIECES[cc].name,go:function(){openPiece(cc,g)}})});
   items.forEach(function(it){
     var b=document.createElement('button');b.className='ctlc';b.type='button';
     var sp=document.createElement('span');sp.className='tile';sp.appendChild(bankImg(it.img,'gimg'));
