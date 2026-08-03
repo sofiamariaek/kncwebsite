@@ -590,8 +590,8 @@ function composeCell(box,group,startCol){
   if(group==='belt'){
     if(box.id==='compTiles')wlb.style.display='none';
     var accessoryNote=document.createElement('p');accessoryNote.className='accessory-note';
-    accessoryNote.textContent='One set is included with your Tailcoat or Jacket, cut to its size. Choose the vegan-suede colour you would like with your suit.';
-    cell.appendChild(accessoryNote)}
+    accessoryNote.textContent='One set is included with your Tailcoat or Jacket, cut to its size.';
+    cell.insertBefore(accessoryNote,quick)}
   function render(){
     var P=PIECES[state.c][state.k];
     if(group==='belt')pc.removeAttribute('data-piece');else pc.setAttribute('data-piece',state.c+':'+state.k);
