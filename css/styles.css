@@ -250,6 +250,11 @@ footer .fsig p{margin-top:18px;font-size:9.5px;letter-spacing:.24em;text-transfo
 .mpair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,28px)}
 .moment figure{margin:0}
 @media (max-width:700px){.mpair{grid-template-columns:1fr;gap:14px}}
+/* the walking pair: columns match each photo's ratio, so heights align uncropped */
+.mpair.walkpair{grid-template-columns:1.49941fr 1.44329fr}
+.edit .fash .walkpair .fr{aspect-ratio:auto;background:none}
+.walkpair .fr img{width:100%;height:auto;object-fit:unset;display:block}
+@media (max-width:700px){.mpair.walkpair{grid-template-columns:1fr}}
 .moment .msolo{margin:clamp(14px,2vw,28px) auto 0;max-width:min(520px,86vw)}
 .edit .fash .fr.msolo{aspect-ratio:2/3}
 .edit .fash .fr{aspect-ratio:4/5;overflow:hidden;display:block;background:#EDE7D8}
