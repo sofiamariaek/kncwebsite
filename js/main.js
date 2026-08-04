@@ -439,7 +439,6 @@ function bagUpsell(a){var up=document.getElementById('bagUp');up.innerHTML='';
         openQuickSize(item)});
       row.appendChild(ad);up.appendChild(row)})}
   var suit=null;a.forEach(function(x){if(!suit&&['Tailcoat','Jacket'].indexOf(x.p)>-1)suit=x});
-  if(!suit)suit=coatFromOrders();
   if(!suit)return;
   var h=document.createElement('p');h.className='upt';h.textContent='Add an extra set';
   if(wl.length)h.style.marginTop='18px';
