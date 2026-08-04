@@ -324,6 +324,8 @@ function pdpShots(c,k){var st=PIECES[c][k].stack,out=[],seen={},ms=((MODEL_SHOTS
   st.forEach(function(sl){if(/(_sida|_topp)/.test(sl))add(sl)});
   st.forEach(function(sl){if(/^lining_/.test(sl))add(sl)});
   st.forEach(function(sl){if(/^(belt_|shoulder_)/.test(sl))add(sl)});
+  if(k==='tailcoat')add('walk_tailcoat');
+  if(k==='jacket')add('walk_jacket');
   return out.length?out:st.slice()}
 /* garment-only order for tiles and square-presses: front, back (side/top),
    lining, belt & epaulettes. Models appear only in the look's own flow. */
@@ -336,6 +338,8 @@ function shotOrder(c,k){var st=PIECES[c][k].stack,out=[],seen={};
   st.forEach(function(sl){if(/(_sida|_topp)/.test(sl))add(sl)});
   st.forEach(function(sl){if(/^lining_/.test(sl))add(sl)});
   st.forEach(function(sl){if(/^(belt_|shoulder_)/.test(sl))add(sl)});
+  if(k==='tailcoat')add('walk_tailcoat');
+  if(k==='jacket')add('walk_jacket');
   return out.length?out:st.slice()}
 /* wishlist */
 var WLHEART='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.5-9-9c-1.2-2.8.6-6 3.7-6 1.9 0 3.4 1.1 4.3 2.7C11.9 6.1 13.4 5 15.3 5c3.1 0 4.9 3.2 3.7 6-2 4.5-7 9-7 9z"/></svg>';
@@ -665,7 +669,7 @@ function openPiece(c,k,includedSet){
   var stackBox=document.getElementById('psStack');stackBox.innerHTML='';
   pdpShots(c,k).forEach(function(sl){var fr=document.createElement('div');
     fr.className='pframe tile'+(sl.indexOf('zoom_')===0?' det':'');
-    fr.appendChild(bankImg(sl, sl.indexOf('zoom_')===0?'dimg':(sl.indexOf('lining_')===0?'gimg cover':(/^(belt_|shoulder_)/.test(sl)?'gimg det':'gimg'))));
+    fr.appendChild(bankImg(sl, sl.indexOf('zoom_')===0?'dimg':(sl.indexOf('lining_')===0?'gimg cover':(/^(belt_|shoulder_|walk_)/.test(sl)?'gimg det':'gimg'))));
     stackBox.appendChild(fr)});
   stackBox.scrollLeft=0;if(stackBox.__upd)setTimeout(stackBox.__upd,60);
 
