@@ -669,7 +669,7 @@ function openPiece(c,k,includedSet){
   var stackBox=document.getElementById('psStack');stackBox.innerHTML='';
   pdpShots(c,k).forEach(function(sl){var fr=document.createElement('div');
     fr.className='pframe tile'+(sl.indexOf('zoom_')===0?' det':'');
-    fr.appendChild(bankImg(sl, sl.indexOf('zoom_')===0?'dimg':(sl.indexOf('lining_')===0?'gimg cover':(/^(belt_|shoulder_|walk_)/.test(sl)?'gimg det':'gimg'))));
+    fr.appendChild(bankImg(sl, sl.indexOf('zoom_')===0?'dimg':(sl.indexOf('lining_')===0?'gimg cover':(/^(belt_|shoulder_)/.test(sl)?'gimg det':'gimg'))));
     stackBox.appendChild(fr)});
   stackBox.scrollLeft=0;if(stackBox.__upd)setTimeout(stackBox.__upd,60);
 
