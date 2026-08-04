@@ -327,9 +327,11 @@ footer .fsig p{margin-top:18px;font-size:9.5px;letter-spacing:.24em;text-transfo
 .stmt{text-align:center}
 .stmt p{font-size:clamp(18px,2.1vw,25px);line-height:1.65;max-width:30em;margin:0 auto}
 .stmt p+p{margin-top:1.4em;font-style:italic}
-.still{padding-top:0;padding-bottom:clamp(20px,3vh,36px)}
-.still figure{margin:0 auto;max-width:min(560px,88vw)}
-.still img{width:100%;height:auto;display:block}
+.stmt-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(30px,5.5vw,84px);align-items:center;max-width:1180px;margin:0 auto;text-align:left}
+.stmt-grid figure{margin:0}
+.stmt-grid img{width:100%;height:auto;display:block}
+.stmt-grid p{margin:0}
+@media (max-width:860px){.stmt-grid{grid-template-columns:1fr}}
 .crepe h2{font-size:clamp(22px,3vw,34px)}
 .crepe .vwrap{margin-top:clamp(30px,4.6vw,50px);aspect-ratio:16/9;overflow:hidden;background:#171410}
 .crepe video{width:100%;height:100%;object-fit:cover;display:block}
