@@ -532,7 +532,7 @@ function composeCell(box,group,startCol){
   if(!PIECES[state.c][state.k])state.c=CCOLS.filter(function(c){return PIECES[c][state.k]})[0];
   var cell=document.createElement('div');cell.className='cell'+(group==='belt'?' is-accessory':'');
   var pc=document.createElement('div');pc.className='pc';pc.setAttribute('role','button');pc.tabIndex=0;
-  pc.setAttribute('aria-label','Enlarge photograph');
+  pc.setAttribute('aria-label','Open the piece page');
   var tile=document.createElement('span');tile.className='tile';
   var img=document.createElement('img');img.className='gimg';img.setAttribute('role','img');
   tile.appendChild(img);
@@ -547,11 +547,8 @@ function composeCell(box,group,startCol){
   tile.appendChild(tp);tile.appendChild(tn);
   pc.appendChild(tile);
   pc.addEventListener('click',function(e){if(!shots.length)return;
-    if(box.id==='lookTiles'&&window.__lookStackShow){window.__lookStackShow(shotOrder(state.c,state.k));
-      var st=document.getElementById('lookStack');
-      if(st)try{st.scrollIntoView({behavior:'smooth',block:'start'})}catch(err){st.scrollIntoView()}
-      return}
-    openZoom(bankSrc(shots[state.si]),e)});
+    if(group==='belt'){openPiece('sand','belt');return}
+    openPiece(state.c,state.k,(state.k==='tailcoat'||state.k==='jacket')?(box.id==='compTiles'?(window.__composerIncludedSet||PIECES[state.c].name):PIECES[state.c].name):null)});
   pc.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pc.click()}});
   var cap=document.createElement('span');cap.className='cap2';pc.appendChild(cap);
   cap.addEventListener('click',function(e){e.stopPropagation();
