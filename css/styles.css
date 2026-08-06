@@ -249,24 +249,18 @@ footer .fsig p{margin-top:18px;font-size:9.5px;letter-spacing:.24em;text-transfo
 .moment:last-child{margin-bottom:0}
 .mpair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,28px)}
 .moment figure{margin:0}
-/* the staggered editorial — images leave the centre line and alternate sides */
-.world-aesthetic .gallery{margin-top:clamp(50px,8vh,100px)}
-.world-aesthetic .gallery .moment{margin:0 auto clamp(120px,16vh,220px)}
+/* one grammar for both chapters: a wide opener, then a pair — every photo whole, bottoms level */
+.world-aesthetic .gallery{margin-top:clamp(40px,6vh,80px)}
+.world-aesthetic .gallery .moment{margin:0 auto clamp(90px,13vh,170px)}
 .world-aesthetic .gallery .moment:last-child{margin-bottom:0}
-.world-aesthetic .gallery h4{margin:0 0 clamp(44px,7vh,80px)}
-.world-aesthetic .gallery figure{margin:0 0 clamp(64px,9vh,120px)}
-.world-aesthetic .gallery figure:last-child{margin-bottom:0}
-.world-aesthetic .gallery figure:has(+ .gsm){margin-bottom:clamp(28px,4vh,56px)}
-.world-aesthetic .gallery .gwl{width:min(74vw,1100px);margin-left:calc(50% - 50vw);margin-right:auto}
-.world-aesthetic .gallery .gwr{width:min(74vw,1100px);margin-left:auto;margin-right:calc(50% - 50vw)}
-.world-aesthetic .gallery .gsm{max-width:min(460px,72vw)}
-.world-aesthetic .gallery .gpr{max-width:min(540px,74vw)}
-.world-aesthetic .gallery .gsm.right,.world-aesthetic .gallery .gpr.right{margin-left:auto;margin-right:7vw}
-.world-aesthetic .gallery .gsm.left,.world-aesthetic .gallery .gpr.left{margin-left:7vw;margin-right:auto}
-.world-aesthetic .gallery figure img{width:100%;height:auto;object-fit:unset;display:block}
-@media (max-width:700px){
-  .world-aesthetic .gallery .gwl,.world-aesthetic .gallery .gwr{width:100vw;margin-left:calc(50% - 50vw);margin-right:0}
-}
+.world-aesthetic .gallery h4{margin:0 0 clamp(36px,5vh,64px)}
+.world-aesthetic .gallery .gwide{margin:0 0 clamp(20px,3vh,36px)}
+.world-aesthetic .gallery .gpair{display:grid;gap:clamp(16px,2.2vw,28px)}
+.world-aesthetic .gallery .gpair figure{margin:0}
+.world-aesthetic .gallery .gpair.day{grid-template-columns:1.4433fr .6669fr}
+.world-aesthetic .gallery .gpair.evening{grid-template-columns:.6669fr .8007fr}
+.world-aesthetic .gallery img{width:100%;height:auto;object-fit:unset;display:block}
+@media (max-width:700px){.world-aesthetic .gallery .gpair.day,.world-aesthetic .gallery .gpair.evening{grid-template-columns:1fr}}
 @media (max-width:700px){.mpair{grid-template-columns:1fr;gap:14px}}
 .edit .fash .fr{aspect-ratio:4/5;overflow:hidden;display:block;background:#EDE7D8}
 .edit .fash .fr.empty{background:#F1ECDF}
