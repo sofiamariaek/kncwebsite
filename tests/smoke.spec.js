@@ -108,15 +108,13 @@ test('composer — add to bag, then checkout confirms the order', async ({ page 
   await expect(page.locator('#bagN')).toBeHidden();
 });
 
-test('tiles browse photos in place; caption opens the piece page; order uses chosen size', async ({ page }) => {
+test('tiles show one photo and open the piece page; order uses chosen size', async ({ page }) => {
   await gotoHome(page);
   await navFromMenu(page, 'composer');
-  // photo arrows sit on the tile from the start — no click needed
+  // one photograph per tile, no arrows; the tile is a door to the piece page
   const firstTile = page.locator('#compTiles .cell').first();
-  await expect(firstTile.locator('.tnav.next')).toBeVisible();
-  await firstTile.locator('.tnav.next').click(); // steps to the back shot in place
-  await expect(view(page, 'composer')).toBeVisible();
-  await firstTile.locator('.cap2').click();
+  await expect(firstTile.locator('.tnav')).toHaveCount(0);
+  await firstTile.locator('.pc').click();
   await expect(view(page, 'piece')).toBeVisible();
   await expect(page.locator('#pieceName')).toHaveText('Tailcoat');
   await page.locator('#pieceOrder').click();
