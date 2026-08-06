@@ -800,7 +800,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 #lookTiles .capprice{font-family:"FK Roman Standard",serif;font-size:11px;letter-spacing:.06em;text-transform:none}
 #lookTiles .cell{align-items:stretch}
 #lookTiles .vtog{align-self:center}
-.pc{cursor:zoom-in}
+.pc{cursor:pointer}
 .cap2{cursor:pointer}
 .tiles .tile{position:relative}
 .tnav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:30px;height:30px;border-radius:50%;background:rgba(255,250,235,.9);border:1px solid rgba(0,0,0,.12);font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .3s}
