@@ -444,6 +444,7 @@ function bagUpsell(a){var up=document.getElementById('bagUp');up.innerHTML='';
       row.appendChild(ad);up.appendChild(row)})}
   var suit=null;a.forEach(function(x){if(!suit&&['Tailcoat','Jacket'].indexOf(x.p)>-1)suit=x});
   if(!suit)return;
+  if(a.some(function(x){return x.p==='Belt & epaulettes'&&x.viaOffer}))return;
   var h=document.createElement('p');h.className='upt';h.textContent='Add an extra set';
   if(wl.length)h.style.marginTop='18px';
   up.appendChild(h);
@@ -476,7 +477,7 @@ function upsellRow(suitCol,size){var pn='Belt & epaulettes';
       d.addEventListener('click',function(e){e.stopPropagation();chosen=c;render()});sw.appendChild(d)})}
   ad.addEventListener('click',function(){var a=bagData();
     if(!bagHasCoat(a)&&!coatFromOrders()){bagToast(null,'Belt & epaulettes are available with a Jacket or Tailcoat');return}
-    openQuickSize({p:pn,c:chosen,z:null,extra:true})});
+    openQuickSize({p:pn,c:chosen,z:null,extra:true,viaOffer:true})});
   render();return row}
 var bagToastEl=null,bagToastT=null;
 function bagToast(item,message){
