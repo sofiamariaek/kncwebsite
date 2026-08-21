@@ -78,19 +78,21 @@ test('look — add to bag asks for a size, bag badge updates', async ({ page }) 
   await expect(page.locator('#bagN')).toHaveText('1');
 });
 
-test('composer — add to bag, then checkout confirms the order', async ({ page }) => {
+test('composer — one Add walks the sizes, checkout confirms the order', async ({ page }) => {
   await gotoHome(page);
   await navFromMenu(page, 'composer');
-  await page.locator('#compTiles .cell').first().locator('.quick-add').click();
-  await expect(page.locator('#quickSize')).toHaveClass(/open/);
-  await page.locator('#quickSizeOptions [data-size="38"]').click();
-  await page.locator('#quickSizeConfirm').click();
-  await expect(page.locator('#bagN')).toHaveText('1');
+  await expect(page.locator('#cmpzImg')).toBeVisible();
+  await expect(page.locator('#cmpzTotal')).toHaveText(/8,800|€/);
+  await page.locator('#cmpzAdd').click();
+  for (const size of ['38', '38', '36']) {
+    await expect(page.locator('#quickSize')).toHaveClass(/open/);
+    await page.locator('#quickSizeOptions [data-size="' + size + '"]').click();
+    await page.locator('#quickSizeConfirm').click();
+  }
+  await expect(page.locator('#bagN')).toHaveText('3');
   await page.locator('#bagLink').click();
   await expect(page.locator('#bag')).toHaveClass(/open/);
-  await expect(page.locator('#bagItems .wlitem')).toHaveCount(1);
-  await expect(page.locator('#bagItems .bagtot')).toContainText('4,800');
-  // First confirm asks where to deliver; details are saved once, then the order confirms.
+  await expect(page.locator('#bagItems .bagtot')).toContainText('8,800');
   await page.locator('[data-bagpay]').first().click();
   await expect(page.locator('#acct')).toHaveClass(/open/);
   await page.locator('#acctEmailForm input[name="email"]').fill('smoke@kiwicolibri.test');
@@ -105,11 +107,11 @@ test('composer — add to bag, then checkout confirms the order', async ({ page 
   await expect(page.locator('#bagN')).toBeHidden();
 });
 
-test('tiles show one photo and open the piece page; order uses chosen size', async ({ page }) => {
+test('look tiles show one photo and open the piece page; order uses chosen size', async ({ page }) => {
   await gotoHome(page);
-  await navFromMenu(page, 'composer');
-  // one photograph per tile, no arrows; the tile is a door to the piece page
-  const firstTile = page.locator('#compTiles .cell').first();
+  await navFromMenu(page, 'looks');
+  await page.locator('#lookGridT a').first().click();
+  const firstTile = page.locator('#lookTiles .cell').first();
   await expect(firstTile.locator('.tnav')).toHaveCount(0);
   await firstTile.locator('.pc').click();
   await expect(view(page, 'piece')).toBeVisible();
@@ -126,8 +128,9 @@ test('tiles show one photo and open the piece page; order uses chosen size', asy
 
 test('wishlist — heart saves a piece, it appears in the wishlist panel', async ({ page }) => {
   await gotoHome(page);
-  await navFromMenu(page, 'composer');
-  await page.locator('#compTiles .cell').first().locator('.wlbtn').click();
+  await navFromMenu(page, 'looks');
+  await page.locator('#lookGridT a').first().click();
+  await page.locator('#lookTiles .cell').first().locator('.wlbtn').click();
   await page.locator('#wlLink').click();
   await expect(page.locator('#wlItems .wlitem')).toHaveCount(1);
   await expect(page.locator('#wlItems .nm')).toContainText('Tailcoat');

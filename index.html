@@ -298,12 +298,49 @@
 </div>
 
 <div class="view" data-view="composer" hidden>
-  <section class="cpage">
+  <section class="cmpz">
     <a class="back vback" href="#" data-back>Back</a>
-    <h2 class="pagename">Compose Your Suit</h2>
-    <p class="composer-intro"><strong>Four components, composed as one suit.</strong> Choose Tailcoat or Jacket, breeches, corset and the colour of the included belt and epaulettes. Add each component directly. Size selection follows.</p>
-    <div class="compwrap">
-      <div class="tiles" id="compTiles" data-compose="tar" data-slots="coat,breech,corset,belt"></div>
+    <div class="cmpz-grid">
+      <div class="cmpz-stage"><img id="cmpzImg" alt="The composed suit"></div>
+      <aside class="cmpz-rail">
+        <h2 class="pagename">Compose</h2>
+        <p class="cmpz-sub">Four components. One suit.</p>
+        <div class="cstep">
+          <h3><i>1</i> Outer layer</h3>
+          <div class="copt" id="cmpzCoatK">
+            <button type="button" data-k="tailcoat"><span class="cthumb"><img alt="Tailcoat"></span><em>Tailcoat</em></button>
+            <button type="button" data-k="jacket"><span class="cthumb"><img alt="Jacket"></span><em>Jacket</em></button>
+          </div>
+          <p class="clab">Colour</p><div class="sw csw" id="cmpzCoatC"></div>
+        </div>
+        <div class="cstep">
+          <h3><i>2</i> Breeches</h3>
+          <div class="copt" id="cmpzBrK">
+            <button type="button" data-k="cargo"><span class="cthumb"><img alt="Cargo breeches"></span><em>Cargo</em></button>
+            <button type="button" data-k="slim"><span class="cthumb"><img alt="Slim breeches"></span><em>Slim</em></button>
+          </div>
+          <p class="clab">Colour</p><div class="sw csw" id="cmpzBrC"></div>
+        </div>
+        <div class="cstep">
+          <h3><i>3</i> Corset</h3>
+          <div class="copt"><button type="button" class="solo" tabindex="-1"><span class="cthumb"><img id="cmpzCorImg" alt="Corset"></span><em>Corset</em></button></div>
+          <p class="clab">Colour</p><div class="sw csw" id="cmpzCorC"></div>
+        </div>
+        <div class="cstep">
+          <h3><i>4</i> Tailoring details</h3>
+          <p class="clab">Belt &amp; epaulettes colour</p><div class="sw csw" id="cmpzBeltC"></div>
+          <p class="cnote">One set is included with your Tailcoat or Jacket.</p>
+        </div>
+      </aside>
+    </div>
+    <div class="cmpz-bar">
+      <span class="cbl">Your suit</span>
+      <div class="cmpz-summary" id="cmpzSummary"></div>
+      <div class="cmpz-total"><span>Total</span><em id="cmpzTotal"></em></div>
+      <div class="cmpz-actions">
+        <button type="button" id="cmpzAdd">Add to bag</button>
+        <a href="#" data-open-ccg class="cmpz-consult">Book a consultation</a>
+      </div>
     </div>
   </section>
 </div>
