@@ -903,7 +903,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .campstage .fgz{height:100%;width:auto;max-width:min(66vw,960px);object-fit:contain;object-position:center;display:block}
 .campstage .csv:nth-child(3).on .fgz{animation:none;transform:scale(1)}
 
-.home-world{display:grid;grid-template-columns:minmax(280px,.7fr) minmax(0,1.3fr);gap:clamp(54px,9vw,150px);align-items:start}
+.home-world{grid-template-columns:minmax(280px,.7fr) minmax(0,1.3fr);gap:clamp(54px,9vw,150px);align-items:start}
 .home-world-copy{padding-top:clamp(48px,8vw,118px)}
 .home-world-images{grid-template-columns:minmax(0,1.42fr) minmax(180px,.58fr);gap:clamp(14px,2vw,30px);align-items:start}
 .home-world-images figure:first-child{aspect-ratio:4/5}
