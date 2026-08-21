@@ -1022,7 +1022,8 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .craftpanel .ct .rtx .sub-t{font-size:13px;letter-spacing:.22em;margin:0 0 .8em;text-align:left}
 
 .suit-service-panel>div:last-child{display:flex;flex-direction:column;align-self:stretch;text-align:left}
-.suit-service-panel>div:last-child p{margin-top:auto}
+.suit-service-panel>div:last-child p{margin-top:0}
+.suit-service-panel h2{margin-bottom:clamp(56px,9vh,110px)}
 
 /* compose — the configurator: preview left, numbered steps right, suit bar beneath */
 .cmpz{text-align:left;padding-top:clamp(18px,2.6vh,30px)}
@@ -1067,8 +1068,25 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .view[data-view="about"] .namesec .story{margin:0}
 .view[data-view="about"] .namesec .story p{font-size:clamp(14px,1.25vw,17px);line-height:1.85}
 .view[data-view="about"] .gallery h4{text-align:left}
-.view[data-view="about"] .edit .credit{text-align:left}
+.view[data-view="about"] .edit .credit{text-align:center}
+.view[data-view="about"] .world-aesthetic>h2{text-align:center}
+.view[data-view="about"] .namesec h2{text-align:left;font-size:13px;letter-spacing:.22em}
+.view[data-view="about"] .founder-grid{align-items:stretch}
+.view[data-view="about"] .founderfull .q{display:flex;flex-direction:column;justify-content:space-between}
+.view[data-view="about"] .founderfull .q h2{margin-bottom:clamp(56px,9vh,110px)}
+.view[data-view="about"] .namesec .namegrid{align-items:stretch}
+.view[data-view="about"] .namesec .story{display:flex;flex-direction:column}
+.view[data-view="about"] .namesec .story h2{margin-bottom:24px}
+.view[data-view="about"] .namesec .story p{margin-top:auto}
+.view[data-view="about"] .founder-grid figure{margin:0;display:flex;align-items:flex-end}
+.view[data-view="about"] .founder-grid figure img{width:100%;height:auto;display:block}
+.view[data-view="about"] .founderfull .q p{max-width:34em}
 
 .csize{margin-top:2px}
 .cszg{display:inline-block;margin-top:14px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;text-decoration:underline;text-underline-offset:3px;color:var(--grey)}
 #cmpzAdd[disabled]{opacity:.45;cursor:default}
+
+/* one label per card: the rotating craft text sheds its inner sub-headings */
+.craftpanel .ct .rtx .sub-t{display:none}
+.crepe .rtx .sub-t{display:none}
+.crepe .rtx p{font-size:11px;letter-spacing:.08em;color:var(--grey);text-align:left;max-width:none;margin:10px 0 0;line-height:1.7}
