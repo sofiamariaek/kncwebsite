@@ -151,7 +151,7 @@ footer .fsig p{margin-top:18px;font-size:9.5px;letter-spacing:.24em;text-transfo
 /* ---------- world (taupe) ---------- */
 .world{background:var(--ivory);color:var(--black)}
 .world .eyebrow{color:var(--grey)}
-.founder-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(30px,5.5vw,84px);align-items:center}
+.founder-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(30px,5.5vw,84px);align-items:start}
 @media (max-width:860px){.founder-grid{grid-template-columns:1fr}}
 .founder-grid figure img{width:100%;height:auto;display:block}
 .world .q p{font-size:clamp(20px,2.6vw,30px);line-height:1.6;max-width:26em}
@@ -163,7 +163,7 @@ footer .fsig p{margin-top:18px;font-size:9.5px;letter-spacing:.24em;text-transfo
 .foundfilm #foundSnd:hover,.foundfilm #foundSnd.on{background:var(--black);color:var(--ivory)}
 .founderfull{padding:clamp(40px,6vw,80px) var(--pad) 0}
 .founderfull .q{max-width:36em;margin:0 auto}
-.founderfull .founder-grid{align-items:center}
+.founderfull .founder-grid{align-items:start}
 .founderfull .q p,.founderhome .q p{font-size:var(--prose);line-height:1.9;margin-bottom:1.4em}
 
 /* ---------- set look: image + four tiles ---------- */
@@ -282,7 +282,7 @@ footer .fsig p{margin-top:18px;font-size:9.5px;letter-spacing:.24em;text-transfo
 .cstrip .ctxt p{margin-bottom:1.1em;line-height:1.8;font-size:clamp(13px,1.25vw,15.5px)}
 .cstrip .ctxt .sub-t{font-size:clamp(14px,1.4vw,17px);letter-spacing:.16em;margin-bottom:1em}
 @media (max-width:900px){.cstrip{grid-auto-columns:72vw}}
-.craftpanel{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:clamp(20px,3vw,44px);align-items:center;
+.craftpanel{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:clamp(20px,3vw,44px);align-items:start;
   padding:clamp(30px,5vh,60px) var(--pad);box-sizing:border-box}
 .craftpanel.rev{grid-template-columns:minmax(0,4fr) minmax(0,8fr)}
 .craftpanel.big{grid-template-columns:minmax(0,9.6fr) minmax(0,2.4fr)}
@@ -335,9 +335,9 @@ footer .fsig p{margin-top:18px;font-size:9.5px;letter-spacing:.24em;text-transfo
 .atl .trio img{width:100%;height:100%;object-fit:cover}
 @media (max-width:700px){.atl .trio{grid-template-columns:1fr}}
 .stmt{text-align:center}
-.stmt-copy{display:flex;flex-direction:column;justify-content:space-between;position:relative;text-align:left;padding:4px clamp(30px,3.4vw,52px) 4px 0}
+.stmt-copy{display:flex;flex-direction:column;justify-content:flex-start;position:relative;text-align:left;padding:4px clamp(30px,3.4vw,52px) 4px 0}
 .stmt-copy .eyebrow{margin:0}
-.stmt-copy p{font-size:var(--prose);line-height:1.8;max-width:24em;margin:clamp(26px,4vh,44px) 0 0;text-align:left}
+.stmt-copy p{line-height:1.85;max-width:24em;margin:18px 0 0;text-align:left}
 .stmt-meta{position:absolute;top:0;right:0;writing-mode:vertical-rl;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--grey)}
 @media (max-width:860px){.stmt-meta{display:none}.stmt-copy{padding-right:0}}
 .stmt p+p{margin-top:1.4em;font-style:italic}
@@ -797,7 +797,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 /* 2026 house architecture refresh */
 .home-world{text-align:center}
 .home-world-images{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,28px)}
-.home-world-copy{max-width:none;margin-top:clamp(26px,4vh,46px)}
+.home-world-copy{max-width:none;margin-top:0;text-align:left}
 .home-world-copy p{margin:14px auto 0;max-width:44ch;font-size:var(--prose);line-height:1.9}
 .home-world-copy .credit{font-size:11px;color:var(--grey);margin-top:14px}
 .home-world-copy .viewall{display:inline-block;margin-top:28px}
@@ -856,7 +856,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .suit-introduction{max-width:1140px;margin:0 auto clamp(42px,6vw,78px)}
 .suit-introduction>p{max-width:660px;margin:0 auto clamp(28px,4vw,46px);text-align:center;font-size:var(--prose);line-height:1.9}
 
-.suit-service-panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:clamp(36px,7vw,110px);align-items:center}
+.suit-service-panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:clamp(36px,7vw,110px);align-items:start}
 .suit-service-panel figure{aspect-ratio:4/3;overflow:hidden;background:#ece7dc}
 .suit-service-panel img{width:100%;height:100%;object-fit:cover}
 .suit-service-panel h2{font-size:clamp(15px,1.5vw,19px);letter-spacing:.22em;margin-top:12px}
@@ -903,8 +903,8 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .campstage .fgz{height:100%;width:auto;max-width:min(66vw,960px);object-fit:contain;object-position:center;display:block}
 .campstage .csv:nth-child(3).on .fgz{animation:none;transform:scale(1)}
 
-.home-world{grid-template-columns:minmax(280px,.7fr) minmax(0,1.3fr);gap:clamp(54px,9vw,150px);align-items:start}
-.home-world-copy{padding-top:clamp(48px,8vw,118px)}
+.home-world{display:grid;grid-template-columns:minmax(280px,.7fr) minmax(0,1.3fr);gap:clamp(54px,9vw,150px);align-items:start}
+.home-world-copy{padding-top:0}
 .home-world-images{grid-template-columns:minmax(0,1.42fr) minmax(180px,.58fr);gap:clamp(14px,2vw,30px);align-items:start}
 .home-world-images figure:first-child{aspect-ratio:4/5}
 .home-world-images figure:last-child{aspect-ratio:2/3;margin:clamp(110px,18vw,260px) 0 0}
@@ -1012,3 +1012,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .view[data-view="atelier"] .craftrow .ctext p{margin-left:0;margin-right:0}
 .view[data-view="atelier"] .atl .vcap{text-align:left;font-size:11px;letter-spacing:.08em;font-style:normal;color:var(--grey)}
 
+
+/* text beside pictures: one quieter size, top corner, either side */
+.stmt-copy p,.founder-grid .q p,.home-world-copy p,.craftpanel .ct p,.suit-service-panel p,.namesec .story p,.rtx p{font-size:clamp(15px,1.3vw,18px);line-height:1.85}
