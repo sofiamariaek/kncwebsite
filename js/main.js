@@ -196,7 +196,7 @@ function zbtns(id,cur,fn){var box=document.getElementById(id);
     b.setAttribute('aria-pressed',String(b.getAttribute('data-size')===cur));
     if(!b.__wired){b.__wired=1;b.addEventListener('click',function(){fn(b.getAttribute('data-size'));render()})}})}
 function render(){
-  img.src=bankSrc(KOSTYM[st.coatC][st.coat]);
+  img.src=bankSrc('suit_'+st.coat+'_'+st.brK+'_'+st.coatC)||bankSrc(KOSTYM[st.coatC][st.coat]);
   kbtns('cmpzCoatK',st.coat,function(k){st.coat=k});
   kbtns('cmpzBrK',st.brK,function(k){st.brK=k});
   document.querySelector('#cmpzCoatK [data-k="tailcoat"] img').src=flat(st.coatC,'tailcoat');
