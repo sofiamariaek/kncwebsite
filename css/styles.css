@@ -904,9 +904,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 @media (max-width:760px){.campstage .duo{width:100%;gap:18px}.campstage .duo .fgz{width:calc(50% - 9px)!important;height:auto!important;object-fit:contain!important;object-position:center!important}}
 .campstage .fgz{height:100%;width:auto;max-width:min(66vw,960px);object-fit:contain;object-position:center;display:block}
 .campstage .csv:nth-child(3).on .fgz{animation:none;transform:scale(1)}
-.campaign-intro{position:absolute;z-index:3;right:var(--pad);left:auto;top:clamp(20px,3vh,34px);bottom:auto;transform:none;color:var(--black);text-align:right;white-space:nowrap}
-.campaign-intro h1{font-family:"FK Roman Standard",Georgia,serif;font-size:11px;font-weight:300;line-height:1.6;letter-spacing:.32em;text-transform:uppercase;color:var(--grey)}
-.campaign-intro a{display:inline-block;margin-top:8px;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px}
 
 .home-world{grid-template-columns:minmax(280px,.7fr) minmax(0,1.3fr);gap:clamp(54px,9vw,150px);align-items:start}
 .home-world-copy{padding-top:clamp(48px,8vw,118px)}
@@ -937,10 +934,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 }
 @media (max-width:600px){
   .campstage{min-height:560px}
-  .campaign-intro{left:0;right:0;top:auto;bottom:14px;transform:none;white-space:normal;text-align:center}
-  .campaign-intro h1{font-size:clamp(13px,3.6vw,15px);max-width:none}
-  .campaign-intro a{margin-top:18px}
-  .home-world-images{grid-template-columns:1fr .56fr;gap:10px}
+        .home-world-images{grid-template-columns:1fr .56fr;gap:10px}
   .home-world-images figure:last-child{margin-top:72px}
   .hlooks #lookStrip{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin-right:calc(var(--pad) * -1);padding-right:var(--pad);scrollbar-width:none}
   .hlooks #lookStrip::-webkit-scrollbar{display:none}
