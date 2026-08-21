@@ -1044,17 +1044,18 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .copt button[aria-pressed="true"] em,.copt button.solo em{color:var(--black)}
 .clab{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--grey);margin:12px 0 8px}
 .cnote{font-size:13px;color:var(--grey);line-height:1.7;margin-top:10px;max-width:36ch}
-.cmpz-bar{position:sticky;bottom:0;background:var(--ivory);border-top:1px solid var(--black);margin-top:clamp(28px,4.6vh,50px);padding:14px var(--pad) 16px;display:flex;align-items:center;gap:clamp(18px,3vw,44px);z-index:6}
+.cmpz-bar{background:#F4EEDF;margin-top:clamp(28px,4.6vh,50px);padding:clamp(20px,3vh,30px) var(--pad) clamp(18px,2.6vh,26px)}
+.cmpz-row{display:flex;align-items:center;gap:clamp(20px,3.4vw,54px);margin-bottom:clamp(16px,2.4vh,24px)}
 .cbl{font-family:"Greenstone","Palatino Linotype",Palatino,serif;font-size:13px;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap}
 .cmpz-summary{display:flex;gap:clamp(14px,2.4vw,36px);flex:1;flex-wrap:wrap}
-.cmpz-summary span{font-size:12px;line-height:1.5}
-.cmpz-summary span em{display:block;font-style:normal;color:var(--grey);font-size:11px}
-.cmpz-total{text-align:right;white-space:nowrap}
+.cmpz-summary span{font-family:"Greenstone","Palatino Linotype",Palatino,serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;line-height:1.5}
+.cmpz-summary span em{display:block;font-family:"FK Roman Standard",Georgia,serif;font-style:normal;color:var(--grey);font-size:11px;letter-spacing:.04em;text-transform:none;margin-top:3px}
+.cmpz-total{text-align:right;white-space:nowrap;border-left:1px solid var(--rule);padding-left:clamp(20px,3vw,48px)}
 .cmpz-total span{display:block;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--grey)}
 .cmpz-total em{font-style:normal;font-size:17px}
-#cmpzAdd{display:block;min-width:210px;min-height:44px;background:var(--black);color:var(--ivory);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase}
+#cmpzAdd{display:block;width:100%;min-height:48px;background:var(--black);color:var(--ivory);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase}
 .cmpz-consult{display:block;margin-top:8px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;text-decoration:underline;text-underline-offset:3px;color:var(--grey);text-align:center}
-@media (max-width:880px){.cmpz-grid{grid-template-columns:1fr}.cmpz-stage{position:static}.cmpz-bar{flex-wrap:wrap}.cmpz-summary{order:3;width:100%}}
+@media (max-width:880px){.cmpz-grid{grid-template-columns:1fr}.cmpz-stage{position:static}.cmpz-row{flex-wrap:wrap}.cmpz-total{border-left:0;padding-left:0}}
 
 /* the aesthetic page follows the atelier: left voice, card labels, one text size */
 .view[data-view="about"]{text-align:left}
