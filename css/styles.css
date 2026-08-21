@@ -339,8 +339,13 @@ footer .fsig p{margin-top:18px;font-size:9.5px;letter-spacing:.24em;text-transfo
 @media (max-width:700px){.atl .trio{grid-template-columns:1fr}}
 .stmt{text-align:center}
 .stmt p{font-size:clamp(18px,2.1vw,25px);line-height:1.65;max-width:30em;margin:0 auto}
+.stmt-copy{display:flex;flex-direction:column;justify-content:space-between;position:relative;text-align:left;padding:4px clamp(30px,3.4vw,52px) 4px 0}
+.stmt-copy .eyebrow{margin:0}
+.stmt-copy p{font-size:var(--prose);line-height:1.8;max-width:24em;margin:clamp(26px,4vh,44px) 0 0;text-align:left}
+.stmt-meta{position:absolute;top:0;right:0;writing-mode:vertical-rl;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--grey)}
+@media (max-width:860px){.stmt-meta{display:none}.stmt-copy{padding-right:0}}
 .stmt p+p{margin-top:1.4em;font-style:italic}
-.stmt-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(30px,5.5vw,84px);align-items:center;max-width:1180px;margin:0 auto;text-align:left}
+.stmt-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(30px,5.5vw,84px);align-items:stretch;max-width:1180px;margin:0 auto;text-align:left}
 .stmt-grid figure{margin:0}
 .stmt-grid img{width:100%;height:auto;display:block}
 .stmt-grid p{margin:0}
@@ -608,16 +613,11 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 @media (max-width:900px){.ladies.lookgrid{grid-template-columns:repeat(2,1fr)}}
 /* the looks promenade — a full-bleed glide with edge arrows */
 .lookprom{position:relative;width:100vw;margin-left:calc(50% - 50vw);margin-top:clamp(18px,2.6vw,30px)}
-.lookrowtitle{font-size:clamp(13px,1.35vw,16px);letter-spacing:.14em;margin:clamp(34px,5vw,60px) 0 0;text-align:center}
 .lookprom .lookgrid{display:flex;max-width:none;overflow-x:auto;scroll-snap-type:x mandatory;gap:clamp(14px,1.6vw,24px);scrollbar-width:none}
 .lookprom .lookgrid::-webkit-scrollbar{display:none}
-.lookprom .lookgrid>a{flex:0 0 min(36vw,560px);scroll-snap-align:center}
+.lookprom .lookgrid>a{flex:0 0 calc((100% - 2*clamp(14px,1.6vw,24px))/3);scroll-snap-align:start}
 @media (max-width:900px){.lookprom .lookgrid>a{flex-basis:72vw}}
-.promnav{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border-radius:50%;background:var(--ivory);box-shadow:0 1px 10px rgba(20,16,10,.16);display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--black);transition:opacity .3s var(--ease)}
-.promnav.prev{left:clamp(10px,2vw,26px)}
-.promnav.next{right:clamp(10px,2vw,26px)}
-.promnav[disabled]{opacity:0;pointer-events:none}
-@media (max-width:700px){.promnav{display:none}}
+
 .capsw{display:inline-flex;gap:9px;margin-left:14px;vertical-align:middle}
 .capsw i{width:17px;height:17px;border-radius:50%;border:1px solid rgba(0,0,0,.25);display:inline-block}
 .cpage{padding-top:clamp(30px,5vh,56px)}
@@ -907,9 +907,9 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .campstage .csv:nth-child(3) .fgz{object-position:center 30%;width:118%;max-width:none;margin-left:-18%}
 .campstage .csv:nth-child(3).on .fgz{animation:none;transform:scale(1)}
 .campaign-intro{position:absolute;z-index:3;left:var(--pad);bottom:clamp(34px,6vw,78px);color:#fff;text-align:left;text-shadow:0 2px 30px rgba(0,0,0,.28)}
-.campaign-intro>span{display:block;font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;margin-bottom:12px}
-.campaign-intro h1{font-family:"Greenstone",serif;font-size:clamp(26px,3.4vw,48px);font-weight:400;line-height:1.05;letter-spacing:.08em;text-transform:uppercase}
-.campaign-intro a{display:inline-block;margin-top:22px;padding-bottom:5px;border-bottom:1px solid currentColor;font-size:10px;letter-spacing:.24em;text-transform:uppercase;text-shadow:none}
+.campaign-intro>span{display:block;font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;margin-bottom:8px}
+.campaign-intro h1{font-family:"Greenstone",serif;font-size:clamp(15px,1.15vw,18px);font-weight:400;line-height:1.4;letter-spacing:.24em;text-transform:uppercase}
+.campaign-intro a{display:inline-block;margin-top:14px;padding-bottom:4px;border-bottom:1px solid currentColor;font-size:10px;letter-spacing:.24em;text-transform:uppercase;text-shadow:none}
 
 .home-world{grid-template-columns:minmax(280px,.7fr) minmax(0,1.3fr);gap:clamp(54px,9vw,150px);align-items:start}
 .home-world-copy{padding-top:clamp(48px,8vw,118px)}
@@ -942,7 +942,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
   .campstage{min-height:560px}
   .campstage .csv.campaign-bond.on .fgz{animation:none;transform:scale(1.52);transform-origin:52% 100%;object-position:center bottom}
   .campaign-intro{right:var(--pad);bottom:34px}
-  .campaign-intro h1{font-size:clamp(24px,8vw,34px);max-width:8em}
+  .campaign-intro h1{font-size:clamp(13px,3.6vw,15px);max-width:none}
   .campaign-intro a{margin-top:18px}
   .home-world-images{grid-template-columns:1fr .56fr;gap:10px}
   .home-world-images figure:last-child{margin-top:72px}
