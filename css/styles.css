@@ -124,15 +124,11 @@ section{position:relative;padding:clamp(84px,13vh,150px) var(--pad)}
 .campstage .csv{display:flex;align-items:center;justify-content:center}
 .campstage .fgz{position:static;height:100%;width:auto;max-width:100%;object-fit:contain}
 footer{border-top:1px solid var(--rule);padding:clamp(40px,6vw,80px) var(--pad) clamp(30px,4vw,50px)}
-footer .fcols{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(24px,4vw,70px);max-width:1200px;margin:0 auto;text-align:left}
-footer .fcols h4{font-family:"Greenstone",serif;text-transform:uppercase;letter-spacing:.2em;font-size:11px;margin-bottom:16px;color:var(--black)}
-footer .fcols a,footer .fcols span{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey);padding:6px 0;transition:color .3s}
-footer .fcols a:hover{color:var(--black)}
 footer .flang{margin-top:14px;color:var(--black)}
 footer .fsig{text-align:center;margin-top:clamp(44px,7vw,90px);padding-top:clamp(26px,4vw,44px);border-top:1px solid var(--rule)}
 footer .fsig img{height:clamp(20px,2.6vw,32px);width:auto;margin:0 auto;display:block}
 footer .fsig p{margin-top:18px;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--grey)}
-@media (max-width:760px){footer .fcols{grid-template-columns:1fr 1fr}}
+@media (max-width:760px){}
 .hero.camp{padding:0;background:var(--ivory)}
 .hero.camp .frame{height:auto;overflow:hidden}
 .hero.camp .ph{width:100%;height:auto;display:block}
@@ -1015,3 +1011,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 
 
 .svc .panelmock h3,.svc .after h3{font-size:15px;letter-spacing:.18em}
+
+/* the crepe panel column reads centred like the other home sections */
+#hcrepe .ct{text-align:center}
+#hcrepe .ct p{margin-left:auto;margin-right:auto}
