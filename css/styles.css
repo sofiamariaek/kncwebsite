@@ -901,7 +901,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .campstage .csv{z-index:1;display:block}
 .campstage .fgz{width:auto;height:100%;max-width:none;object-fit:contain;object-position:left center;display:block}
 .campstage .csv:nth-child(3).on .fgz{animation:none;transform:scale(1)}
-.campaign-intro{position:absolute;z-index:3;right:var(--pad);left:auto;top:50%;transform:translateY(-50%);color:var(--black);text-align:left;max-width:30ch}
+.campaign-intro{position:absolute;z-index:3;left:72%;top:50%;transform:translateY(-50%);color:var(--black);text-align:left;max-width:30ch;transition:left 1.1s var(--ease)}
 .campaign-intro>span{display:block;font-size:11px;letter-spacing:.3em;text-transform:uppercase;margin-bottom:8px;color:var(--grey)}
 .campaign-intro h1{font-family:"Greenstone",serif;font-size:clamp(15px,1.15vw,18px);font-weight:400;line-height:1.4;letter-spacing:.24em;text-transform:uppercase}
 .campaign-intro a{display:inline-block;margin-top:14px;padding-bottom:4px;border-bottom:1px solid currentColor;font-size:11px;letter-spacing:.24em;text-transform:uppercase}
