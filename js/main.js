@@ -116,24 +116,11 @@ document.addEventListener('click',function(e){
 addEventListener('keydown',function(e){if(e.key==='Escape')closeZoom()});
 
 /* campaign stage — rotating stills, ends on the connection shot */
-/* the collection words sit centred in the ivory the active photograph leaves */
-(function(){var st=document.querySelector('.campstage'),it=document.querySelector('.campaign-intro');
-if(!st||!it)return;
-function pos(){if(innerWidth<=760){it.style.left='';return}
-  var on=st.querySelector('.csv.on .fgz');if(!on)return;
-  var s=st.getBoundingClientRect(),p=on.getBoundingClientRect(),w=it.getBoundingClientRect().width;
-  var edge=p.right-s.left,space=s.width-edge;
-  var x=edge+(space-w)/2;
-  if(space<w+48)x=s.width-w-28;
-  it.style.left=Math.max(24,Math.round(x))+'px'}
-new MutationObserver(pos).observe(st,{subtree:true,attributes:true,attributeFilter:['class']});
-addEventListener('resize',pos);setTimeout(pos,250);setTimeout(pos,900);
-})();
 (function(){var cs=document.querySelectorAll('.campstage .csv');if(cs.length<2)return;
 var i=0;setInterval(function(){
-  cs[i].classList.remove('on');
   var ni=(i+1)%cs.length;
-  setTimeout(function(){cs[ni].classList.add('on')},700);
+  cs[ni].classList.add('on');
+  cs[i].classList.remove('on');
   i=ni},5200)})();
 
 /* shop the look — numbered looks, filter, mini-pages */
