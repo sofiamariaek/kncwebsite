@@ -920,7 +920,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .hlooks #lookStrip>a:nth-child(1) figure img{aspect-ratio:4/5}
 .hlooks #lookStrip>a:nth-child(2) figure img{aspect-ratio:3/4}
 .hlooks #lookStrip>a:nth-child(3) figure img{aspect-ratio:4/5}
-.hlooks>.viewall{display:block;width:max-content;margin:clamp(50px,7vw,90px) 0 0 auto}
+.hlooks>.viewall{display:block;width:max-content;margin:clamp(28px,4vw,48px) auto 0}
 
 @media (max-width:900px){
   .home-world{grid-template-columns:1fr;gap:42px}
@@ -937,7 +937,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
   .hlooks #lookStrip{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin-right:calc(var(--pad) * -1);padding-right:var(--pad);scrollbar-width:none}
   .hlooks #lookStrip::-webkit-scrollbar{display:none}
   .hlooks #lookStrip>a:nth-child(1),.hlooks #lookStrip>a:nth-child(2),.hlooks #lookStrip>a:nth-child(3){flex:0 0 78vw;width:auto;margin:0;scroll-snap-align:start}
-  .hlooks>.viewall{margin-left:0}
 }
 
 /* look page — the look's photography flows, its rail stays beside it */
