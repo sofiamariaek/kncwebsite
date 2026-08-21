@@ -83,12 +83,11 @@ test('composer — one Add walks the sizes, checkout confirms the order', async 
   await navFromMenu(page, 'composer');
   await expect(page.locator('#cmpzImg')).toBeVisible();
   await expect(page.locator('#cmpzTotal')).toHaveText(/8,800|€/);
+  await expect(page.locator('#cmpzAdd')).toBeDisabled();
+  await page.locator('#cmpzCoatZ [data-size="38"]').click();
+  await page.locator('#cmpzBrZ [data-size="38"]').click();
+  await page.locator('#cmpzCorZ [data-size="36"]').click();
   await page.locator('#cmpzAdd').click();
-  for (const size of ['38', '38', '36']) {
-    await expect(page.locator('#quickSize')).toHaveClass(/open/);
-    await page.locator('#quickSizeOptions [data-size="' + size + '"]').click();
-    await page.locator('#quickSizeConfirm').click();
-  }
   await expect(page.locator('#bagN')).toHaveText('3');
   await page.locator('#bagLink').click();
   await expect(page.locator('#bag')).toHaveClass(/open/);
