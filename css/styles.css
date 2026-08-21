@@ -906,9 +906,8 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .campstage .fgz{height:100%;width:auto;max-width:min(94vw,1200px);object-fit:contain;object-position:center;display:block;box-shadow:0 0 0 1px rgba(31,26,18,.14),0 0 0 clamp(10px,1.4vh,18px) var(--ivory),0 0 0 calc(clamp(10px,1.4vh,18px) + 1px) rgba(31,26,18,.10)}
 .campstage .csv:nth-child(3).on .fgz{animation:none;transform:scale(1)}
 .campaign-intro{position:absolute;z-index:3;left:50%;bottom:clamp(16px,2.8vh,32px);transform:translateX(-50%);color:var(--black);text-align:center;white-space:nowrap}
-.campaign-intro>span{display:block;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;margin-bottom:6px;color:var(--grey)}
 .campaign-intro h1{font-family:"Greenstone",serif;font-size:clamp(12px,.95vw,14px);font-weight:400;line-height:1.4;letter-spacing:.28em;text-transform:uppercase}
-.campaign-intro a{display:inline-block;margin-top:10px;padding-bottom:3px;border-bottom:1px solid currentColor;font-size:10px;letter-spacing:.26em;text-transform:uppercase}
+.campaign-intro a{display:inline-block;margin-top:10px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px}
 
 .home-world{grid-template-columns:minmax(280px,.7fr) minmax(0,1.3fr);gap:clamp(54px,9vw,150px);align-items:start}
 .home-world-copy{padding-top:clamp(48px,8vw,118px)}
