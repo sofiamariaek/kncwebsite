@@ -1072,6 +1072,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .view[data-view="about"] .world-aesthetic>h2{text-align:center}
 .view[data-view="about"] .namesec h2{text-align:left;font-size:13px;letter-spacing:.22em}
 .view[data-view="about"] .founder-grid{align-items:stretch}
+.view[data-view="about"] .founderfull .founder-grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}
 .view[data-view="about"] .founderfull .q{display:flex;flex-direction:column;justify-content:space-between}
 .view[data-view="about"] .founderfull .q h2{margin-bottom:clamp(56px,9vh,110px)}
 .view[data-view="about"] .namesec .namegrid{align-items:stretch}
