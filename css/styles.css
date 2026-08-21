@@ -1021,3 +1021,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .view[data-view="atelier"] .rtx .sub-t{text-align:left}
 .view[data-view="atelier"] .craftrow .ctext p{margin-left:0;margin-right:0}
 .view[data-view="atelier"] .atl .vcap{text-align:left;font-size:11px;letter-spacing:.08em;font-style:normal;color:var(--grey)}
+
+/* home section names speak quietly; page titles keep their size */
+.view[data-view="home"] .pagename{font-size:clamp(15px,1.5vw,19px);letter-spacing:.22em}
