@@ -583,9 +583,8 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .compctl .sizes span.on{background:var(--black);color:var(--ivory);border-color:var(--black)}
 .compctl .czs{margin-top:10px}
 .compwrap{max-width:1100px;margin:0 auto}
-.vback{position:sticky;top:12px;z-index:30;display:inline-block;background:var(--ivory);padding:10px 16px;
-  font-size:11px;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--rule)}
-.vback:hover{background:var(--black);color:var(--ivory);border-color:var(--black)}
+.vback{position:sticky;top:12px;z-index:30;display:inline-block;padding:4px 2px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey)}
+.vback:hover{color:var(--black)}
 .compwrap .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(18px,2.6vw,34px) clamp(16px,2.2vw,28px)}
 .compctl .bagadd{margin-top:28px}
 .compboard{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(10px,1.4vw,18px);align-content:start}
