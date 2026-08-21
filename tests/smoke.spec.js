@@ -55,15 +55,12 @@ test('menu drawer navigates views; browser back returns home', async ({ page }) 
   await expect(view(page, 'home')).toBeVisible();
 });
 
-test('looks — grid filters, a look opens with images and piece tiles', async ({ page }) => {
+test('looks — two silhouette rows, a look opens with images and piece tiles', async ({ page }) => {
   await gotoHome(page);
   await navFromMenu(page, 'looks');
-  const cards = page.locator('#lookGrid a');
-  await expect(cards).toHaveCount(6);
-  await page.locator('#lookFilter button[data-f="jacket"]').click();
-  await expect(cards).toHaveCount(3);
-  await page.locator('#lookFilter button[data-f="all"]').click();
-  await cards.first().click();
+  await expect(page.locator('#lookGridT a')).toHaveCount(3);
+  await expect(page.locator('#lookGridJ a')).toHaveCount(3);
+  await page.locator('#lookGridT a').first().click();
   await expect(view(page, 'look')).toBeVisible();
   await expect(page.locator('#lookVariant')).toContainText('Sandstone');
   await expect(page.locator('#lookStack figure img[src]').first()).toBeVisible();
@@ -73,7 +70,7 @@ test('looks — grid filters, a look opens with images and piece tiles', async (
 test('look — add to bag asks for a size, bag badge updates', async ({ page }) => {
   await gotoHome(page);
   await navFromMenu(page, 'looks');
-  await page.locator('#lookGrid a').first().click();
+  await page.locator('#lookGridT a').first().click();
   await page.locator('#lookTiles .quick-add').first().click();
   await expect(page.locator('#quickSize')).toHaveClass(/open/);
   await page.locator('#quickSizeOptions [data-size="38"]').click();

@@ -140,16 +140,12 @@ function lookCard(i){var L=LOOKS[i];
   a.innerHTML='<figure><img loading="lazy" src="'+bankSrc(L.shots[0])+'" alt="'+L.name+', '+L.variant+'"></figure><span class="lookmeta"><strong>'+L.name+' · '+L.variant+'</strong></span>';
   a.addEventListener('click',function(e){e.preventDefault();openLook(i)});
   return a}
-function renderLooks(f){var g=document.getElementById('lookGrid');if(!g)return;g.innerHTML='';
-  LOOKS.forEach(function(L,i){if(f!=='all'&&L.kind!==f)return;g.appendChild(lookCard(i))})}
+function renderLooksInto(id,kind){var g=document.getElementById(id);if(!g)return;g.innerHTML='';
+  LOOKS.forEach(function(L,i){if(L.kind!==kind)return;g.appendChild(lookCard(i))})}
 (function(){var st=document.getElementById('lookStrip');if(st){[0,2,3].forEach(function(i){st.appendChild(lookCard(i))})}})();
-renderLooks('all');
-document.querySelectorAll('#lookFilter button').forEach(function(b){
-  b.addEventListener('click',function(){
-    document.querySelectorAll('#lookFilter button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});
-    renderLooks(b.getAttribute('data-f'))})});
-/* promenade arrows glide the looks row */
-(function(){var g=document.getElementById('lookGrid'),p=document.getElementById('lookPrev'),n=document.getElementById('lookNext');
+renderLooksInto('lookGridT','tailcoat');renderLooksInto('lookGridJ','jacket');
+/* promenade arrows glide each looks row */
+function promWire(gid,pid,nid){var g=document.getElementById(gid),p=document.getElementById(pid),n=document.getElementById(nid);
 if(!g||!p||!n)return;
 function step(){var a=g.querySelector('a');if(!a)return 320;
   return a.getBoundingClientRect().width+(parseFloat(getComputedStyle(g).gap)||0)}
@@ -159,7 +155,9 @@ n.addEventListener('click',function(){g.scrollBy({left:step(),behavior:'smooth'}
 g.addEventListener('scroll',function(){requestAnimationFrame(upd)});
 new MutationObserver(function(){g.scrollLeft=0;upd()}).observe(g,{childList:true});
 if(window.ResizeObserver)new ResizeObserver(function(){upd()}).observe(g);
-upd()})();
+upd()}
+promWire('lookGridT','lookPrevT','lookNextT');
+promWire('lookGridJ','lookPrevJ','lookNextJ');
 var curLook=0;
 function lookStackShow(slugs){var st=document.getElementById('lookStack');st.innerHTML='';
   slugs.forEach(function(sl,j){var src=bankSrc(sl);if(!src)return;
