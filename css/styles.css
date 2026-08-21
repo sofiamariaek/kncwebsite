@@ -996,7 +996,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 }
 
 /* inner pages read centred; the homepage and buy rails keep their own stance */
-.view[data-view="about"],.view[data-view="composer"],
+.view[data-view="composer"],
 .view[data-view="delivery"],.view[data-view="services"]{text-align:center}
 
 /* the atelier reads as a journal: left voice, staggered measures, quiet captions */
@@ -1055,3 +1055,15 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 #cmpzAdd{display:block;min-width:210px;min-height:44px;background:var(--black);color:var(--ivory);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase}
 .cmpz-consult{display:block;margin-top:8px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;text-decoration:underline;text-underline-offset:3px;color:var(--grey);text-align:center}
 @media (max-width:880px){.cmpz-grid{grid-template-columns:1fr}.cmpz-stage{position:static}.cmpz-bar{flex-wrap:wrap}.cmpz-summary{order:3;width:100%}}
+
+/* the aesthetic page follows the atelier: left voice, card labels, one text size */
+.view[data-view="about"]{text-align:left}
+.view[data-view="about"] .navrow{justify-content:center}
+.view[data-view="about"] .founderfull h2{font-size:13px;letter-spacing:.22em;margin-bottom:clamp(14px,2vw,22px)}
+.view[data-view="about"] .founderfull .q{margin:0}
+.view[data-view="about"] .founderfull .q p{font-size:clamp(14px,1.25vw,17px);line-height:1.85}
+.view[data-view="about"] .namesec h2{font-size:13px;letter-spacing:.22em}
+.view[data-view="about"] .namesec .story{margin:0}
+.view[data-view="about"] .namesec .story p{font-size:clamp(14px,1.25vw,17px);line-height:1.85}
+.view[data-view="about"] .gallery h4{text-align:left}
+.view[data-view="about"] .edit .credit{text-align:left}
