@@ -291,7 +291,7 @@ footer .fsig p{margin-top:18px;font-size:9.5px;letter-spacing:.24em;text-transfo
 .craftpanel .ct .sub-t{font-size:clamp(14px,1.4vw,17px);letter-spacing:.16em;margin:1.2em 0 1em}
 .rtx{transition:opacity .4s var(--ease)}
 .rtx .sub-t{font-size:clamp(15px,1.5vw,19px);letter-spacing:.22em;margin:1.2em 0 .8em}
-.rtx p{margin:0 auto 1.1em;line-height:1.9;max-width:26em;font-size:var(--prose)}
+.rtx p{margin:0 0 1.1em;line-height:1.85;max-width:26em;font-size:clamp(14px,1.25vw,17px)}
 .crepertx{text-align:center;margin-top:16px}
 .crepertx .sub-t{margin:0 0 8px}
 .crepertx p{max-width:none;font-size:13px;color:var(--grey);margin:0}
@@ -316,9 +316,9 @@ footer .fsig p{margin-top:18px;font-size:9.5px;letter-spacing:.24em;text-transfo
 .atl h2{font-size:clamp(15px,1.5vw,19px);letter-spacing:.22em}
 .atl .story{max-width:34em;margin:clamp(26px,4vw,44px) auto 0}
 .crepe .story{max-width:34em;margin:clamp(26px,4vw,44px) auto 0}
-.atl .story p,.crepe .story p{margin-bottom:1.2em;font-size:var(--prose);line-height:1.9}
+.atl .story p,.crepe .story p{margin-bottom:1.2em;font-size:clamp(14px,1.25vw,17px);line-height:1.85}
 .atl .story .goal,.crepe .story .goal{font-style:italic}
-.atl .story .sub-t,.crepe .story .sub-t{font-size:clamp(15px,1.5vw,19px);letter-spacing:.22em;margin-bottom:.8em}
+.atl .story .sub-t,.crepe .story .sub-t{font-size:13px;letter-spacing:.22em;margin-bottom:1em}
 .atl .vwrap{margin-top:clamp(30px,4.6vw,50px);aspect-ratio:16/9;overflow:hidden;background:#171410}
 .atl video{width:100%;height:100%;object-fit:cover;display:block}
 .atl .vcap{text-align:center;margin-top:12px}
@@ -855,8 +855,8 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .suit-service-panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:clamp(36px,7vw,110px);align-items:center}
 .suit-service-panel figure{aspect-ratio:4/3;overflow:hidden;background:#ece7dc}
 .suit-service-panel img{width:100%;height:100%;object-fit:cover}
-.suit-service-panel h2{font-size:clamp(15px,1.5vw,19px);letter-spacing:.22em;margin-top:12px}
-.suit-service-panel p{max-width:44ch;margin-top:22px;font-size:var(--prose);line-height:1.9}
+.suit-service-panel h2{font-size:13px;letter-spacing:.22em;margin-top:0}
+.suit-service-panel p{max-width:44ch;margin-top:22px;font-size:clamp(14px,1.25vw,17px);line-height:1.85}
 .suit-service-panel .viewall{display:inline-block;margin-top:26px}
 
 .composition-sizes{margin-top:26px;border-top:1px solid var(--rule)}
