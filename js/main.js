@@ -148,6 +148,18 @@ document.querySelectorAll('#lookFilter button').forEach(function(b){
   b.addEventListener('click',function(){
     document.querySelectorAll('#lookFilter button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});
     renderLooks(b.getAttribute('data-f'))})});
+/* promenade arrows glide the looks row */
+(function(){var g=document.getElementById('lookGrid'),p=document.getElementById('lookPrev'),n=document.getElementById('lookNext');
+if(!g||!p||!n)return;
+function step(){var a=g.querySelector('a');if(!a)return 320;
+  return a.getBoundingClientRect().width+(parseFloat(getComputedStyle(g).gap)||0)}
+function upd(){p.disabled=g.scrollLeft<8;n.disabled=g.scrollLeft>g.scrollWidth-g.clientWidth-8}
+p.addEventListener('click',function(){g.scrollBy({left:-step(),behavior:'smooth'})});
+n.addEventListener('click',function(){g.scrollBy({left:step(),behavior:'smooth'})});
+g.addEventListener('scroll',function(){requestAnimationFrame(upd)});
+new MutationObserver(function(){g.scrollLeft=0;upd()}).observe(g,{childList:true});
+if(window.ResizeObserver)new ResizeObserver(function(){upd()}).observe(g);
+upd()})();
 var curLook=0;
 function lookStackShow(slugs){var st=document.getElementById('lookStack');st.innerHTML='';
   slugs.forEach(function(sl,j){var src=bankSrc(sl);if(!src)return;

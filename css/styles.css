@@ -606,6 +606,17 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .svcb h4{font-family:"Greenstone","Palatino Linotype",Palatino,serif;text-transform:uppercase;font-size:clamp(13px,1.35vw,16px);letter-spacing:.14em;color:var(--black);font-weight:400}
 @media (max-width:700px){.svcb{grid-template-columns:1fr}.svcb>div+div{border-left:0;border-top:1px solid var(--rule);padding-top:26px}}
 @media (max-width:900px){.ladies.lookgrid{grid-template-columns:repeat(2,1fr)}}
+/* the looks promenade — a full-bleed glide with edge arrows */
+.lookprom{position:relative;width:100vw;margin-left:calc(50% - 50vw);margin-top:clamp(26px,4vw,44px)}
+.lookprom .lookgrid{display:flex;max-width:none;overflow-x:auto;scroll-snap-type:x mandatory;gap:clamp(14px,1.6vw,24px);scrollbar-width:none}
+.lookprom .lookgrid::-webkit-scrollbar{display:none}
+.lookprom .lookgrid>a{flex:0 0 min(31vw,460px);scroll-snap-align:center}
+@media (max-width:900px){.lookprom .lookgrid>a{flex-basis:72vw}}
+.promnav{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border-radius:50%;background:var(--ivory);box-shadow:0 1px 10px rgba(20,16,10,.16);display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--black);transition:opacity .3s var(--ease)}
+.promnav.prev{left:clamp(10px,2vw,26px)}
+.promnav.next{right:clamp(10px,2vw,26px)}
+.promnav[disabled]{opacity:0;pointer-events:none}
+@media (max-width:700px){.promnav{display:none}}
 .capsw{display:inline-flex;gap:9px;margin-left:14px;vertical-align:middle}
 .capsw i{width:17px;height:17px;border-radius:50%;border:1px solid rgba(0,0,0,.25);display:inline-block}
 .cpage{padding-top:clamp(30px,5vh,56px)}
@@ -999,5 +1010,16 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 }
 
 /* inner pages read centred; the homepage and buy rails keep their own stance */
-.view[data-view="about"],.view[data-view="atelier"],.view[data-view="composer"],
+.view[data-view="about"],.view[data-view="composer"],
 .view[data-view="delivery"],.view[data-view="services"]{text-align:center}
+
+/* the atelier reads as a journal: left voice, staggered measures, quiet captions */
+.view[data-view="atelier"]{text-align:left}
+.view[data-view="atelier"] .navrow{justify-content:center}
+.view[data-view="atelier"] .atl .story,.view[data-view="atelier"] .crepe .story{max-width:none;margin-left:0;margin-right:0}
+.view[data-view="atelier"] .story p{max-width:30em}
+.view[data-view="atelier"] .story p:nth-of-type(even){margin-left:clamp(0px,30vw,420px);max-width:26em}
+.view[data-view="atelier"] .rtx p{margin-left:0;margin-right:0}
+.view[data-view="atelier"] .rtx .sub-t{text-align:left}
+.view[data-view="atelier"] .craftrow .ctext p{margin-left:0;margin-right:0}
+.view[data-view="atelier"] .atl .vcap{text-align:left;font-size:11px;letter-spacing:.08em;font-style:normal;color:var(--grey)}
