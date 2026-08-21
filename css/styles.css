@@ -1012,6 +1012,9 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 
 .svc .panelmock h3,.svc .after h3{font-size:15px;letter-spacing:.18em}
 
-/* the crepe panel column reads centred like the other home sections */
-#hcrepe .ct{text-align:center}
-#hcrepe .ct p{margin-left:auto;margin-right:auto}
+/* the crepe panel follows the statement card: label top, words settled at the bottom */
+#hcrepe .ct{text-align:left;display:flex;flex-direction:column;align-self:stretch}
+#hcrepe .ct h2{font-size:13px;letter-spacing:.22em;margin:0}
+#hcrepe .ct h2 + p{margin-top:auto;padding-top:24px}
+#hcrepe .ct p{max-width:26em;margin-left:0;margin-right:0}
+#hcrepe .ct .viewall{margin:14px 0 0;align-self:flex-start}
