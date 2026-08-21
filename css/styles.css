@@ -1004,7 +1004,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .view[data-view="atelier"] .navrow{justify-content:center}
 .view[data-view="atelier"] .atl .story,.view[data-view="atelier"] .crepe .story{max-width:none;margin-left:0;margin-right:0}
 .view[data-view="atelier"] .story p{max-width:30em}
-.view[data-view="atelier"] .story p:nth-of-type(even){margin-left:clamp(0px,30vw,420px);max-width:26em}
 .view[data-view="atelier"] .rtx p{margin-left:0;margin-right:0}
 .view[data-view="atelier"] .rtx .sub-t{text-align:left}
 .view[data-view="atelier"] .craftrow .ctext p{margin-left:0;margin-right:0}
@@ -1013,9 +1012,14 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 
 .svc .panelmock h3,.svc .after h3{font-size:15px;letter-spacing:.18em}
 
-/* the crepe panel follows the statement card: label top, words settled at the bottom */
-#hcrepe .ct{text-align:left;display:flex;flex-direction:column;align-self:stretch}
-#hcrepe .ct h2{font-size:13px;letter-spacing:.22em;margin:0}
-#hcrepe .ct h2 + p{margin-top:auto;padding-top:24px}
-#hcrepe .ct p{max-width:26em;margin-left:0;margin-right:0}
-#hcrepe .ct .viewall{margin:14px 0 0;align-self:flex-start}
+/* craft panels follow the statement card: label top, words settled at the bottom */
+.craftpanel .ct{text-align:left;display:flex;flex-direction:column;align-self:stretch}
+.craftpanel .ct h2{font-size:13px;letter-spacing:.22em;margin:0}
+.craftpanel .ct h2 + p{margin-top:auto;padding-top:24px}
+.craftpanel .ct .rtx{margin-top:auto;padding-top:24px}
+.craftpanel .ct p{max-width:26em;margin-left:0;margin-right:0}
+.craftpanel .ct .viewall{margin:14px 0 0;align-self:flex-start}
+.craftpanel .ct .rtx .sub-t{font-size:13px;letter-spacing:.22em;margin:0 0 .8em;text-align:left}
+
+.suit-service-panel>div:last-child{display:flex;flex-direction:column;align-self:stretch;text-align:left}
+.suit-service-panel>div:last-child p{margin-top:auto}
