@@ -351,18 +351,11 @@ footer .fsig p{margin-top:18px;font-size:9.5px;letter-spacing:.24em;text-transfo
 .lore h2{font-size:clamp(18px,2.4vw,28px);line-height:1.5;max-width:26em;margin:0 auto}
 
 /* ---------- services ---------- */
-.svc .grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(34px,6vw,90px);align-items:start;margin-top:clamp(30px,4vw,44px)}
+.svc .grid{display:block;max-width:960px;margin:clamp(30px,4vw,44px) auto 0}
 .svc .quads{display:grid;grid-template-columns:1fr 1fr;gap:clamp(22px,3vw,36px)}
 .svc .quads h3{font-size:15px;letter-spacing:.18em;margin-bottom:6px}
 .svc .quads p{font-size:13px;letter-spacing:0;text-transform:none;line-height:1.7;color:var(--grey)}
 .svc .disc{margin-top:clamp(24px,3.4vw,36px);font-size:12px;letter-spacing:.04em;text-transform:none;color:var(--grey);text-align:left}
-.svc .panelmock{border:1px solid var(--rule);padding:clamp(20px,2.6vw,30px)}
-.svc .panelmock .ph{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--rule);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--grey)}
-.svc .panelmock .ph img{width:26px}
-.svc .panelmock ul{list-style:none}
-.svc .panelmock li{padding:14px 2px;border-bottom:1px solid var(--rule);font-size:14px;display:flex;justify-content:space-between;align-items:center}
-.svc .panelmock li::after{content:"›";color:var(--grey)}
-.svc .panelmock li:last-child{border-bottom:0}
 .svc .after{margin-top:clamp(44px,6vw,64px);padding-top:clamp(26px,3.6vw,36px);border-top:1px solid var(--rule);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:baseline}
 .svc .after h3{font-size:clamp(16px,1.8vw,21px)}
 .svc .after p{color:var(--grey);font-size:14px}
@@ -1009,7 +1002,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .view[data-view="atelier"] .atl .vcap{text-align:left;font-size:11px;letter-spacing:.08em;font-style:normal;color:var(--grey)}
 
 
-.svc .panelmock h3,.svc .after h3{font-size:15px;letter-spacing:.18em}
 
 /* craft panels follow the statement card: label top, words settled at the bottom */
 .craftpanel .ct{text-align:left;display:flex;flex-direction:column;align-self:stretch}
