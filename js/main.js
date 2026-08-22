@@ -244,7 +244,11 @@ document.addEventListener('click',function(e){
   var av=document.querySelector('.view[data-view="about"]');
   var chap=av&&!av.hidden&&(av.classList.contains('aes-day-only')||av.classList.contains('aes-evening-only'));
   goBack();
-  if(chap)setTimeout(function(){openMenuGroup('about')},80)});
+  if(chap)setTimeout(function(){
+    menu.querySelectorAll('.mitem').forEach(function(mi){mi.style.display='';mi.classList.remove('open')});
+    var mf=menu.querySelector('.mfoot');if(mf)mf.style.display='';
+    var it=menu.querySelector('.mitem[data-group="about"]');if(it)it.classList.add('open');
+    menu.classList.add('open');focusInto(menu,'#menuX')},80)});
 window.__histOn=('pushState' in history);
 if(window.__histOn){
   addEventListener('popstate',function(ev){
