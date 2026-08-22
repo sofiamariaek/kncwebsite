@@ -267,7 +267,7 @@ document.addEventListener('click',function(e){
   var href=a.getAttribute('href')||'#';
   e.preventDefault();
   showView(name==='home'?'home':name);
-  if(name==='home'&&href.length>1){var el=document.querySelector(href);if(el)setTimeout(function(){el.scrollIntoView()},60)}
+  if(href.length>1){var el=document.querySelector(href);if(el)setTimeout(function(){try{el.scrollIntoView({behavior:'smooth',block:'start'})}catch(err){el.scrollIntoView()}},90)}
   if(menu.classList.contains('open')){menu.classList.remove('open');focusBack(menu)}
 });
 

@@ -30,7 +30,11 @@
 
 <div class="menu" id="menu">
   <button class="x" id="menuX" aria-label="Close">&#215;</button>
-  <div class="mitem" data-group="about"><a class="mhead" href="#" data-nav="about">The Equestrian Aesthetic</a></div>
+  <div class="mitem" data-group="about"><button type="button" class="mhead" data-sub>The Equestrian Aesthetic</button>
+    <div class="msub mpics">
+      <a href="#aes-day" data-nav="about"><figure><img src="assets/img/aesthetic-day-walk.jpg" alt="Day"><figcaption>Day</figcaption></figure></a>
+      <a href="#aes-evening" data-nav="about"><figure><img src="assets/img/campaign-paris.jpg" alt="Night"><figcaption>Night</figcaption></figure></a>
+    </div></div>
   <div class="mitem" data-group="suit"><button type="button" class="mhead" data-sub>The Equestrian Suit</button>
     <div class="msub">
       <a href="#" data-nav="looks">All looks</a>
@@ -160,7 +164,7 @@
   <h2 class="lines" data-io><span class="ln"><span>The Equestrian Aesthetic</span></span></h2>
   <p class="credit" style="margin-top:10px">Styled by Tabitha Simmons</p>
   <div class="fash gallery" data-stagger data-io>
-    <div class="moment">
+    <div class="moment" id="aes-day">
       <h4>Day</h4>
       <figure class="gwide"><img loading="lazy" src="assets/img/aesthetic-day-walk.jpg" alt="Kiwi &amp; Colibri equestrian tailoring &#8212; Day, the Moss jacket on a walk"></figure>
       <div class="gpair day">
@@ -168,7 +172,7 @@
         <figure><img loading="lazy" src="assets/img/aesthetic-day-city.jpg" alt="Kiwi &amp; Colibri equestrian tailoring &#8212; Day in the city"></figure>
       </div>
     </div>
-    <div class="moment">
+    <div class="moment" id="aes-evening">
       <h4>Evening</h4>
       <figure class="gwide"><img loading="lazy" src="assets/img/campaign-paris.jpg" alt="Kiwi &amp; Colibri equestrian tailoring &#8212; Evening in Paris"></figure>
       <div class="gpair evening">
