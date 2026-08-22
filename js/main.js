@@ -128,26 +128,31 @@ var PRICE={'Tailcoat':4800,'Jacket':4200,'Cargo breeches':2000,'Slim breeches':1
 var PRICEK={tailcoat:4800,jacket:4200,cargo:2000,slim:1850,corset:2000,belt:750};
 function fmtP(v){return '\u20AC'+String(v).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
 var LOOKS=[
- {kind:'tailcoat',c:'sand',name:'Tailcoat Suit',variant:'Sandstone',shots:['hero_sand','lm_sand2','lm_sand3','kostym_frack_beige','lining_sand','belt_beige_f','shoulder_beige']},
+ {kind:'tailcoat',c:'sand',name:'Tailcoat Suit',variant:'Sandstone',film:'assets/video/clip-12.mp4',shots:['hero_sand','lm_sand2','lm_sand3','kostym_frack_beige','lining_sand','belt_beige_f','shoulder_beige']},
  {kind:'tailcoat',c:'tar',name:'Tailcoat Suit',variant:'Tar',shots:['hero_tar','lm_tar2','lm_tar3','kostym_frack_svart','lining_tar']},
- {kind:'tailcoat',c:'moss',name:'Tailcoat Suit',variant:'Moss',shots:['hero_moss','lm_moss2','lm_moss3','kostym_frack_gron','lining_moss']},
+ {kind:'tailcoat',c:'moss',name:'Tailcoat Suit',variant:'Moss',film:'assets/video/clip-13.mp4',shots:['hero_moss','lm_moss2','lm_moss3','kostym_frack_gron','lining_moss']},
  {kind:'jacket',c:'tar',name:'Jacket Suit',variant:'Tar',shots:['lj_tar1','lj_tar2','lj_tar3','kostym_black','lining_tar']},
  {kind:'jacket',c:'moss',name:'Jacket Suit',variant:'Moss',shots:['lj_moss4','lj_moss1','lj_moss3','kostym_jacka_gron','lining_moss']},
  {kind:'jacket',c:'sand',name:'Jacket Suit',variant:'Sandstone',shots:['lj_sand1','lj_sand2','lj_sand3','kostym_jacka_beige','lining_sand']}
 ];
-function lookCard(i){var L=LOOKS[i];
+function lookCard(i,film){var L=LOOKS[i];
   var a=document.createElement('a');a.href='#';
-  a.innerHTML='<figure><img loading="lazy" src="'+bankSrc(L.shots[0])+'" alt="'+L.name+', '+L.variant+'"></figure><span class="lookmeta"><strong>'+L.name+' · '+L.variant+'</strong></span>';
+  var media=(film&&L.film)?'<video src="'+L.film+'" muted loop autoplay playsinline preload="metadata"></video>'
+    :'<img loading="lazy" src="'+bankSrc(L.shots[0])+'" alt="'+L.name+', '+L.variant+'">';
+  a.innerHTML='<figure>'+media+'</figure><span class="lookmeta"><strong>'+L.name+' · '+L.variant+'</strong></span>';
   a.addEventListener('click',function(e){e.preventDefault();openLook(i)});
   return a}
 function renderLooksInto(id,kind){var g=document.getElementById(id);if(!g)return;g.innerHTML='';
-  LOOKS.forEach(function(L,i){if(L.kind!==kind)return;g.appendChild(lookCard(i))})}
+  LOOKS.forEach(function(L,i){if(L.kind!==kind)return;g.appendChild(lookCard(i,true))})}
 (function(){var st=document.getElementById('lookStrip');if(st){[0,2,3].forEach(function(i){st.appendChild(lookCard(i))})}})();
 renderLooksInto('lookGridT','tailcoat');renderLooksInto('lookGridJ','jacket');
 var curLook=0;
-function lookStackShow(slugs){var st=document.getElementById('lookStack');st.innerHTML='';
+function lookStackShow(slugs,film){var st=document.getElementById('lookStack');st.innerHTML='';
+  if(film){var ff=document.createElement('figure');ff.className='main fframe';
+    ff.innerHTML='<video src="'+film+'" muted loop autoplay playsinline preload="metadata"></video>';
+    st.appendChild(ff)}
   slugs.forEach(function(sl,j){var src=bankSrc(sl);if(!src)return;
-    var fig=document.createElement('figure');fig.className=j===0?'main fframe':'fframe';
+    var fig=document.createElement('figure');fig.className=(j===0&&!film)?'main fframe':'fframe';
     var im=document.createElement('img');im.src=src;im.alt='';
     if(/^(frack_|jacka_|vast_|byxa_)/.test(sl))im.className='flat';
     if(/^(belt_|shoulder_)/.test(sl))im.className='det';
@@ -161,7 +166,8 @@ function lookImgs(i){var L=LOOKS[i];curLook=i;
   ((MODEL_SHOTS[L.kind]||{})[L.c]||[]).forEach(function(sl){if(seq.indexOf(sl)<0)seq.push(sl)});
   L.shots.forEach(function(sl){if(seq.indexOf(sl)<0)seq.push(sl)});
   ['belt_beige_f','shoulder_beige'].forEach(function(sl){if(seq.indexOf(sl)<0)seq.push(sl)});
-  lookStackShow(seq)}
+  if(L.film)seq.shift();
+  lookStackShow(seq,L.film)}
 function openLook(i){var L=LOOKS[i];
   lookImgs(i);
   var tiles=document.getElementById('lookTiles');
