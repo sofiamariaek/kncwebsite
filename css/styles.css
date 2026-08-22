@@ -1105,9 +1105,10 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .mpics a{flex:1;min-width:0}
 .mpics figure{position:relative;margin:0;aspect-ratio:3/4;overflow:hidden;background:#EDE7D8}
 .mpics img{width:100%;height:100%;object-fit:cover;display:block}
-.mpics figcaption{margin-top:10px;text-align:center;color:var(--black);font-family:"Greenstone","Palatino Linotype",Palatino,serif;font-size:13px;letter-spacing:.22em;text-transform:uppercase}
+.mpics figcaption{position:absolute;left:0;right:0;bottom:16px;text-align:center;color:var(--black);font-family:"Greenstone","Palatino Linotype",Palatino,serif;font-size:13px;letter-spacing:.22em;text-transform:uppercase;z-index:2}
+.mpics figure::after{content:"";position:absolute;inset:62% 0 0;background:linear-gradient(to bottom,transparent,rgba(255,250,235,.82))}
 
 @media (min-width:761px){
   .menu .mitem.open .msub.mpics{position:fixed;left:min(400px,86vw);top:0;bottom:0;max-height:none;height:auto;overflow:visible;display:flex;align-items:center;gap:clamp(16px,1.8vw,28px);padding:74px clamp(26px,3.2vw,52px);background:var(--ivory);z-index:69;box-shadow:24px 0 60px rgba(11,10,9,.07)}
-  .menu .mitem.open .msub.mpics a{flex:none;width:clamp(300px,25vw,410px)}
+  .menu .mitem.open .msub.mpics a{flex:none;width:clamp(360px,30vw,520px)}
 }
