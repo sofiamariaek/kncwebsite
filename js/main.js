@@ -267,6 +267,9 @@ document.addEventListener('click',function(e){
   var href=a.getAttribute('href')||'#';
   e.preventDefault();
   showView(name==='home'?'home':name);
+  if(name==='about'){var av=document.querySelector('.view[data-view="about"]');
+    av.classList.remove('aes-day-only','aes-evening-only');
+    var af=a.getAttribute('data-aes');if(af)av.classList.add('aes-'+af+'-only')}
   if(href.length>1){var el=document.querySelector(href);if(el)setTimeout(function(){try{el.scrollIntoView({behavior:'smooth',block:'start'})}catch(err){el.scrollIntoView()}},90)}
   if(menu.classList.contains('open')){menu.classList.remove('open');focusBack(menu)}
 });
