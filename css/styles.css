@@ -445,7 +445,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .sg-head h3{font-size:clamp(19px,2.1vw,24px);letter-spacing:.08em;text-transform:uppercase}
 .sg-x{font-size:26px;line-height:1;padding:2px 6px}
 .sg-note{margin-top:14px;color:var(--grey);font-size:14px}
-.sg-note a{text-decoration:underline;text-underline-offset:4px;color:var(--black)}
+.sg-note a{color:var(--black)}
 .sg-table{width:100%;margin-top:22px;border-collapse:collapse}
 .sg-table th{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:400;color:var(--grey);padding:10px 6px;border-bottom:1px solid var(--rule)}
 .sg-table td{text-align:center;padding:13px 6px;border-bottom:1px solid var(--rule);font-size:14.5px}
@@ -462,13 +462,13 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .wlitem .nm{flex:1;font-size:12.5px;line-height:1.5}
 .wlitem .included-set{display:block;margin-top:3px;font-style:normal;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--grey)}
 .wlitem .rm{font-size:18px;padding:4px}
-.wlitem .zedit{text-decoration:underline;text-underline-offset:3px;padding:0 2px}
+.wlitem .zedit{padding:0 2px}
 .wlempty{margin-top:14px;font-size:12.5px;color:var(--grey)}
 .incl{display:block;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--grey);margin-top:6px;line-height:1.7}
 #bagUp{margin-top:18px}
 #bagUp .upt{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--grey)}
 #bagUp .upn{font-size:11px;color:var(--grey);margin-top:4px;line-height:1.6}
-#bagUp .wlitem .add{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px;padding:4px 6px}
+#bagUp .wlitem .add{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;padding:4px 6px}
 .paybtn.bagadd{background:var(--black);color:var(--ivory);letter-spacing:.2em;text-transform:uppercase;font-size:11.5px}
 .paybtn.bagadd:hover{opacity:.85}
 .hicon{position:relative}
@@ -481,7 +481,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .sheetup .sut{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey);margin-bottom:8px}
 .sheetup button{display:block;width:100%;text-align:left;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
   padding:10px 0;border-bottom:1px solid var(--rule)}
-.sheetup button span{float:right;text-decoration:underline;text-underline-offset:3px}
+.sheetup button span{float:right;text-decoration:none}
 .sheetup .suprow{display:flex;align-items:center;gap:12px;float:none}
 .sheetup .suprow img{width:40px;height:52px;object-fit:contain;background:#F5F5F5}
 .sheetup .suprow i{font-style:normal;flex:1}
@@ -520,7 +520,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .acctcard[data-step="done"] .st-done{display:block}
 .acctcard .done button{margin:16px 8px 0}
 .acctcard .done p{margin-top:10px;font-size:13.5px;line-height:1.7}
-.acctcard .done button{margin-top:16px;text-decoration:underline;text-underline-offset:4px;font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.acctcard .done button{margin-top:16px;font-size:11px;letter-spacing:.18em;text-transform:uppercase}
 /* film overlay */
 .film{position:fixed;inset:0;background:#0B0A09;z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px var(--pad) 40px;
   opacity:0;visibility:hidden;transition:opacity .7s var(--ease),visibility 0s .7s}
@@ -550,12 +550,12 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .hpush,.hlooks{padding:clamp(56px,8vw,110px) var(--pad) 0;text-align:center}
 .hlooks .lookgrid{margin:0 auto}
 #lookStrip{grid-template-columns:repeat(3,1fr);max-width:1100px}
-.viewall{display:inline-block;margin:26px auto 0;font-size:11px;letter-spacing:.22em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px}
+.viewall{display:inline-block;margin:26px auto 0;font-size:11px;letter-spacing:.22em;text-transform:uppercase;text-decoration:none}
 .hatelier{position:relative;margin-top:clamp(56px,8vw,110px)}
 .hatelier img{width:100%;height:clamp(320px,55vh,560px);object-fit:cover;display:block;filter:brightness(.72)}
 .hatelier .ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--ivory)}
 .hatelier h3{font-size:clamp(18px,2.4vw,28px);letter-spacing:.14em;text-transform:uppercase}
-.hatelier a{color:var(--ivory);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px}
+.hatelier a{color:var(--ivory);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;text-decoration:none}
 .lookfilter{display:flex;justify-content:center;gap:10px;margin:0 0 clamp(26px,4vw,44px)}
 .lookfilter button{padding:8px 18px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--rule);color:var(--grey)}
 .lookfilter button[aria-pressed="true"]{background:var(--black);color:var(--ivory);border-color:var(--black)}
@@ -612,7 +612,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .cpage .tile{display:block;width:100%;aspect-ratio:2/3;background:#F5F5F5;overflow:hidden}
 .cpage .cell{display:flex;flex-direction:column;align-items:center}
 .cpage .cell .pc{width:100%}
-.cpage .ordlink{margin-top:8px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px;padding:4px 6px}
+.cpage .ordlink{margin-top:8px;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;padding:4px 6px}
 .cpage .suitcell{grid-column:1/-1}
 .cpage .suitshot{width:100%;margin:0;background:#F5F5F5;aspect-ratio:16/10;overflow:hidden}
 .cpage .suitshot img{width:100%;height:100%;object-fit:contain;padding:3%;box-sizing:border-box;display:block}
@@ -655,7 +655,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .cthumbs button{width:64px;height:80px;background:#F5F5F5;border:1px solid var(--rule);padding:0;overflow:hidden}
 .cthumbs button.on{border-color:var(--black)}
 .cthumbs img{width:100%;height:100%;object-fit:contain;padding:6%;box-sizing:border-box;display:block}
-.sizeguide{font-size:11px;letter-spacing:.18em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px}
+.sizeguide{font-size:11px;letter-spacing:.18em;text-transform:uppercase;text-decoration:none}
 .pbuy .btn.wide{display:block;width:100%;margin-top:24px;text-align:center;border-color:var(--control-grey);background:var(--control-grey)}
 .pbuy .btn.wide:hover{background:#96938C;color:var(--ivory)}
 .shopbtn{display:block;width:100%;margin-top:10px;background:transparent;color:var(--black);border:1px solid var(--black);padding:13px 10px;font-size:13px;letter-spacing:.04em;transition:all .4s var(--ease)}
@@ -694,7 +694,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .navrow{display:flex;justify-content:center;align-items:baseline;gap:36px;margin-bottom:clamp(18px,2.6vw,28px)}
 .navrow .back{margin-bottom:0}
 .assist{margin-top:22px;padding-top:18px;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:8px}
-.assist a{font-size:13px;text-decoration:underline;text-underline-offset:4px}
+.assist a{font-size:13px;text-decoration:none}
 .ctl{max-width:1180px;margin:clamp(44px,6.4vw,84px) auto 0}
 .ctl h3{font-size:clamp(16px,1.8vw,21px);letter-spacing:.14em;text-transform:uppercase;text-align:center}
 .ctlrow{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2.4vw,30px);margin-top:clamp(24px,3.4vw,40px)}
@@ -746,7 +746,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .composition-price span{display:block;margin-top:4px;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--grey)}
 .composition-actions{grid-area:actions;display:flex;align-items:center;justify-content:flex-end;gap:18px;margin-top:8px}
 .composition-actions .btn{white-space:nowrap}
-.composition-actions a:not(.btn){font-size:10px;letter-spacing:.16em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px}
+.composition-actions a:not(.btn){font-size:10px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none}
 .navrow .vhome::before{content:"";margin:0}
 
 /* piece page — full-bleed photography left, sticky buy rail right */
@@ -868,7 +868,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .account-sections span{font-family:"Greenstone",serif;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase}
 .account-sections em{font-style:normal;font-size:11.5px;line-height:1.55;color:var(--grey);text-transform:none;letter-spacing:0}
 .acctcard .done .account-sections button{margin:0;text-decoration:none;letter-spacing:0;text-transform:none;font-size:inherit}
-#bagDone [data-confirm-concierge]{margin-top:18px;text-decoration:underline;text-underline-offset:4px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase}
+#bagDone [data-confirm-concierge]{margin-top:18px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase}
 .svcb p{font-size:13px;line-height:1.8;color:var(--grey);margin-top:6px;max-width:25ch;margin-left:auto;margin-right:auto}
 
 @media (max-width:760px){
@@ -973,7 +973,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 /* delivery page — three calm, left-aligned columns */
 .view[data-view="delivery"] .svcb{max-width:1180px;margin-top:clamp(28px,4vw,52px)}
 .view[data-view="delivery"] .svcb>div+div{padding-left:clamp(18px,2.5vw,32px)}
-.view[data-view="delivery"] .svcb a{display:inline;text-decoration:underline;text-underline-offset:3px}
+.view[data-view="delivery"] .svcb a{display:inline;text-decoration:none}
 .view[data-view="delivery"] .svcb h3{font-size:15px;letter-spacing:.18em}
 .view[data-view="delivery"] .svcb p{font-size:var(--prose);line-height:1.9;max-width:52ch;margin:14px auto 0;color:var(--black)}
 
@@ -1048,7 +1048,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .cmpz-total span{display:block;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--grey)}
 .cmpz-total em{font-style:normal;font-size:17px}
 #cmpzAdd{display:block;min-width:min(280px,30vw);min-height:44px;background:var(--control-grey);color:var(--ivory);border:0;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;transition:background .3s}
-.cmpz-consult{display:block;margin-top:9px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;text-decoration:underline;text-underline-offset:3px;color:var(--grey);text-align:center}
+.cmpz-consult{display:block;margin-top:9px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--grey);text-align:center}
 @media (max-width:880px){.cmpz-grid{grid-template-columns:1fr}.cmpz-stage{position:static}.cmpz-rail{position:static;max-height:none;overflow:visible}.cmpz-bar-inner{flex-wrap:wrap}.cmpz-total{border-left:0;padding-left:0}.cmpz-actions{width:100%}#cmpzAdd{width:100%}}
 
 /* the aesthetic page follows the atelier: left voice, card labels, one text size */
@@ -1077,7 +1077,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .view[data-view="about"] .founderfull .q p{max-width:34em}
 
 .csize{margin-top:2px}
-.cszg{display:inline-block;margin-top:14px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;text-decoration:underline;text-underline-offset:3px;color:var(--grey)}
+.cszg{display:inline-block;margin-top:14px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--grey)}
 #cmpzAdd[disabled]{opacity:.45;cursor:default}
 
 /* one label per card: the rotating craft text sheds its inner sub-headings */
