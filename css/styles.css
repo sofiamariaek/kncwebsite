@@ -1021,6 +1021,8 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .cmpz-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(330px,5fr);gap:clamp(26px,3.6vw,58px);max-width:1280px;margin:0 auto;align-items:start}
 .cmpz-stage{position:sticky;top:clamp(76px,10vh,104px);background:#F5F5F5}
 .cmpz-stage img{width:100%;height:auto;display:block}
+.cmpz-rail{position:sticky;top:clamp(76px,10vh,104px);max-height:calc(100vh - clamp(76px,10vh,104px) - 16px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;padding-right:6px}
+.cmpz-rail::-webkit-scrollbar{display:none}
 .cmpz-rail .pagename{text-align:left;margin-bottom:4px}
 .cmpz-sub{font-size:clamp(14px,1.25vw,17px);color:var(--grey);margin-bottom:clamp(18px,2.6vh,28px)}
 .cstep{border-top:1px solid var(--rule);padding:18px 0 22px}
@@ -1047,7 +1049,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .cmpz-total em{font-style:normal;font-size:17px}
 #cmpzAdd{display:block;min-width:min(280px,30vw);min-height:44px;background:var(--control-grey);color:var(--ivory);border:0;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;transition:background .3s}
 .cmpz-consult{display:block;margin-top:9px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;text-decoration:underline;text-underline-offset:3px;color:var(--grey);text-align:center}
-@media (max-width:880px){.cmpz-grid{grid-template-columns:1fr}.cmpz-stage{position:static}.cmpz-bar-inner{flex-wrap:wrap}.cmpz-total{border-left:0;padding-left:0}.cmpz-actions{width:100%}#cmpzAdd{width:100%}}
+@media (max-width:880px){.cmpz-grid{grid-template-columns:1fr}.cmpz-stage{position:static}.cmpz-rail{position:static;max-height:none;overflow:visible}.cmpz-bar-inner{flex-wrap:wrap}.cmpz-total{border-left:0;padding-left:0}.cmpz-actions{width:100%}#cmpzAdd{width:100%}}
 
 /* the aesthetic page follows the atelier: left voice, card labels, one text size */
 .view[data-view="about"]{text-align:left}
@@ -1085,3 +1087,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 
 .svc .grid{text-align:left}
 .svc .quads h3{margin-bottom:8px}
+
+.cmpz .sw button{width:18px;height:18px}
+.cmpz .sw button::after{inset:-4px}
