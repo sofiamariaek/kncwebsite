@@ -240,7 +240,11 @@ function goBack(){
   if(history.length>1&&window.__histOn){history.back();return}
   NAVSTACK.pop();var prev=NAVSTACK.pop()||'home';showView(prev)}
 document.addEventListener('click',function(e){
-  var b=e.target.closest('[data-back]');if(!b)return;e.preventDefault();goBack()});
+  var b=e.target.closest('[data-back]');if(!b)return;e.preventDefault();
+  var av=document.querySelector('.view[data-view="about"]');
+  var chap=av&&!av.hidden&&(av.classList.contains('aes-day-only')||av.classList.contains('aes-evening-only'));
+  goBack();
+  if(chap)setTimeout(function(){openMenuGroup('about')},80)});
 window.__histOn=('pushState' in history);
 if(window.__histOn){
   addEventListener('popstate',function(ev){
