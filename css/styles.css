@@ -1127,11 +1127,12 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .shadowline .sldisc{display:inline-block;margin-top:clamp(20px,3vh,30px);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--grey)}
 .shadowline .sldisc:hover{color:var(--black)}
 
-/* the front page ends on four tiles, Dior's measure */
-.htiles{padding:clamp(40px,6vh,72px) 0 clamp(56px,8vh,96px)}
-.htgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,1.6vw,24px);max-width:1140px;margin:0 auto;padding:0 clamp(14px,1.6vw,24px)}
-.htgrid a{display:block}
-.htgrid figure{margin:0}
-.htgrid img,.htgrid video{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
-.htgrid img.face-up{object-position:center 12%}
-@media (max-width:700px){.htgrid{grid-template-columns:1fr}}
+/* the front page closes on editorial moments — pictures set the world, lines lead */
+.hmoment{max-width:1140px;margin:0 auto;padding:clamp(30px,4.6vh,56px) clamp(14px,1.6vw,24px)}
+.hmoment figure{margin:0}
+.hmoment img{width:100%;height:auto;display:block}
+.hmoment .hfilm video{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.hmeta{text-align:center;margin-top:clamp(16px,2.4vh,26px)}
+.hmeta h2{font-size:13px;letter-spacing:.22em}
+.hmeta .credit{margin-top:7px}
+.hmeta .viewall{margin-top:12px}
