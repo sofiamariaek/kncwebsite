@@ -1139,3 +1139,12 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 
 /* the mark as punctuation, Dior style */
 .menu .mlogo{position:absolute;top:27px;left:var(--pad);height:14px;width:auto}
+
+#lookStrip{grid-template-columns:repeat(2,1fr);max-width:940px}
+
+.hmeta-top{margin:0 0 clamp(18px,2.8vh,32px)}
+.haes-pair{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,1.6vw,24px)}
+.haes-pair a{display:block}
+.haes-pair figure{margin:0}
+.haes-pair img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+@media (max-width:700px){.haes-pair{grid-template-columns:1fr}}

@@ -152,7 +152,7 @@ function lookCard(i,film){var L=LOOKS[i];
   return a}
 function renderLooksInto(id,kind){var g=document.getElementById(id);if(!g)return;g.innerHTML='';
   LOOKS.forEach(function(L,i){if(L.kind!==kind)return;g.appendChild(lookCard(i,true))})}
-(function(){var st=document.getElementById('lookStrip');if(st){[0,2,3].forEach(function(i){st.appendChild(lookCard(i,i===2))})}})();
+(function(){var st=document.getElementById('lookStrip');if(st){[0,2].forEach(function(i){st.appendChild(lookCard(i,i===2))})}})();
 renderLooksInto('lookGridT','tailcoat');renderLooksInto('lookGridJ','jacket');
 var curLook=0;
 function lookStackShow(slugs,film){var st=document.getElementById('lookStack');st.innerHTML='';
