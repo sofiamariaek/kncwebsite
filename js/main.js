@@ -32,12 +32,19 @@ document.querySelectorAll('.lines').forEach(function(b){b.querySelectorAll('.ln 
 function setHdh(){var h=document.querySelector('.hd');if(h)document.documentElement.style.setProperty('--hdh',h.offsetHeight+'px')}
 setHdh();addEventListener('resize',setHdh);addEventListener('load',setHdh);
 
+/* small films start when they enter the viewport, rest when they leave */
+function lazyFilm(v){v.muted=true;v.preload='none';
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){
+    if(en.isIntersecting){var p=en.target.play();if(p&&p.catch)p.catch(function(){})}
+    else en.target.pause()})},{threshold:.25});
+  io.observe(v)}
+
 /* atelier film: pick a playable codec explicitly (data-URI <source> fallback is unreliable) */
 document.querySelectorAll('video:not([data-reel])').forEach(function(v){
 var ss=v.querySelectorAll('source'),pick=null;
 for(var i=0;i<ss.length;i++){if(v.canPlayType(ss[i].getAttribute('type'))){pick=ss[i].getAttribute('src');break}}
 if(!pick&&ss.length)pick=ss[0].getAttribute('src');
-if(pick){v.src=pick;v.load();var pr=v.play();if(pr&&pr.catch)pr.catch(function(){})}});
+if(pick){v.src=pick;if(v.closest('.htgrid')){lazyFilm(v)}else{v.load();var pr=v.play();if(pr&&pr.catch)pr.catch(function(){})}}});
 
 /* home crêpe module borrows the saddle reel */
 (function(){var slot=document.querySelector('[data-clone-crepe]');if(!slot)return;
@@ -140,11 +147,12 @@ function lookCard(i,film){var L=LOOKS[i];
   var media=(film&&L.film)?'<video src="'+L.film+'" muted loop autoplay playsinline preload="metadata"></video>'
     :'<img loading="lazy" src="'+bankSrc(L.shots[0])+'" alt="'+L.name+', '+L.variant+'">';
   a.innerHTML='<figure>'+media+'</figure><span class="lookmeta"><strong>'+L.name+' · '+L.variant+'</strong></span>';
+  var fv=a.querySelector('video');if(fv)lazyFilm(fv);
   a.addEventListener('click',function(e){e.preventDefault();openLook(i)});
   return a}
 function renderLooksInto(id,kind){var g=document.getElementById(id);if(!g)return;g.innerHTML='';
   LOOKS.forEach(function(L,i){if(L.kind!==kind)return;g.appendChild(lookCard(i,true))})}
-(function(){var st=document.getElementById('lookStrip');if(st){[0,2,3].forEach(function(i){st.appendChild(lookCard(i))})}})();
+(function(){var st=document.getElementById('lookStrip');if(st){[0,2,3].forEach(function(i){st.appendChild(lookCard(i,i===2))})}})();
 renderLooksInto('lookGridT','tailcoat');renderLooksInto('lookGridJ','jacket');
 var curLook=0;
 function lookStackShow(slugs,film){var st=document.getElementById('lookStack');st.innerHTML='';

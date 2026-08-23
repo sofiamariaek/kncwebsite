@@ -1132,5 +1132,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .htgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,1.6vw,24px);max-width:1140px;margin:0 auto;padding:0 clamp(14px,1.6vw,24px)}
 .htgrid a{display:block}
 .htgrid figure{margin:0}
-.htgrid img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.htgrid img,.htgrid video{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.htgrid img.face-up{object-position:center 12%}
 @media (max-width:700px){.htgrid{grid-template-columns:1fr}}
