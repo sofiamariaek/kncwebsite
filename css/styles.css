@@ -1149,4 +1149,4 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .haes-pair img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
 @media (max-width:700px){.haes-pair{grid-template-columns:1fr}}
 
-.hmeta .hmark{width:18px;height:auto;display:block;margin:0 auto clamp(18px,2.6vh,26px)}
+.hmeta .hmark{width:26px;height:auto;display:block;margin:0 auto clamp(18px,2.6vh,26px)}
