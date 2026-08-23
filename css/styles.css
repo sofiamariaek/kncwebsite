@@ -1136,3 +1136,9 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .hmeta h2{font-size:13px;letter-spacing:.22em}
 .hmeta .credit{margin-top:7px}
 .hmeta .viewall{margin-top:12px}
+
+/* the mark as punctuation, Dior style */
+.menu .mlogo{position:absolute;top:27px;left:var(--pad);height:14px;width:auto}
+.pageseal{text-align:center;padding:clamp(44px,6.5vh,80px) 0 clamp(18px,2.6vh,32px)}
+.pageseal img{width:22px;height:auto;display:inline-block}
+.acctcard .acctmark{width:20px;height:auto;display:block;margin:0 auto 14px}
