@@ -1126,3 +1126,11 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .shadowline .slline{margin:0 auto;max-width:30em;font-size:var(--prose);line-height:1.6}
 .shadowline .sldisc{display:inline-block;margin-top:clamp(20px,3vh,30px);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--grey)}
 .shadowline .sldisc:hover{color:var(--black)}
+
+/* the front page ends on four tiles, Dior's measure */
+.htiles{padding:clamp(40px,6vh,72px) 0 clamp(56px,8vh,96px)}
+.htgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,1.6vw,24px);max-width:1140px;margin:0 auto;padding:0 clamp(14px,1.6vw,24px)}
+.htgrid a{display:block}
+.htgrid figure{margin:0}
+.htgrid img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+@media (max-width:700px){.htgrid{grid-template-columns:1fr}}
