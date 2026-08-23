@@ -341,7 +341,7 @@ footer .fsig p{margin-top:18px;font-size:11px;letter-spacing:.26em;text-transfor
 .stmt-grid img{width:100%;height:auto;display:block}
 .stmt-grid p{margin:0}
 @media (max-width:860px){.stmt-grid{grid-template-columns:1fr}}
-.crepe h2{font-size:clamp(15px,1.5vw,19px);letter-spacing:.22em}
+.crepe h2{font-size:13px;letter-spacing:.22em}
 .crepe .vwrap{margin-top:clamp(30px,4.6vw,50px);aspect-ratio:16/9;overflow:hidden;background:#171410}
 .crepe video{width:100%;height:100%;object-fit:cover;display:block}
 .crepe .story{max-width:34em;margin:clamp(34px,5vw,60px) auto 0}
@@ -995,7 +995,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 /* the atelier reads as a journal: left voice, staggered measures, quiet captions */
 .view[data-view="atelier"]{text-align:left}
 .view[data-view="atelier"] .navrow{justify-content:center}
-.view[data-view="atelier"] .atl .story,.view[data-view="atelier"] .crepe .story{max-width:none;margin-left:0;margin-right:0}
 .view[data-view="atelier"] .story p{max-width:30em}
 .view[data-view="atelier"] .rtx p{margin-left:0;margin-right:0}
 .view[data-view="atelier"] .rtx .sub-t{text-align:left}
@@ -1084,7 +1083,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 /* one label per card: the rotating craft text sheds its inner sub-headings */
 .craftpanel .ct .rtx .sub-t{display:none}
 .crepe .rtx .sub-t{display:none}
-.crepe .rtx p{font-size:11px;letter-spacing:.08em;color:var(--grey);text-align:left;max-width:none;margin:10px 0 0;line-height:1.7}
+.crepe .rtx p{font-size:clamp(14px,1.25vw,17px);letter-spacing:normal;color:var(--black);text-align:left;max-width:26em;margin:12px 0 0;line-height:1.85}
 
 .svc .grid{text-align:left}
 .svc .quads h3{margin-bottom:8px}
@@ -1102,7 +1101,8 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 @media (max-width:700px){.lookshero{aspect-ratio:4/3}}
 
 /* the aesthetic opens out to the side of the drawer — big pictures, dior-wise */
-.mpics{display:flex;gap:12px;padding:14px 2px 8px}
+.mpics{display:flex;gap:12px}
+@media (max-width:760px){.menu .mitem.open .msub.mpics{padding:14px 2px 8px}}
 .mpics a{flex:1;min-width:0}
 .mpics figure{position:relative;margin:0;display:flex;flex-direction:column;gap:12px}
 .mpics img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;background:#EDE7D8}
