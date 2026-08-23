@@ -1134,7 +1134,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .hmoment .hfilm video{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
 .hmeta{text-align:center;margin-top:clamp(16px,2.4vh,26px)}
 .hmeta h2{font-size:13px;letter-spacing:.22em}
-.hmeta .credit{margin-top:7px}
+.hmeta .credit{margin-top:11px}
 .hmeta .viewall{margin-top:12px}
 
 /* the mark as punctuation, Dior style */
@@ -1142,11 +1142,11 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 
 #lookStrip{grid-template-columns:repeat(2,1fr);max-width:940px}
 
-.hmeta-top{margin:0 0 clamp(18px,2.8vh,32px)}
+.hmeta-top{margin:0 0 clamp(28px,4.2vh,48px)}
 .haes-pair{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,1.6vw,24px)}
 .haes-pair a{display:block}
 .haes-pair figure{margin:0}
 .haes-pair img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
 @media (max-width:700px){.haes-pair{grid-template-columns:1fr}}
 
-.hmeta .hmark{width:26px;height:auto;display:block;margin:0 auto 16px}
+.hmeta .hmark{width:18px;height:auto;display:block;margin:0 auto clamp(18px,2.6vh,26px)}
