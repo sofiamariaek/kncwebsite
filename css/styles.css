@@ -319,7 +319,7 @@ footer .fsig p{margin-top:18px;font-size:11px;letter-spacing:.26em;text-transfor
 .atl .story p,.crepe .story p{margin-bottom:1.2em;font-size:clamp(14px,1.25vw,17px);line-height:1.85}
 .atl .story .goal,.crepe .story .goal{font-style:italic}
 .atl .story .sub-t,.crepe .story .sub-t{font-size:13px;letter-spacing:.22em;margin-bottom:1em}
-.atl .vwrap{margin-top:clamp(30px,4.6vw,50px);aspect-ratio:16/9;overflow:hidden;background:#171410}
+.atl .vwrap{margin:clamp(30px,4.6vw,50px) auto 0;max-width:1280px;aspect-ratio:16/9;overflow:hidden;background:#171410}
 .atl video{width:100%;height:100%;object-fit:cover;display:block}
 .atl .vcap{text-align:center;margin-top:12px}
 .atl .gal{margin-top:clamp(34px,5vw,60px);column-count:2;column-gap:clamp(16px,2.4vw,30px)}
@@ -342,7 +342,7 @@ footer .fsig p{margin-top:18px;font-size:11px;letter-spacing:.26em;text-transfor
 .stmt-grid p{margin:0}
 @media (max-width:860px){.stmt-grid{grid-template-columns:1fr}}
 .crepe h2{font-size:13px;letter-spacing:.22em}
-.crepe .vwrap{margin-top:clamp(30px,4.6vw,50px);aspect-ratio:16/9;overflow:hidden;background:#171410}
+.crepe .vwrap{margin:clamp(30px,4.6vw,50px) auto 0;max-width:1280px;aspect-ratio:16/9;overflow:hidden;background:#171410}
 .crepe video{width:100%;height:100%;object-fit:cover;display:block}
 .crepe .story{max-width:34em;margin:clamp(34px,5vw,60px) auto 0}
 .crepe .story p{margin-bottom:1.2em}
