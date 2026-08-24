@@ -215,7 +215,7 @@ footer .fsig p{margin-top:18px;font-size:11px;letter-spacing:.26em;text-transfor
 .navsub{display:block;font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--grey);margin-top:4px;text-align:center}
 .sw{display:flex;gap:10px}
 .sw button{width:26px;height:26px;border-radius:50%;border:1px solid rgba(0,0,0,.25);position:relative;transition:transform .35s var(--ease)}
-.sw button::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--black);opacity:0;transform:scale(.8);transition:opacity .4s,transform .4s var(--ease)}
+.sw button::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1px solid var(--grey);opacity:0;transform:scale(.8);transition:opacity .4s,transform .4s var(--ease)}
 .sw button[aria-pressed="true"]::after{opacity:1;transform:scale(1)}
 .sw button:hover{transform:translateY(-2px)}
 .sw .t{background:var(--tar)} .sw .m{background:#57633A} .sw .s{background:var(--sand)}

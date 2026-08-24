@@ -191,7 +191,7 @@ var img=document.getElementById('cmpzImg');if(!img)return;
 var KOSTYM={tar:{tailcoat:'kostym_frack_svart',jacket:'kostym_black'},
             moss:{tailcoat:'kostym_frack_gron',jacket:'kostym_jacka_gron'},
             sand:{tailcoat:'kostym_frack_beige',jacket:'kostym_jacka_beige'}};
-var st={coat:'tailcoat',coatC:'moss',brK:'cargo',brC:'moss',corC:'moss',beltC:'moss',coatZ:null,brZ:null,corZ:null};
+var st={coat:'tailcoat',coatC:'moss',brK:'cargo',brC:'moss',corC:'moss',beltC:'moss',focus:null};
 function flat(c,k){return bankSrc(prodSlug(PIECES[c][k].stack))}
 function dots(el,cur,fn){el.innerHTML='';CCOLS.forEach(function(c){
   var d=document.createElement('button');d.type='button';d.className=SWCLS[c];
@@ -201,18 +201,22 @@ function kbtns(id,cur,fn){var box=document.getElementById(id);
   [].forEach.call(box.querySelectorAll('button'),function(b){
     b.setAttribute('aria-pressed',String(b.getAttribute('data-k')===cur));
     if(!b.__wired){b.__wired=1;b.addEventListener('click',function(){fn(b.getAttribute('data-k'));render()})}})}
+var corThumb=document.getElementById('cmpzCorImg');
+if(corThumb&&!corThumb.__wired){corThumb.__wired=1;corThumb.closest('button').addEventListener('click',function(){st.focus='corset';render()})}
 function render(){
-  img.src=bankSrc('suit_'+st.coat+'_'+st.brK+'_'+st.coatC)||bankSrc(KOSTYM[st.coatC][st.coat]);
-  kbtns('cmpzCoatK',st.coat,function(k){st.coat=k});
+  img.src=st.focus==='corset'
+    ?(bankSrc('under_'+st.brK+'_'+st.corC)||flat(st.corC,'corset'))
+    :(bankSrc('suit_'+st.coat+'_'+st.brK+'_'+st.coatC)||bankSrc(KOSTYM[st.coatC][st.coat]));
+  kbtns('cmpzCoatK',st.coat,function(k){st.coat=k;st.focus=null});
   kbtns('cmpzBrK',st.brK,function(k){st.brK=k});
   document.querySelector('#cmpzCoatK [data-k="tailcoat"] img').src=flat(st.coatC,'tailcoat');
   document.querySelector('#cmpzCoatK [data-k="jacket"] img').src=flat(st.coatC,'jacket');
   document.querySelector('#cmpzBrK [data-k="cargo"] img').src=flat(st.brC,'cargo');
   document.querySelector('#cmpzBrK [data-k="slim"] img').src=flat(st.brC,'slim');
   document.getElementById('cmpzCorImg').src=flat(st.corC,'corset');
-  dots(document.getElementById('cmpzCoatC'),st.coatC,function(c){st.coatC=c});
+  dots(document.getElementById('cmpzCoatC'),st.coatC,function(c){st.coatC=c;st.focus=null});
   dots(document.getElementById('cmpzBrC'),st.brC,function(c){st.brC=c});
-  dots(document.getElementById('cmpzCorC'),st.corC,function(c){st.corC=c});
+  dots(document.getElementById('cmpzCorC'),st.corC,function(c){st.corC=c;st.focus='corset'});
   dots(document.getElementById('cmpzBeltC'),st.beltC,function(c){st.beltC=c});
 }
 document.getElementById('cmpzAdd').addEventListener('click',function(){
@@ -507,7 +511,9 @@ function upsellRow(suitCol,size){var pn='Belt & epaulettes';
   ad.style.textDecoration='underline';ad.style.textUnderlineOffset='3px';
   ad.style.fontSize='10.5px';ad.style.letterSpacing='.18em';ad.style.textTransform='uppercase';
   row.appendChild(ad);
-  function render(){
+  var corThumb=document.getElementById('cmpzCorImg');
+if(corThumb&&!corThumb.__wired){corThumb.__wired=1;corThumb.closest('button').addEventListener('click',function(){st.focus='corset';render()})}
+function render(){
     if(chosen==='Sandstone'){im.src=bankSrc(UPIMGS.Belt);im.style.display=''}else{im.removeAttribute('src');im.style.display='none'}
     nm.innerHTML='Extra belt & epaulettes<em style="display:block;font-style:normal;font-size:11px;color:var(--grey);margin-top:2px">'+fmtP(PRICE['Belt & epaulettes'])+'</em>';
     sw.innerHTML='';
@@ -626,7 +632,9 @@ function composeCell(box,group,startCol){
     var accessoryNote=document.createElement('p');accessoryNote.className='accessory-note';
     accessoryNote.textContent='One set is included with your Tailcoat or Jacket, cut to its size.';
     cell.insertBefore(accessoryNote,quick)}
-  function render(){
+  var corThumb=document.getElementById('cmpzCorImg');
+if(corThumb&&!corThumb.__wired){corThumb.__wired=1;corThumb.closest('button').addEventListener('click',function(){st.focus='corset';render()})}
+function render(){
     var P=PIECES[state.c][state.k];
     if(group==='belt')pc.removeAttribute('data-piece');else pc.setAttribute('data-piece',state.c+':'+state.k);
     state.si=0;
