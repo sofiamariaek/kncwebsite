@@ -17,7 +17,7 @@ async function openMenu(page) {
 }
 
 // Menu links can sit inside a collapsed submenu; open its group first.
-const MENU_GROUP = { looks: 'suit', composer: 'suit', services: 'concierge', delivery: 'concierge' };
+const MENU_GROUP = { looks: 'suit', composer: 'suit' };
 async function navFromMenu(page, nav) {
   await openMenu(page);
   const group = MENU_GROUP[nav];
@@ -135,11 +135,12 @@ test('wishlist — heart saves a piece, it appears in the wishlist panel', async
   await expect(page.locator('#wlItems .nm')).toContainText('Tailcoat');
 });
 
-test('size guide overlay opens from the menu and closes', async ({ page }) => {
+test('size guide overlay opens from the composer and closes', async ({ page }) => {
   await gotoHome(page);
   await openMenu(page);
-  await page.locator('#menu .mitem[data-group="concierge"] .mhead').click();
-  await page.locator('#menu [data-open-sizeg]').click();
+  await page.locator('#menu .mitem[data-group="suit"] .mhead').click();
+  await page.locator('#menu [data-nav="composer"]').click();
+  await page.locator('.cszg').click();
   await expect(page.locator('#sizeg')).toHaveClass(/open/);
   await page.locator('#sizegX').click();
   await expect(page.locator('#sizeg')).not.toHaveClass(/open/);

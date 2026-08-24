@@ -1181,6 +1181,4 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .view[data-view="ourworld"] .namesec .namegrid.ngrev .story h2{margin:0}
 .view[data-view="ourworld"] .namesec .namegrid.ngrev .story p{margin-top:auto;padding-top:24px}
 
-.view[data-view="ourworld"] .namesec .namegrid.ngrev .story{align-items:flex-end}
 
-.view[data-view="ourworld"] .namesec .namegrid.ngrev .story{justify-self:end;max-width:30em;width:100%}
