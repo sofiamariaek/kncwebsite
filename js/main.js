@@ -44,7 +44,7 @@ document.querySelectorAll('video:not([data-reel])').forEach(function(v){
 var ss=v.querySelectorAll('source'),pick=null;
 for(var i=0;i<ss.length;i++){if(v.canPlayType(ss[i].getAttribute('type'))){pick=ss[i].getAttribute('src');break}}
 if(!pick&&ss.length)pick=ss[0].getAttribute('src');
-if(pick){v.src=pick;if(v.closest('.hmoment')){lazyFilm(v)}else{v.load();var pr=v.play();if(pr&&pr.catch)pr.catch(function(){})}}});
+if(pick){v.src=pick;if(v.closest('.hmoment,.owfilm')){lazyFilm(v)}else{v.load();var pr=v.play();if(pr&&pr.catch)pr.catch(function(){})}}});
 
 /* home crêpe module borrows the saddle reel */
 (function(){var slot=document.querySelector('[data-clone-crepe]');if(!slot)return;

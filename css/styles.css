@@ -1157,8 +1157,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 
 .view[data-view="ourworld"] .founderfull .q{justify-content:center}
 
-.ournamesec{padding-top:clamp(50px,7vw,90px)}
-.ournamesec h2{font-size:13px;letter-spacing:.22em;text-align:center}
 
 .ourworld{padding-bottom:0}
 
@@ -1167,3 +1165,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .view[data-view="ourworld"] .namesec figure img{aspect-ratio:4/5;object-fit:cover}
 .view[data-view="ourworld"] .namesec .story{justify-content:center}
 .view[data-view="ourworld"] .namesec .story p{margin-top:0}
+
+.view[data-view="ourworld"] .namesec.owfilm .namegrid{grid-template-columns:minmax(0,6fr) minmax(0,5fr)}
+.view[data-view="ourworld"] .namesec figure video{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.view[data-view="ourworld"] .namesec .namegrid.ngrev{grid-template-columns:minmax(0,6fr) minmax(0,4fr)}
