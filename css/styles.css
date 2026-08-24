@@ -1019,9 +1019,9 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 /* compose — the configurator: preview left, numbered steps right, suit bar beneath */
 .cmpz{text-align:left;padding-top:clamp(18px,2.6vh,30px)}
 .cmpz-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(330px,5fr);gap:clamp(26px,3.6vw,58px);max-width:1280px;margin:0 auto;align-items:start}
-.cmpz-stage{position:sticky;top:clamp(76px,10vh,104px);background:#F5F5F5}
-.cmpz-stage img{width:100%;height:auto;display:block}
-.cmpz-rail{position:sticky;top:clamp(76px,10vh,104px);max-height:calc(100vh - clamp(76px,10vh,104px) - 16px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;padding-right:6px}
+.cmpz-stage{position:sticky;top:clamp(76px,10vh,104px);background:#F5F5F5;display:flex;align-items:flex-start;justify-content:center}
+.cmpz-stage img{width:auto;max-width:100%;max-height:calc(100vh - clamp(76px,10vh,104px) - 24px);height:auto;display:block}
+.cmpz-rail{padding-right:6px}
 .cmpz-rail::-webkit-scrollbar{display:none}
 .cmpz-rail .pagename{text-align:left;margin-bottom:4px}
 .cmpz-sub{font-size:clamp(14px,1.25vw,17px);color:var(--grey);margin-bottom:clamp(18px,2.6vh,28px)}
