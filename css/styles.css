@@ -1055,26 +1055,26 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .view[data-view="about"]{text-align:left}
 .view[data-view="about"] .navrow{justify-content:center}
 .view[data-view="about"] .founderfull h2,.view[data-view="ourworld"] .founderfull h2{font-size:13px;letter-spacing:.22em;margin-bottom:clamp(14px,2vw,22px)}
-.view[data-view="about"] .founderfull .q{margin:0}
-.view[data-view="about"] .founderfull .q p{font-size:clamp(14px,1.25vw,17px);line-height:1.85}
+.view[data-view="about"] .founderfull .q,.view[data-view="ourworld"] .founderfull .q{margin:0}
+.view[data-view="about"] .founderfull .q p,.view[data-view="ourworld"] .founderfull .q p{font-size:clamp(14px,1.25vw,17px);line-height:1.85}
 .view[data-view="about"] .namesec h2,.view[data-view="ourworld"] .namesec h2{font-size:13px;letter-spacing:.22em}
-.view[data-view="about"] .namesec .story{margin:0}
-.view[data-view="about"] .namesec .story p{font-size:clamp(14px,1.25vw,17px);line-height:1.85}
+.view[data-view="about"] .namesec .story,.view[data-view="ourworld"] .namesec .story{margin:0}
+.view[data-view="about"] .namesec .story p,.view[data-view="ourworld"] .namesec .story p{font-size:clamp(14px,1.25vw,17px);line-height:1.85}
 .view[data-view="about"] .gallery h4{text-align:left}
 .view[data-view="about"] .edit .credit{text-align:center}
 .view[data-view="about"] .world-aesthetic>h2{text-align:center}
-.view[data-view="about"] .namesec h2{text-align:left;font-size:13px;letter-spacing:.22em}
-.view[data-view="about"] .founder-grid{align-items:stretch}
-.view[data-view="about"] .founderfull .founder-grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}
-.view[data-view="about"] .founderfull .q{display:flex;flex-direction:column;justify-content:space-between}
-.view[data-view="about"] .founderfull .q h2{margin-bottom:clamp(56px,9vh,110px)}
-.view[data-view="about"] .namesec .namegrid{align-items:stretch}
-.view[data-view="about"] .namesec .story{display:flex;flex-direction:column}
-.view[data-view="about"] .namesec .story h2{margin-bottom:24px}
-.view[data-view="about"] .namesec .story p{margin-top:auto}
-.view[data-view="about"] .founder-grid figure{margin:0;display:flex;align-items:flex-end}
-.view[data-view="about"] .founder-grid figure img{width:100%;height:auto;display:block}
-.view[data-view="about"] .founderfull .q p{max-width:34em}
+.view[data-view="about"] .namesec h2,.view[data-view="ourworld"] .namesec h2{text-align:left;font-size:13px;letter-spacing:.22em}
+.view[data-view="about"] .founder-grid,.view[data-view="ourworld"] .founder-grid{align-items:stretch}
+.view[data-view="about"] .founderfull .founder-grid,.view[data-view="ourworld"] .founderfull .founder-grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}
+.view[data-view="about"] .founderfull .q,.view[data-view="ourworld"] .founderfull .q{display:flex;flex-direction:column;justify-content:space-between}
+.view[data-view="about"] .founderfull .q h2,.view[data-view="ourworld"] .founderfull .q h2{margin-bottom:clamp(56px,9vh,110px)}
+.view[data-view="about"] .namesec .namegrid,.view[data-view="ourworld"] .namesec .namegrid{align-items:stretch}
+.view[data-view="about"] .namesec .story,.view[data-view="ourworld"] .namesec .story{display:flex;flex-direction:column}
+.view[data-view="about"] .namesec .story h2,.view[data-view="ourworld"] .namesec .story h2{margin-bottom:24px}
+.view[data-view="about"] .namesec .story p,.view[data-view="ourworld"] .namesec .story p{margin-top:auto}
+.view[data-view="about"] .founder-grid figure,.view[data-view="ourworld"] .founder-grid figure{margin:0;display:flex;align-items:flex-end}
+.view[data-view="about"] .founder-grid figure img,.view[data-view="ourworld"] .founder-grid figure img{width:100%;height:auto;display:block}
+.view[data-view="about"] .founderfull .q p,.view[data-view="ourworld"] .founderfull .q p{max-width:34em}
 
 .csize{margin-top:2px}
 .cszg{display:inline-block;margin-top:14px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--grey)}
@@ -1150,3 +1150,14 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .mpdisc{flex:0 0 100%;text-align:center;margin-top:2px}
 
 .ourlede{max-width:34em;margin:clamp(26px,4vw,44px) auto 0;font-size:clamp(14px,1.25vw,17px);line-height:1.85}
+
+.view[data-view="ourworld"]{text-align:left}
+.view[data-view="ourworld"] .ourworld>h2{text-align:center}
+.ourlede{text-align:center}
+
+.view[data-view="ourworld"] .founderfull .q{justify-content:center}
+
+.ournamesec{padding-top:clamp(50px,7vw,90px)}
+.ournamesec h2{font-size:13px;letter-spacing:.22em;text-align:center}
+
+.ourworld{padding-bottom:0}
