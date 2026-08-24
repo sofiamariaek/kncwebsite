@@ -1169,3 +1169,9 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .view[data-view="ourworld"] .namesec.owfilm .namegrid{grid-template-columns:minmax(0,6fr) minmax(0,5fr)}
 .view[data-view="ourworld"] .namesec figure video{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
 .view[data-view="ourworld"] .namesec .namegrid.ngrev{grid-template-columns:minmax(0,6fr) minmax(0,4fr)}
+
+.view[data-view="ourworld"] .namesec.owfilm .namegrid{align-items:stretch}
+.view[data-view="ourworld"] .namesec.owfilm figure img{aspect-ratio:auto}
+.view[data-view="ourworld"] .namesec.owfilm .story{justify-content:flex-start}
+.view[data-view="ourworld"] .namesec.owfilm .story h2{font-size:13px;letter-spacing:.22em;margin:0;text-align:left}
+.view[data-view="ourworld"] .namesec.owfilm .story p{margin-top:auto;padding-top:24px}
