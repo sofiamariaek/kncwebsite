@@ -215,6 +215,8 @@ function render(){
   document.querySelector('#cmpzBrK [data-k="cargo"] img').src=flat(st.brC,'cargo');
   document.querySelector('#cmpzBrK [data-k="slim"] img').src=flat(st.brC,'slim');
   document.getElementById('cmpzCorImg').src=flat(st.corC,'corset');
+  document.getElementById('cmpzBeltImg').src=bankSrc('belt_beige_f');
+  document.getElementById('cmpzEpImg').src=bankSrc('shoulder_beige');
   dots(document.getElementById('cmpzCoatC'),st.coatC,function(c){st.coatC=c;st.focus=null;
     openQuickSize({p:PIECES[c][st.coat].n,c:PIECES[c].name,includedSet:PIECES[st.beltC].name})});
   dots(document.getElementById('cmpzBrC'),st.brC,function(c){st.brC=c;
