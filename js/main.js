@@ -68,11 +68,7 @@ var REELTXT={
  rnd:[
   {t:'Prototypes',p:'Each piece begins as a basted shell \u2014 versions side by side, refined until only one remains.'},
   {t:'The Corset',p:'Fitted directly on the body, pinned and corrected until it holds its line.'},
-  {t:'The Details',p:'Buttons cast for the house, chosen by hand.'}],
- crepe:[
-  {t:'The Stretch',p:'Tested at full extension \u2014 the suit must move as the rider moves.'},
-  {t:'In the Saddle',p:'Fitted where it lives.'},
-  {t:'The Detail',p:'Every pocket proven in position.'}]
+  {t:'The Details',p:'Buttons cast for the house, chosen by hand.'}]
 };
 document.querySelectorAll('video[data-reel]').forEach(function(v){
   var srcs=[].map.call(v.querySelectorAll('source'),function(x){return x.getAttribute('src')});
