@@ -82,12 +82,12 @@ test('composer — one Add walks the sizes, checkout confirms the order', async 
   await gotoHome(page);
   await navFromMenu(page, 'composer');
   await expect(page.locator('#cmpzImg')).toBeVisible();
-  await expect(page.locator('#cmpzTotal')).toHaveText(/8,800|€/);
-  await expect(page.locator('#cmpzAdd')).toBeDisabled();
-  await page.locator('#cmpzCoatZ [data-size="38"]').click();
-  await page.locator('#cmpzBrZ [data-size="38"]').click();
-  await page.locator('#cmpzCorZ [data-size="36"]').click();
   await page.locator('#cmpzAdd').click();
+  for (const size of ['38', '38', '36']) {
+    await expect(page.locator('#quickSize')).toHaveClass(/open/);
+    await page.locator(`#quickSizeOptions [data-size="${size}"]`).click();
+    await page.locator('#quickSizeConfirm').click();
+  }
   await expect(page.locator('#bagN')).toHaveText('3');
   await page.locator('#bagLink').click();
   await expect(page.locator('#bag')).toHaveClass(/open/);
@@ -135,12 +135,12 @@ test('wishlist — heart saves a piece, it appears in the wishlist panel', async
   await expect(page.locator('#wlItems .nm')).toContainText('Tailcoat');
 });
 
-test('size guide overlay opens from the composer and closes', async ({ page }) => {
+test('size guide overlay opens from the size panel and closes', async ({ page }) => {
   await gotoHome(page);
-  await openMenu(page);
-  await page.locator('#menu .mitem[data-group="suit"] .mhead').click();
-  await page.locator('#menu [data-nav="composer"]').click();
-  await page.locator('.cszg').click();
+  await navFromMenu(page, 'composer');
+  await page.locator('#cmpzAdd').click();
+  await expect(page.locator('#quickSize')).toHaveClass(/open/);
+  await page.locator('.quicksize-guide').click();
   await expect(page.locator('#sizeg')).toHaveClass(/open/);
   await page.locator('#sizegX').click();
   await expect(page.locator('#sizeg')).not.toHaveClass(/open/);

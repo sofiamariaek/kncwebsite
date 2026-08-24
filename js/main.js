@@ -201,10 +201,6 @@ function kbtns(id,cur,fn){var box=document.getElementById(id);
   [].forEach.call(box.querySelectorAll('button'),function(b){
     b.setAttribute('aria-pressed',String(b.getAttribute('data-k')===cur));
     if(!b.__wired){b.__wired=1;b.addEventListener('click',function(){fn(b.getAttribute('data-k'));render()})}})}
-function zbtns(id,cur,fn){var box=document.getElementById(id);
-  [].forEach.call(box.querySelectorAll('button'),function(b){
-    b.setAttribute('aria-pressed',String(b.getAttribute('data-size')===cur));
-    if(!b.__wired){b.__wired=1;b.addEventListener('click',function(){fn(b.getAttribute('data-size'));render()})}})}
 function render(){
   img.src=bankSrc('suit_'+st.coat+'_'+st.brK+'_'+st.coatC)||bankSrc(KOSTYM[st.coatC][st.coat]);
   kbtns('cmpzCoatK',st.coat,function(k){st.coat=k});
@@ -218,25 +214,12 @@ function render(){
   dots(document.getElementById('cmpzBrC'),st.brC,function(c){st.brC=c});
   dots(document.getElementById('cmpzCorC'),st.corC,function(c){st.corC=c});
   dots(document.getElementById('cmpzBeltC'),st.beltC,function(c){st.beltC=c});
-  zbtns('cmpzCoatZ',st.coatZ,function(z){st.coatZ=z});
-  zbtns('cmpzBrZ',st.brZ,function(z){st.brZ=z});
-  zbtns('cmpzCorZ',st.corZ,function(z){st.corZ=z});
-  document.getElementById('cmpzAdd').disabled=!(st.coatZ&&st.brZ&&st.corZ);
-  var names={tailcoat:'Tailcoat',jacket:'Jacket',cargo:'Cargo breeches',slim:'Slim breeches'};
-  document.getElementById('cmpzSummary').innerHTML=
-    '<span>'+names[st.coat]+'<em>'+PIECES[st.coatC].name+'</em></span>'+
-    '<span>'+names[st.brK]+'<em>'+PIECES[st.brC].name+'</em></span>'+
-    '<span>Corset<em>'+PIECES[st.corC].name+'</em></span>'+
-    '<span>Belt &amp; epaulettes<em>'+PIECES[st.beltC].name+' &#183; included</em></span>';
-  document.getElementById('cmpzTotal').textContent=fmtP(PRICEK[st.coat]+PRICEK[st.brK]+PRICEK.corset);
 }
 document.getElementById('cmpzAdd').addEventListener('click',function(){
-  if(!(st.coatZ&&st.brZ&&st.corZ))return;
-  var bag=bagData();
-  bag.push({p:PIECES[st.coatC][st.coat].n,c:PIECES[st.coatC].name,z:st.coatZ,includedSet:PIECES[st.beltC].name});
-  bag.push({p:PIECES[st.brC][st.brK].n,c:PIECES[st.brC].name,z:st.brZ});
-  bag.push({p:PIECES[st.corC].corset.n,c:PIECES[st.corC].name,z:st.corZ});
-  bagSave(bag);bagToast(null,'Your suit is in the bag \u2014 '+PIECES[st.coatC].name+' '+ (st.coat==='tailcoat'?'Tailcoat':'Jacket')+', sized');});
+  var coat={p:PIECES[st.coatC][st.coat].n,c:PIECES[st.coatC].name,includedSet:PIECES[st.beltC].name};
+  var br={p:PIECES[st.brC][st.brK].n,c:PIECES[st.brC].name};
+  var cor={p:PIECES[st.corC].corset.n,c:PIECES[st.corC].name};
+  openQuickSize(coat,function(){openQuickSize(br,function(){openQuickSize(cor)})});});
 window.__composerInit=render;
 })();
 })();
