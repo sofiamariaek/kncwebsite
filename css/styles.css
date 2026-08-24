@@ -1054,10 +1054,10 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 /* the aesthetic page follows the atelier: left voice, card labels, one text size */
 .view[data-view="about"]{text-align:left}
 .view[data-view="about"] .navrow{justify-content:center}
-.view[data-view="about"] .founderfull h2{font-size:13px;letter-spacing:.22em;margin-bottom:clamp(14px,2vw,22px)}
+.view[data-view="about"] .founderfull h2,.view[data-view="ourworld"] .founderfull h2{font-size:13px;letter-spacing:.22em;margin-bottom:clamp(14px,2vw,22px)}
 .view[data-view="about"] .founderfull .q{margin:0}
 .view[data-view="about"] .founderfull .q p{font-size:clamp(14px,1.25vw,17px);line-height:1.85}
-.view[data-view="about"] .namesec h2{font-size:13px;letter-spacing:.22em}
+.view[data-view="about"] .namesec h2,.view[data-view="ourworld"] .namesec h2{font-size:13px;letter-spacing:.22em}
 .view[data-view="about"] .namesec .story{margin:0}
 .view[data-view="about"] .namesec .story p{font-size:clamp(14px,1.25vw,17px);line-height:1.85}
 .view[data-view="about"] .gallery h4{text-align:left}
@@ -1115,10 +1115,6 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
   .menu .mitem.open .msub.mpics a{flex:none;width:clamp(230px,17.5vw,300px);padding:0}
 }
 
-.view[data-view="about"].aes-day-only #aes-evening{display:none}
-.view[data-view="about"].aes-evening-only #aes-day{display:none}
-.view[data-view="about"].aes-day-only section:not(.world-aesthetic){display:none}
-.view[data-view="about"].aes-evening-only section:not(.world-aesthetic){display:none}
 
 /* under the horse's shadow — the mark, one line, Discover */
 .shadowline{text-align:center;padding:clamp(58px,8.5vh,104px) var(--pad) clamp(50px,7.5vh,92px)}
@@ -1152,3 +1148,5 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .hmeta .hmark{width:26px;height:auto;display:block;margin:0 auto clamp(18px,2.6vh,26px)}
 
 .mpdisc{flex:0 0 100%;text-align:center;margin-top:2px}
+
+.ourlede{max-width:34em;margin:clamp(26px,4vw,44px) auto 0;font-size:clamp(14px,1.25vw,17px);line-height:1.85}
