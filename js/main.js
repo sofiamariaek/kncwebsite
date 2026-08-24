@@ -204,8 +204,9 @@ function kbtns(id,cur,fn){var box=document.getElementById(id);
 var corThumb=document.getElementById('cmpzCorImg');
 if(corThumb&&!corThumb.__wired){corThumb.__wired=1;corThumb.closest('button').addEventListener('click',function(){st.focus='corset';render()})}
 function render(){
+  var UND={sand:'beige',moss:'gron',tar:'svart'};
   img.src=st.focus==='corset'
-    ?(bankSrc('under_'+st.brK+'_'+st.corC)||flat(st.corC,'corset'))
+    ?(bankSrc('byxa_'+UND[st.corC]+'_topp')||flat(st.corC,'corset'))
     :(bankSrc('suit_'+st.coat+'_'+st.brK+'_'+st.coatC)||bankSrc(KOSTYM[st.coatC][st.coat]));
   kbtns('cmpzCoatK',st.coat,function(k){st.coat=k;st.focus=null});
   kbtns('cmpzBrK',st.brK,function(k){st.brK=k});
