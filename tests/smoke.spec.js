@@ -82,8 +82,8 @@ test('composer — one Add walks the sizes, checkout confirms the order', async 
   await gotoHome(page);
   await navFromMenu(page, 'composer');
   await expect(page.locator('#cmpzImg')).toBeVisible();
-  await page.locator('#cmpzAdd').click();
-  for (const size of ['38', '38', '36']) {
+  for (const [dots, size] of [['#cmpzCoatC', '38'], ['#cmpzBrC', '38'], ['#cmpzCorC', '36']]) {
+    await page.locator(`${dots} button`).first().click();
     await expect(page.locator('#quickSize')).toHaveClass(/open/);
     await page.locator(`#quickSizeOptions [data-size="${size}"]`).click();
     await page.locator('#quickSizeConfirm').click();
@@ -138,7 +138,7 @@ test('wishlist — heart saves a piece, it appears in the wishlist panel', async
 test('size guide overlay opens from the size panel and closes', async ({ page }) => {
   await gotoHome(page);
   await navFromMenu(page, 'composer');
-  await page.locator('#cmpzAdd').click();
+  await page.locator('#cmpzCoatC button').first().click();
   await expect(page.locator('#quickSize')).toHaveClass(/open/);
   await page.locator('.quicksize-guide').click();
   await expect(page.locator('#sizeg')).toHaveClass(/open/);
