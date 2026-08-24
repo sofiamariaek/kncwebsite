@@ -1150,3 +1150,5 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 @media (max-width:700px){.haes-pair{grid-template-columns:1fr}}
 
 .hmeta .hmark{width:26px;height:auto;display:block;margin:0 auto clamp(18px,2.6vh,26px)}
+
+.mpdisc{flex:0 0 100%;text-align:center;margin-top:2px}
