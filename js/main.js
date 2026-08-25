@@ -131,18 +131,18 @@ var PRICE={'Tailcoat':4800,'Jacket':4200,'Cargo breeches':2000,'Slim breeches':1
 var PRICEK={tailcoat:4800,jacket:4200,cargo:2000,slim:1850,corset:2000,belt:750};
 function fmtP(v){return '\u20AC'+String(v).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
 var LOOKS=[
- {kind:'tailcoat',c:'sand',name:'Tailcoat Suit',variant:'Sandstone',film:'assets/video/clip-12.mp4',shots:['hero_sand','lm_sand2','lm_sand3','kostym_frack_beige','lining_sand','belt_beige_f','shoulder_beige']},
- {kind:'tailcoat',c:'tar',name:'Tailcoat Suit',variant:'Tar',shots:['hero_tar','lm_tar2','lm_tar3','kostym_frack_svart','lining_tar']},
- {kind:'tailcoat',c:'moss',name:'Tailcoat Suit',variant:'Moss',film:'assets/video/clip-13.mp4',shots:['hero_moss','lm_moss2','lm_moss3','kostym_frack_gron','lining_moss']},
- {kind:'jacket',c:'tar',name:'Jacket Suit',variant:'Tar',shots:['lj_tar1','lj_tar2','lj_tar3','kostym_black','lining_tar']},
- {kind:'jacket',c:'moss',name:'Jacket Suit',variant:'Moss',shots:['lj_moss4','lj_moss1','lj_moss3','kostym_jacka_gron','lining_moss']},
- {kind:'jacket',c:'sand',name:'Jacket Suit',variant:'Sandstone',shots:['lj_sand1','lj_sand2','lj_sand3','kostym_jacka_beige','lining_sand']}
+ {kind:'tailcoat',c:'sand',name:'Tailcoat Equestrian Suit',variant:'Sandstone',film:'assets/video/clip-12.mp4',shots:['hero_sand','lm_sand2','lm_sand3','kostym_frack_beige','lining_sand','belt_beige_f','shoulder_beige']},
+ {kind:'tailcoat',c:'tar',name:'Tailcoat Equestrian Suit',variant:'Tar',shots:['hero_tar','lm_tar2','lm_tar3','kostym_frack_svart','lining_tar']},
+ {kind:'tailcoat',c:'moss',name:'Tailcoat Equestrian Suit',variant:'Moss',film:'assets/video/clip-13.mp4',shots:['hero_moss','lm_moss2','lm_moss3','kostym_frack_gron','lining_moss']},
+ {kind:'jacket',c:'tar',name:'Jacket Equestrian Suit',variant:'Tar',shots:['lj_tar1','lj_tar2','lj_tar3','kostym_black','lining_tar']},
+ {kind:'jacket',c:'moss',name:'Jacket Equestrian Suit',variant:'Moss',shots:['lj_moss4','lj_moss1','lj_moss3','kostym_jacka_gron','lining_moss']},
+ {kind:'jacket',c:'sand',name:'Jacket Equestrian Suit',variant:'Sandstone',shots:['lj_sand1','lj_sand2','lj_sand3','kostym_jacka_beige','lining_sand']}
 ];
 function lookCard(i,film){var L=LOOKS[i];
   var a=document.createElement('a');a.href='#';
   var media=(film&&L.film)?'<video src="'+L.film+'" muted loop autoplay playsinline preload="metadata"></video>'
     :'<img loading="lazy" src="'+bankSrc(L.shots[0])+'" alt="'+L.name+', '+L.variant+'">';
-  a.innerHTML='<figure>'+media+'</figure><span class="lookmeta"><strong>'+L.name+' · '+L.variant+'</strong></span>';
+  a.innerHTML='<figure>'+media+'</figure><span class="lookmeta"><strong>'+L.name+' \u2014 '+L.variant+'</strong></span>';
   var fv=a.querySelector('video');if(fv)lazyFilm(fv);
   a.addEventListener('click',function(e){e.preventDefault();openLook(i)});
   return a}
@@ -157,7 +157,7 @@ function lookStackShow(slugs,film){var st=document.getElementById('lookStack');s
     st.appendChild(ff)}
   slugs.forEach(function(sl,j){var src=bankSrc(sl);if(!src)return;
     var fig=document.createElement('figure');fig.className=(j===0&&!film)?'main fframe':'fframe';
-    var im=document.createElement('img');im.src=src;im.alt='';
+    var im=document.createElement('img');im.src=src;im.alt=altFor(sl);
     if(/^(frack_|jacka_|vast_|byxa_)/.test(sl))im.className='flat';
     if(/^(belt_|shoulder_)/.test(sl))im.className='det';
     fig.appendChild(im);st.appendChild(fig)});
@@ -165,7 +165,7 @@ function lookStackShow(slugs,film){var st=document.getElementById('lookStack');s
 window.__lookStackShow=lookStackShow;
 function lookImgs(i){var L=LOOKS[i];curLook=i;
   document.getElementById('lookTitle').textContent='The Equestrian Suit';
-  document.getElementById('lookVariant').textContent=L.name+' · '+L.variant;
+  document.getElementById('lookVariant').textContent=L.name+' \u2014 '+L.variant;
   var seq=[L.shots[0]];
   ((MODEL_SHOTS[L.kind]||{})[L.c]||[]).forEach(function(sl){if(seq.indexOf(sl)<0)seq.push(sl)});
   L.shots.forEach(function(sl){if(seq.indexOf(sl)<0)seq.push(sl)});
@@ -227,6 +227,7 @@ function render(){
 }
 
 window.__composerInit=render;
+document.querySelectorAll('#bank img[data-slug]').forEach(function(b){b.alt=altFor(b.getAttribute('data-slug'))});
 })();
 })();
 
@@ -245,7 +246,8 @@ if(window.__histOn){
   addEventListener('popstate',function(ev){
     var v=(ev.state&&ev.state.v)||'home';__showViewRaw(v)});
 }
-function showView(name){
+var VIEWTITLES={home:'Kiwi & Colibri \u2014 Luxury Equestrian Fashion House',looks:'All Looks \u2014 The Equestrian Suit | Kiwi & Colibri',composer:'Compose your Equestrian Suit | Kiwi & Colibri',about:'The Equestrian Aesthetic | Kiwi & Colibri',atelier:'Atelier \u2014 Made in Italy | Kiwi & Colibri',ourworld:'Our World | Kiwi & Colibri'};
+function showView(name){document.title=VIEWTITLES[name]||VIEWTITLES.home;
   if(window.__histOn){try{history.pushState({v:name},'', '#'+name)}catch(e){}}
   NAVSTACK.push(name);if(NAVSTACK.length>40)NAVSTACK.shift();
   __showViewRaw(name)}
@@ -315,7 +317,27 @@ menu.querySelectorAll('[data-mpiece]').forEach(function(a){
 
 
 /* piece slider */
-function bankImg(slug,cls){var i=document.createElement('img');i.src=bankSrc(slug);i.alt='';i.className=cls;return i}
+function altFor(s){var C={svart:'Tar',gron:'Moss',beige:'Sandstone',black:'Tar',tar:'Tar',moss:'Moss',sand:'Sandstone'};
+  var col=null;for(var k in C){if(s.indexOf(k)>-1){col=C[k];break}}
+  var v=col?' in '+col:'';
+  function side(){return /bak/.test(s)?', back':(/sida/.test(s)?', side':', front')}
+  if(/^frack/.test(s))return 'Tailcoat equestrian suit'+v+side();
+  if(/^jacka/.test(s))return 'Jacket equestrian suit'+v+side();
+  if(/^vast/.test(s))return 'Corset'+v+side();
+  if(/^byxa/.test(s)){var kk=/cargo/.test(s)?'Cargo breeches':(/slim/.test(s)?'Slim breeches':'Breeches');
+    if(/topp/.test(s))return 'Corset and '+kk.toLowerCase()+v;return kk+v+side()}
+  if(/^kostym_black/.test(s))return 'Jacket equestrian suit in Tar, composed';
+  if(/^kostym_frack/.test(s))return 'Tailcoat equestrian suit'+v+', composed';
+  if(/^kostym_jacka/.test(s))return 'Jacket equestrian suit'+v+', composed';
+  if(/^lm_/.test(s))return 'Tailcoat equestrian suit'+v+', worn';
+  if(/^lj_|^mj_/.test(s))return 'Jacket equestrian suit'+v+', worn';
+  if(/^lining/.test(s))return 'Colibri Cr\u00eape monogrammed lining'+v;
+  if(/^belt/.test(s))return 'Belt'+v;
+  if(/^shoulder/.test(s))return 'Epaulettes'+v;
+  if(/^hero_/.test(s))return 'Tailcoat equestrian suit'+v;
+  if(/^walk_tailcoat/.test(s))return 'Tailcoat equestrian suit in Sandstone, on a walk';
+  return 'Kiwi & Colibri \u2014 equestrian suit'}
+function bankImg(slug,cls){var i=document.createElement('img');i.src=bankSrc(slug);i.alt=altFor(slug);i.className=cls;return i}
 function bankSrc(slug){var b=document.querySelector('#bank [data-slug="'+slug+'"]');return b?(b.getAttribute('data-src')||''):''}
 function prodSlug(stack){if(!stack||!stack.length)return null;
   for(var i=0;i<stack.length;i++){if(!/^(hero_|lj_|lm_)/.test(stack[i]))return stack[i]}
@@ -665,7 +687,7 @@ function buildComposeBox(box){var col=box.getAttribute('data-compose');box.inner
 /* tiles build deferred to init (needs PIECES) */
 var DESCR={
  tailcoat:'The Tailcoat is the most ceremonial piece in the Kiwi & Colibri wardrobe. Its standing collar, structured shoulders, sculpted waist and elongated tails create a sharper, more modern silhouette. The Tailcoat carries the presence of the dressage arena into everyday life \u2014 made not to wait in the wardrobe, but to be worn.',
- jacket:'A precise equestrian jacket with a sculpted shoulder, defined waist and the house\u2019s military line. Designed to move between the stable, the city and evening.',
+ jacket:'A precise equestrian jacket with a sculpted shoulder, defined waist and the house\u2019s military line. It carries the pace of the show jumping ring between the stable, the city and evening.',
  corset:'A close, architectural layer that brings definition to the complete equestrian suit while retaining freedom of movement.',
  cargo:'Breeches cut with a clean cargo line and engineered for movement in and out of the saddle.',
  slim:'A streamlined breech in Colibri Cr\u00eape, shaped for a close silhouette and ease in motion.',
