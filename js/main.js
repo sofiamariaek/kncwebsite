@@ -727,6 +727,15 @@ function openPiece(c,k,includedSet){
       h+='<h5>Care</h5>';cd.care.forEach(function(x){h+='<p>'+x+'</p>'});
       pcb.innerHTML=h;pce.removeAttribute('open')}
     else pce.style.display='none'}
+  var ptr=document.getElementById('pieceTrace'),ptw=document.getElementById('pieceTraceWrap');
+  if(ptr&&ptw){var td=CARE[k];
+    if(td){ptw.style.display='';var t='';
+      if(td.comp[0][0].indexOf('Reggiani')>-1)t+='<h5>Weaving</h5><p>Reggiani \u2014 Biella, Italy. A family mill, founded 1973.</p>';
+      t+='<h5>Tailoring</h5><p>Cieffe \u2014 Milan, Italy.</p>';
+      if(k==='tailcoat'||k==='jacket')t+='<h5>Buttons</h5><p>Cast for the house, chosen by hand.</p>';
+      t+='<h5>Origin</h5><p>Atelier-made in Northern Italy.</p>';
+      ptr.innerHTML=t;ptw.removeAttribute('open')}
+    else ptw.style.display='none'}
   document.getElementById('pieceColour').textContent=PIECES[c].name;
   var stackBox=document.getElementById('psStack');stackBox.innerHTML='';
   pdpShots(c,k).forEach(function(sl){var fr=document.createElement('div');
