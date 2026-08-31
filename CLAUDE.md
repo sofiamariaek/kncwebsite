@@ -72,3 +72,52 @@ Work only in your own lane's folder. Never check out or edit another agent's bra
   (lowercase-hyphen names, no spaces), reference by relative path. Never embed
   base64 data URIs.
 - Verify changes in the browser before opening a PR.
+
+## House language — the keyword system
+
+The canonical vocabulary (from KCKeywordSystem.pdf). Every page, product,
+image and profile speaks these words exactly; alternating forms teaches
+the engines nothing. Sprinkle inside true sentences, never stuff.
+
+**One canonical form:** it is always *equestrian suit*. Never "riding suit",
+"riding wear", "show outfit", "equestrian-inspired", "the equestrian look".
+No hype ("must-have", "game-changing", "revolutionary"), no exclamation
+marks, no dangled scarcity ("only three left"). Scarcity is stated as fact.
+
+**Brand-owned:** Kiwi & Colibri (always written in full — never K&C in
+visible copy) · Colibri Crêpe · Kür · Tar · Moss · Sandstone.
+
+**Head terms:** equestrian fashion · equestrian suit · competition suit ·
+luxury equestrian apparel · dressage apparel · show jumping apparel ·
+equestrian aesthetic (only on our terms — as *the new equestrian aesthetic*).
+
+**Mid-tier:** equestrian fashion house · luxury equestrian suit ·
+competition equestrian suit · limited edition equestrian suit.
+Data layer only (metafields/tags, not prose): technical equestrian apparel.
+Press/social only, not the site: quiet luxury equestrian.
+
+**Long-tail:** luxury equestrian fashion house · Scandinavian luxury
+equestrian brand (data layer only — "brand" is off-voice in prose) ·
+atelier-made equestrian suit · equestrian craftsmanship ·
+competition-proven equestrian apparel · luxury equestrian capsule wardrobe ·
+the new equestrian aesthetic. (Cut: "versatile luxury equestrian suit" —
+its idea lives in the capsule wardrobe phrase.)
+
+**The identity phrase, split by surface:** prose says
+"an equestrian fashion house" (luxury is demonstrated, not declared);
+machine surfaces (meta title, boilerplate, bios) carry the full
+"Luxury Equestrian Fashion House".
+
+**Naming, three tiers (law):** the family is *The Equestrian Suit*; a set
+is "{Style} Equestrian Suit — {Colourway}" (e.g. Tailcoat Equestrian Suit —
+Sandstone); a piece is its plain name (Tailcoat, Corset, Cargo breeches).
+
+**Templates:** SEO title: "{Name} Equestrian Suit in {Colourway} — Limited
+Edition | Kiwi & Colibri". Meta description (<155 chars): "The {Name}
+equestrian suit in {Colourway}. Cut in Colibri Crêpe, atelier-made in
+Northern Italy, competition-proven. One of two hundred." Image alt:
+"{Name} equestrian suit in {Colourway}, {context}". Press boilerplate:
+"Kiwi & Colibri is a Scandinavian luxury equestrian fashion house. Its
+equestrian suits — cut in the house's own Colibri Crêpe and atelier-made
+in Northern Italy — are ridden in dressage and show jumping competition.
+Two hundred suits. No more."

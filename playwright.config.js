@@ -11,7 +11,7 @@ module.exports = defineConfig({
     trace: 'retain-on-failure',
   },
   webServer: {
-    command: 'python3 -m http.server 4173',
+    command: 'npx http-server -p 4173 -c-1 --silent',
     port: 4173,
     reuseExistingServer: true,
   },

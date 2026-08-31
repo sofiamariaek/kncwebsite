@@ -17,7 +17,7 @@ async function openMenu(page) {
 }
 
 // Menu links can sit inside a collapsed submenu; open its group first.
-const MENU_GROUP = { looks: 'suit', composer: 'suit', services: 'concierge', delivery: 'concierge' };
+const MENU_GROUP = { looks: 'suit', composer: 'suit' };
 async function navFromMenu(page, nav) {
   await openMenu(page);
   const group = MENU_GROUP[nav];
@@ -55,15 +55,12 @@ test('menu drawer navigates views; browser back returns home', async ({ page }) 
   await expect(view(page, 'home')).toBeVisible();
 });
 
-test('looks — grid filters, a look opens with images and piece tiles', async ({ page }) => {
+test('looks — two silhouette rows, a look opens with images and piece tiles', async ({ page }) => {
   await gotoHome(page);
   await navFromMenu(page, 'looks');
-  const cards = page.locator('#lookGrid a');
-  await expect(cards).toHaveCount(6);
-  await page.locator('#lookFilter button[data-f="jacket"]').click();
-  await expect(cards).toHaveCount(3);
-  await page.locator('#lookFilter button[data-f="all"]').click();
-  await cards.first().click();
+  await expect(page.locator('#lookGridT a')).toHaveCount(3);
+  await expect(page.locator('#lookGridJ a')).toHaveCount(3);
+  await page.locator('#lookGridT a').first().click();
   await expect(view(page, 'look')).toBeVisible();
   await expect(page.locator('#lookVariant')).toContainText('Sandstone');
   await expect(page.locator('#lookStack figure img[src]').first()).toBeVisible();
@@ -73,7 +70,7 @@ test('looks — grid filters, a look opens with images and piece tiles', async (
 test('look — add to bag asks for a size, bag badge updates', async ({ page }) => {
   await gotoHome(page);
   await navFromMenu(page, 'looks');
-  await page.locator('#lookGrid a').first().click();
+  await page.locator('#lookGridT a').first().click();
   await page.locator('#lookTiles .quick-add').first().click();
   await expect(page.locator('#quickSize')).toHaveClass(/open/);
   await page.locator('#quickSizeOptions [data-size="38"]').click();
@@ -81,19 +78,20 @@ test('look — add to bag asks for a size, bag badge updates', async ({ page }) 
   await expect(page.locator('#bagN')).toHaveText('1');
 });
 
-test('composer — add to bag, then checkout confirms the order', async ({ page }) => {
+test('composer — one Add walks the sizes, checkout confirms the order', async ({ page }) => {
   await gotoHome(page);
   await navFromMenu(page, 'composer');
-  await page.locator('#compTiles .cell').first().locator('.quick-add').click();
-  await expect(page.locator('#quickSize')).toHaveClass(/open/);
-  await page.locator('#quickSizeOptions [data-size="38"]').click();
-  await page.locator('#quickSizeConfirm').click();
-  await expect(page.locator('#bagN')).toHaveText('1');
+  await expect(page.locator('#cmpzImg')).toBeVisible();
+  for (const [dots, size] of [['#cmpzCoatC', '38'], ['#cmpzBrC', '38'], ['#cmpzCorC', '36']]) {
+    await page.locator(`${dots} button`).first().click();
+    await expect(page.locator('#quickSize')).toHaveClass(/open/);
+    await page.locator(`#quickSizeOptions [data-size="${size}"]`).click();
+    await page.locator('#quickSizeConfirm').click();
+  }
+  await expect(page.locator('#bagN')).toHaveText('3');
   await page.locator('#bagLink').click();
   await expect(page.locator('#bag')).toHaveClass(/open/);
-  await expect(page.locator('#bagItems .wlitem')).toHaveCount(1);
-  await expect(page.locator('#bagItems .bagtot')).toContainText('4,800');
-  // First confirm asks where to deliver; details are saved once, then the order confirms.
+  await expect(page.locator('#bagItems .bagtot')).toContainText('8,800');
   await page.locator('[data-bagpay]').first().click();
   await expect(page.locator('#acct')).toHaveClass(/open/);
   await page.locator('#acctEmailForm input[name="email"]').fill('smoke@kiwicolibri.test');
@@ -108,11 +106,11 @@ test('composer — add to bag, then checkout confirms the order', async ({ page 
   await expect(page.locator('#bagN')).toBeHidden();
 });
 
-test('tiles show one photo and open the piece page; order uses chosen size', async ({ page }) => {
+test('look tiles show one photo and open the piece page; order uses chosen size', async ({ page }) => {
   await gotoHome(page);
-  await navFromMenu(page, 'composer');
-  // one photograph per tile, no arrows; the tile is a door to the piece page
-  const firstTile = page.locator('#compTiles .cell').first();
+  await navFromMenu(page, 'looks');
+  await page.locator('#lookGridT a').first().click();
+  const firstTile = page.locator('#lookTiles .cell').first();
   await expect(firstTile.locator('.tnav')).toHaveCount(0);
   await firstTile.locator('.pc').click();
   await expect(view(page, 'piece')).toBeVisible();
@@ -129,18 +127,20 @@ test('tiles show one photo and open the piece page; order uses chosen size', asy
 
 test('wishlist — heart saves a piece, it appears in the wishlist panel', async ({ page }) => {
   await gotoHome(page);
-  await navFromMenu(page, 'composer');
-  await page.locator('#compTiles .cell').first().locator('.wlbtn').click();
+  await navFromMenu(page, 'looks');
+  await page.locator('#lookGridT a').first().click();
+  await page.locator('#lookTiles .cell').first().locator('.wlbtn').click();
   await page.locator('#wlLink').click();
   await expect(page.locator('#wlItems .wlitem')).toHaveCount(1);
   await expect(page.locator('#wlItems .nm')).toContainText('Tailcoat');
 });
 
-test('size guide overlay opens from the menu and closes', async ({ page }) => {
+test('size guide overlay opens from the size panel and closes', async ({ page }) => {
   await gotoHome(page);
-  await openMenu(page);
-  await page.locator('#menu .mitem[data-group="concierge"] .mhead').click();
-  await page.locator('#menu [data-open-sizeg]').click();
+  await navFromMenu(page, 'composer');
+  await page.locator('#cmpzCoatC button').first().click();
+  await expect(page.locator('#quickSize')).toHaveClass(/open/);
+  await page.locator('.quicksize-guide').click();
   await expect(page.locator('#sizeg')).toHaveClass(/open/);
   await page.locator('#sizegX').click();
   await expect(page.locator('#sizeg')).not.toHaveClass(/open/);
