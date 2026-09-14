@@ -188,7 +188,6 @@ window.__composerInit=function(){
 
 
 /* views router */
-var veilT=null;
 var NAVSTACK=['home'];
 function goBack(){
   if(history.length>1&&window.__histOn){history.back();return}
@@ -205,10 +204,6 @@ function showView(name){
   NAVSTACK.push(name);if(NAVSTACK.length>40)NAVSTACK.shift();
   __showViewRaw(name)}
 function __showViewRaw(name){
-  var de=document.documentElement,bd=document.body;
-  de.classList.remove('ready');bd.classList.remove('ready');
-  clearTimeout(veilT);
-  veilT=setTimeout(function(){de.classList.add('ready');bd.classList.add('ready')},480);
   document.querySelectorAll('.view').forEach(function(v){v.hidden=v.getAttribute('data-view')!==name});
   document.querySelectorAll('.view:not([hidden]) .fstack,.view:not([hidden]) .pvstack').forEach(function(st){
     st.scrollLeft=0;if(st.__upd)setTimeout(st.__upd,80)});

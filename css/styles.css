@@ -1001,3 +1001,15 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 /* inner pages read centred; the homepage and buy rails keep their own stance */
 .view[data-view="about"],.view[data-view="atelier"],.view[data-view="composer"],
 .view[data-view="delivery"],.view[data-view="services"]{text-align:center}
+
+/* Readable actions, with the campaign and editorial typography kept intact. */
+.campaign-intro a,.viewall,.btn,.back,.ppage .vback,.ppage .vhome,
+.lookpage .vback,.lookpage .vhome,.menu .msub a,.sizeguide,
+.quick-add,.quicksize-confirm,.lookfilter button,.cell .vtog button,
+.pcare summary,.fnf button,footer .fcols a{
+  font-size:12px;
+  letter-spacing:.12em;
+}
+.home-world-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:0 32px}
+.home-world-actions .viewall{margin-left:0;margin-right:0}
+.svc .quads p{font-size:13px;letter-spacing:0;text-transform:none;line-height:1.8}
