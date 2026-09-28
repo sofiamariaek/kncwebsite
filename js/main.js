@@ -6,18 +6,15 @@ function ready(){document.body.classList.add('ready');document.documentElement.c
 if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){setTimeout(ready,100)})}
 setTimeout(ready,1600);
 
-/* reveals: IO + parent proxy + scroll-sweep safety net */
+/* Text reveals only; photographs and films are visible without scroll effects. */
 var pending=[];
 function markIn(t){t.classList.add('in');
-  t.querySelectorAll&&t.querySelectorAll('.imgrv:not(.in-child)').forEach(function(v){v.classList.add('in')});
-  if(t.hasAttribute&&t.hasAttribute('data-stagger'))[].forEach.call(t.children,function(c,i){c.style.transitionDelay=(.1*i)+'s';
-    var iv=c.querySelector&&c.querySelector('.in-child');if(iv)setTimeout(function(){iv.classList.add('in')},120*i+150)})}
+  if(t.hasAttribute&&t.hasAttribute('data-stagger'))[].forEach.call(t.children,function(c,i){c.style.transitionDelay=(.1*i)+'s'})}
 var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){
-  var t=e.target.__rvTarget||e.target;markIn(t);io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -5% 0px'}):null;
+  markIn(e.target);io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -5% 0px'}):null;
 document.querySelectorAll('[data-io]').forEach(function(el){
-  var obsTarget=el.classList.contains('imgrv')&&el.parentElement?(el.parentElement.__rvTarget=el,el.parentElement):el;
-  pending.push({o:obsTarget,t:el});
-  if(io)io.observe(obsTarget)});
+  pending.push({o:el,t:el});
+  if(io)io.observe(el)});
 function sweep(){var vh=innerHeight;
   pending=pending.filter(function(p){if(p.t.classList.contains('in'))return false;
     var r=p.o.getBoundingClientRect();
