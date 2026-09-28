@@ -24,7 +24,7 @@
   --tar:#101114; --moss:#3E3523; --sand:#C9C4B4;
   --ease:cubic-bezier(.19,1,.22,1); --easeio:cubic-bezier(.65,.05,.36,1);
   --pad:clamp(20px,5.5vw,84px);
-;--prose:clamp(15px,1.15vw,17px)}
+;--prose:clamp(16px,1.8vw,21px)}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--ivory);color:var(--black);
@@ -338,7 +338,7 @@ footer .fsig p{margin-top:18px;font-size:9.5px;letter-spacing:.24em;text-transfo
 .atl .trio img{width:100%;height:100%;object-fit:cover}
 @media (max-width:700px){.atl .trio{grid-template-columns:1fr}}
 .stmt{text-align:center}
-.stmt p{font-size:clamp(16px,1.25vw,18px);line-height:1.8;max-width:30em;margin:0 auto}
+.stmt p{font-size:clamp(18px,2.1vw,25px);line-height:1.65;max-width:30em;margin:0 auto}
 .stmt p+p{margin-top:1.4em;font-style:italic}
 .stmt-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(30px,5.5vw,84px);align-items:center;max-width:1180px;margin:0 auto;text-align:left}
 .stmt-grid figure{margin:0}
@@ -976,7 +976,7 @@ footer .bar{margin-top:clamp(30px,4vw,44px);border-top:1px solid var(--rule);pad
 .founderfull h2{font-size:clamp(22px,3vw,34px);margin-bottom:clamp(18px,2.6vw,30px)}
 .namesec .namegrid{grid-template-columns:minmax(0,5fr) minmax(0,6fr);margin-top:clamp(26px,4vw,44px)}
 .namesec .story{max-width:36em;margin:0 auto}
-.namesec .story p{font-size:var(--prose);line-height:1.9}
+.namesec .story p{font-size:clamp(16px,1.8vw,21px);line-height:1.9}
 
 
 /* Evening: the Paris picture full width and uncropped */
