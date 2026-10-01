@@ -6,18 +6,15 @@ function ready(){document.body.classList.add('ready');document.documentElement.c
 if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){setTimeout(ready,100)})}
 setTimeout(ready,1600);
 
-/* reveals: IO + parent proxy + scroll-sweep safety net */
+/* Text reveals only; photographs and films are visible without scroll effects. */
 var pending=[];
 function markIn(t){t.classList.add('in');
-  t.querySelectorAll&&t.querySelectorAll('.imgrv:not(.in-child)').forEach(function(v){v.classList.add('in')});
-  if(t.hasAttribute&&t.hasAttribute('data-stagger'))[].forEach.call(t.children,function(c,i){c.style.transitionDelay=(.1*i)+'s';
-    var iv=c.querySelector&&c.querySelector('.in-child');if(iv)setTimeout(function(){iv.classList.add('in')},120*i+150)})}
+  if(t.hasAttribute&&t.hasAttribute('data-stagger'))[].forEach.call(t.children,function(c,i){c.style.transitionDelay=(.1*i)+'s'})}
 var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){
-  var t=e.target.__rvTarget||e.target;markIn(t);io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -5% 0px'}):null;
+  markIn(e.target);io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -5% 0px'}):null;
 document.querySelectorAll('[data-io]').forEach(function(el){
-  var obsTarget=el.classList.contains('imgrv')&&el.parentElement?(el.parentElement.__rvTarget=el,el.parentElement):el;
-  pending.push({o:obsTarget,t:el});
-  if(io)io.observe(obsTarget)});
+  pending.push({o:el,t:el});
+  if(io)io.observe(el)});
 function sweep(){var vh=innerHeight;
   pending=pending.filter(function(p){if(p.t.classList.contains('in'))return false;
     var r=p.o.getBoundingClientRect();
@@ -135,14 +132,42 @@ var LOOKS=[
  {kind:'jacket',c:'moss',name:'Jacket Suit',variant:'Moss',shots:['lj_moss4','lj_moss1','lj_moss3','kostym_jacka_gron','lining_moss']},
  {kind:'jacket',c:'sand',name:'Jacket Suit',variant:'Sandstone',shots:['lj_sand1','lj_sand2','lj_sand3','kostym_jacka_beige','lining_sand']}
 ];
-function lookCard(i){var L=LOOKS[i];
+var MODEL_FILMS={0:'assets/video/clip-12.mp4',2:'assets/video/clip-13.mp4'};
+/* Model films keep the photograph visible until playback begins. */
+function modelFilm(figure,src,poster){
+  var v=document.createElement('video');
+  v.muted=true;v.loop=true;v.playsInline=true;
+  v.setAttribute('muted','');v.setAttribute('playsinline','');
+  v.setAttribute('aria-hidden','true');v.preload='none';v.poster=poster;v.src=src;
+  figure.classList.add('model-film');figure.appendChild(v);
+  var visible=false,observer;
+  function sync(){
+    if(visible&&!document.hidden&&!reduced){var p=v.play();if(p&&p.catch)p.catch(function(){})}
+    else v.pause()}
+  v.addEventListener('playing',function(){v.classList.add('playing')});
+  v.addEventListener('error',function(){v.classList.remove('playing')});
+  if('IntersectionObserver' in window){
+    observer=new IntersectionObserver(function(entries){
+      visible=entries[0].isIntersecting;sync()
+    },{threshold:.1});observer.observe(figure)
+  }else{visible=true;sync()}
+  document.addEventListener('visibilitychange',sync);
+  return function(){
+    visible=false;if(observer)observer.disconnect();
+    document.removeEventListener('visibilitychange',sync);v.pause();v.removeAttribute('src');v.load()
+  }
+}
+function lookCard(i){var L=LOOKS[i],film=MODEL_FILMS[i];
   var a=document.createElement('a');a.href='#';
   a.innerHTML='<figure><img loading="lazy" src="'+bankSrc(L.shots[0])+'" alt="'+L.name+', '+L.variant+'"></figure><span class="lookmeta"><strong>'+L.name+' · '+L.variant+'</strong></span>';
+  if(film)a.disposeFilm=modelFilm(a.querySelector('figure'),film,bankSrc(L.shots[0]));
   a.addEventListener('click',function(e){e.preventDefault();openLook(i)});
   return a}
-function renderLooks(f){var g=document.getElementById('lookGrid');if(!g)return;g.innerHTML='';
+function renderLooks(f){var g=document.getElementById('lookGrid');if(!g)return;
+  [].forEach.call(g.children,function(a){if(a.disposeFilm)a.disposeFilm()});g.innerHTML='';
   LOOKS.forEach(function(L,i){if(f!=='all'&&L.kind!==f)return;g.appendChild(lookCard(i))})}
-(function(){var st=document.getElementById('lookStrip');if(st){[0,2,3].forEach(function(i){st.appendChild(lookCard(i))})}})();
+(function(){var st=document.getElementById('lookStrip');if(st){
+  [0,2,3].forEach(function(i){st.appendChild(lookCard(i))})}})();
 renderLooks('all');
 document.querySelectorAll('#lookFilter button').forEach(function(b){
   b.addEventListener('click',function(){
@@ -188,7 +213,6 @@ window.__composerInit=function(){
 
 
 /* views router */
-var veilT=null;
 var NAVSTACK=['home'];
 function goBack(){
   if(history.length>1&&window.__histOn){history.back();return}
@@ -205,10 +229,6 @@ function showView(name){
   NAVSTACK.push(name);if(NAVSTACK.length>40)NAVSTACK.shift();
   __showViewRaw(name)}
 function __showViewRaw(name){
-  var de=document.documentElement,bd=document.body;
-  de.classList.remove('ready');bd.classList.remove('ready');
-  clearTimeout(veilT);
-  veilT=setTimeout(function(){de.classList.add('ready');bd.classList.add('ready')},480);
   document.querySelectorAll('.view').forEach(function(v){v.hidden=v.getAttribute('data-view')!==name});
   document.querySelectorAll('.view:not([hidden]) .fstack,.view:not([hidden]) .pvstack').forEach(function(st){
     st.scrollLeft=0;if(st.__upd)setTimeout(st.__upd,80)});
@@ -614,7 +634,7 @@ function buildComposeBox(box){var col=box.getAttribute('data-compose');box.inner
 /* tiles build deferred to init (needs PIECES) */
 var DESCR={
  tailcoat:'The Tailcoat is the most ceremonial piece in the Kiwi & Colibri wardrobe. Its standing collar, structured shoulders, sculpted waist and elongated tails create a sharper, more modern silhouette. The Tailcoat carries the presence of the dressage arena into everyday life \u2014 made not to wait in the wardrobe, but to be worn.',
- jacket:'A precise equestrian jacket with a sculpted shoulder, defined waist and the house\u2019s military line. Designed to move between the stable, the city and evening.',
+ jacket:'A precise equestrian jacket with a sculpted shoulder, defined waist and the house\u2019s military line. Designed to move between the stable and the city, day and night.',
  corset:'A close, architectural layer that brings definition to the complete equestrian suit while retaining freedom of movement.',
  cargo:'Breeches cut with a clean cargo line and engineered for movement in and out of the saddle.',
  slim:'A streamlined breech in Colibri Cr\u00eape, shaped for a close silhouette and ease in motion.',
