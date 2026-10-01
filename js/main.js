@@ -132,14 +132,37 @@ var LOOKS=[
  {kind:'jacket',c:'moss',name:'Jacket Suit',variant:'Moss',shots:['lj_moss4','lj_moss1','lj_moss3','kostym_jacka_gron','lining_moss']},
  {kind:'jacket',c:'sand',name:'Jacket Suit',variant:'Sandstone',shots:['lj_sand1','lj_sand2','lj_sand3','kostym_jacka_beige','lining_sand']}
 ];
-function lookCard(i){var L=LOOKS[i];
+/* Homepage model films keep the photograph visible until playback begins. */
+function homeModelFilm(figure,src,poster){
+  var v=document.createElement('video');
+  v.muted=true;v.loop=true;v.playsInline=true;
+  v.setAttribute('muted','');v.setAttribute('playsinline','');
+  v.setAttribute('aria-hidden','true');v.preload='none';v.poster=poster;v.src=src;
+  figure.classList.add('model-film');figure.appendChild(v);
+  var visible=false;
+  function sync(){
+    if(visible&&!document.hidden&&!reduced){var p=v.play();if(p&&p.catch)p.catch(function(){})}
+    else v.pause()}
+  v.addEventListener('playing',function(){v.classList.add('playing')});
+  v.addEventListener('error',function(){v.classList.remove('playing')});
+  if('IntersectionObserver' in window){
+    var observer=new IntersectionObserver(function(entries){
+      visible=entries[0].isIntersecting;sync()
+    },{threshold:.1});observer.observe(figure)
+  }else{visible=true;sync()}
+  document.addEventListener('visibilitychange',sync)
+}
+function lookCard(i,film){var L=LOOKS[i];
   var a=document.createElement('a');a.href='#';
   a.innerHTML='<figure><img loading="lazy" src="'+bankSrc(L.shots[0])+'" alt="'+L.name+', '+L.variant+'"></figure><span class="lookmeta"><strong>'+L.name+' · '+L.variant+'</strong></span>';
+  if(film)homeModelFilm(a.querySelector('figure'),film,bankSrc(L.shots[0]));
   a.addEventListener('click',function(e){e.preventDefault();openLook(i)});
   return a}
 function renderLooks(f){var g=document.getElementById('lookGrid');if(!g)return;g.innerHTML='';
   LOOKS.forEach(function(L,i){if(f!=='all'&&L.kind!==f)return;g.appendChild(lookCard(i))})}
-(function(){var st=document.getElementById('lookStrip');if(st){[0,2,3].forEach(function(i){st.appendChild(lookCard(i))})}})();
+(function(){var st=document.getElementById('lookStrip');if(st){
+  var films={0:'assets/video/clip-12.mp4',2:'assets/video/clip-13.mp4'};
+  [0,2,3].forEach(function(i){st.appendChild(lookCard(i,films[i]))})}})();
 renderLooks('all');
 document.querySelectorAll('#lookFilter button').forEach(function(b){
   b.addEventListener('click',function(){
